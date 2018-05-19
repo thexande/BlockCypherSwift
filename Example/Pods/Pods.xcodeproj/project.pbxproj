@@ -24,6 +24,7 @@
 		A68686C8E9877758AFF2C7C1A34802F7 /* Pods-BlockCypherSwift_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = D7B008214CFEAAFBD87CCA5EE635E8F5 /* Pods-BlockCypherSwift_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A98867CB2199201225580CB3B1B8D369 /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3D0BAA1E4054FC46FCAA4B5B773430 /* Wallet.swift */; };
 		A9ED70A5A6123906A39322F44070C947 /* Pods-BlockCypherSwift_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 66203C6395BE8B8B1F9B6E78D2B742F7 /* Pods-BlockCypherSwift_Example-dummy.m */; };
+		B0506D8020AFD63600DB2CB2 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0506D7F20AFD63600DB2CB2 /* DateFormatter.swift */; };
 		B0BF27F3EF196B15DBADE6F3BCACDEF4 /* WalletService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D5F23249CD01377C160DC5BE62B4ABD /* WalletService.swift */; };
 		B62028956059DA424CB04DEDD6FE97A0 /* NoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEC8237081E04A82FE6DFF0984E9DDB /* NoError.swift */; };
 		F88BE7945F802C2A9DB2774C4780F3CD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90BC75930AC15D5638EA375FD478E4C9 /* Foundation.framework */; };
@@ -67,8 +68,8 @@
 		00731B6E7DAD95BABCBD81F4CD9AF4E5 /* Result.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Result.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		031239815DF989AD6BDBF628292A57D9 /* Pods-BlockCypherSwift_Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-BlockCypherSwift_Tests-frameworks.sh"; sourceTree = "<group>"; };
 		06581C15CEEF2942FE7906FAA2C3C55F /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0A76A9F90BD74DF059A4B90658DAC82F /* Pods_BlockCypherSwift_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_BlockCypherSwift_Tests.framework; path = "Pods-BlockCypherSwift_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		10D47E164BEB3C4864668E8AF0455653 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		0A76A9F90BD74DF059A4B90658DAC82F /* Pods_BlockCypherSwift_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockCypherSwift_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		10D47E164BEB3C4864668E8AF0455653 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		139BBD05AA27106D0EE6B2EA82259AF7 /* Pods-BlockCypherSwift_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-BlockCypherSwift_Example-frameworks.sh"; sourceTree = "<group>"; };
 		13C2F3012E2708BB48B1140B76F21862 /* BlockCypherSwift-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "BlockCypherSwift-dummy.m"; sourceTree = "<group>"; };
 		198AF4BE6F9CCA16B3C3DB54A461F9FA /* Pods-BlockCypherSwift_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-BlockCypherSwift_Tests-dummy.m"; sourceTree = "<group>"; };
@@ -77,8 +78,8 @@
 		26E8279FF336BC59E4371F28D428C3B8 /* Pods-BlockCypherSwift_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-BlockCypherSwift_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		3136A65818678DEDA44AB027607569F0 /* Pods-BlockCypherSwift_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-BlockCypherSwift_Tests.modulemap"; sourceTree = "<group>"; };
 		33CA00DCBFDD2502DA590D9DB17D2932 /* AnyError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AnyError.swift; path = Result/AnyError.swift; sourceTree = "<group>"; };
-		340A339716CB75D8F92ABD0B5158427E /* Result.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Result.framework; path = Result.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		379493399D27B0D604110765BD828622 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		340A339716CB75D8F92ABD0B5158427E /* Result.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Result.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		379493399D27B0D604110765BD828622 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		40082E237D34682865101988E5D817E7 /* Pods-BlockCypherSwift_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-BlockCypherSwift_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		4C19DC38C0A80B3BF30A0E58F8BE41FF /* Input.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Input.swift; path = BlockCypherSwift/Classes/Input.swift; sourceTree = "<group>"; };
 		509BA777AD9DD14078BC1D3E69926E32 /* Result-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Result-umbrella.h"; sourceTree = "<group>"; };
@@ -94,18 +95,19 @@
 		90BC75930AC15D5638EA375FD478E4C9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		90BD6FFD57AB005EEC5B987B3CFAE21F /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		928489CE7FB3A5DC97D933F2EB1DCC1B /* Output.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Output.swift; path = BlockCypherSwift/Classes/Output.swift; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		943341190FEB2DCC370A47F99DDFED75 /* BlockCypherSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = BlockCypherSwift.framework; path = BlockCypherSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9801EEEBE5DB32B8DC975A9968D74C54 /* BlockCypherSwift.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; path = BlockCypherSwift.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		943341190FEB2DCC370A47F99DDFED75 /* BlockCypherSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BlockCypherSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9801EEEBE5DB32B8DC975A9968D74C54 /* BlockCypherSwift.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; path = BlockCypherSwift.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A04617F88C01B98F9F94B85816DD3BFD /* Pods-BlockCypherSwift_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-BlockCypherSwift_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		A4C2AACDE20ABA7EF594BA0EA86DD819 /* Pods-BlockCypherSwift_Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-BlockCypherSwift_Example-resources.sh"; sourceTree = "<group>"; };
 		A5F3296C5FAFCF96EACD43A37117309B /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AAA5DB08A2662F0942188AE9B5732BEE /* BlockCypherSwift.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = BlockCypherSwift.modulemap; sourceTree = "<group>"; };
 		AAAD005D4AC17ECC677D23F9068D64A0 /* BlockCypherSwift-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "BlockCypherSwift-prefix.pch"; sourceTree = "<group>"; };
 		ADAB543493D023BFCF97B94C58094E19 /* Pods-BlockCypherSwift_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-BlockCypherSwift_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		B0506D7F20AFD63600DB2CB2 /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DateFormatter.swift; path = BlockCypherSwift/Classes/DateFormatter.swift; sourceTree = "<group>"; };
 		B90B13AF2058885272611249A7197F74 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C9FEA452549C9EB03EE13DC9B3245D61 /* Pods-BlockCypherSwift_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-BlockCypherSwift_Example-umbrella.h"; sourceTree = "<group>"; };
-		D3F4C950DF20AEDADAD13DE171C94BC4 /* Pods_BlockCypherSwift_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_BlockCypherSwift_Example.framework; path = "Pods-BlockCypherSwift_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D3F4C950DF20AEDADAD13DE171C94BC4 /* Pods_BlockCypherSwift_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockCypherSwift_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7B008214CFEAAFBD87CCA5EE635E8F5 /* Pods-BlockCypherSwift_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-BlockCypherSwift_Tests-umbrella.h"; sourceTree = "<group>"; };
 		E9EDC0F945903598794F94BD830F83ED /* BlockCypherSwift.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = BlockCypherSwift.xcconfig; sourceTree = "<group>"; };
 		F3FE648E000C4D52F51942D50CF4915D /* Result.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Result.modulemap; sourceTree = "<group>"; };
@@ -180,7 +182,6 @@
 				FD043463234A777AA58A3F0276E11EDB /* ResultProtocol.swift */,
 				672F9FD62198245C7CB864C7A236F899 /* Support Files */,
 			);
-			name = Result;
 			path = Result;
 			sourceTree = "<group>";
 		};
@@ -236,6 +237,7 @@
 				631B79FB7E82A537257C5198F166D1D5 /* Transaction.swift */,
 				FD3D0BAA1E4054FC46FCAA4B5B773430 /* Wallet.swift */,
 				7D5F23249CD01377C160DC5BE62B4ABD /* WalletService.swift */,
+				B0506D7F20AFD63600DB2CB2 /* DateFormatter.swift */,
 				BFCF17251180EBC842474DDCD65C66BD /* Pod */,
 				A968888E88BA58220D1A694C7DC74955 /* Support Files */,
 			);
@@ -495,6 +497,7 @@
 				1286DA180923DF43644A38E73EFF689F /* BlockCypherSwift-dummy.m in Sources */,
 				31CA1BE55BF7587925D5CE51574E87F0 /* Input.swift in Sources */,
 				FAC4D0BA89837C160BA6DB3685EF0839 /* Output.swift in Sources */,
+				B0506D8020AFD63600DB2CB2 /* DateFormatter.swift in Sources */,
 				3C9F6E79407F91C19C1E5960B704532D /* Transaction.swift in Sources */,
 				A98867CB2199201225580CB3B1B8D369 /* Wallet.swift in Sources */,
 				B0BF27F3EF196B15DBADE6F3BCACDEF4 /* WalletService.swift in Sources */,
