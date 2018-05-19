@@ -1,0 +1,22 @@
+{
+  "name": "BlockCypherSwift",
+  "version": "0.1.0",
+  "summary": "A short description of BlockCypherSwift.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/Alexander Murphy/BlockCypherSwift",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Alexander Murphy": "amurphy345@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/Alexander Murphy/BlockCypherSwift.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "BlockCypherSwift/Classes/**/*"
+}

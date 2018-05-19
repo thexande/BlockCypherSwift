@@ -1,0 +1,6 @@
+framework module BlockCypherSwift {
+  umbrella header "BlockCypherSwift-umbrella.h"
+
+  export *
+  module * { export * }
+}
