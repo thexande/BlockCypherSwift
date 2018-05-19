@@ -33,6 +33,7 @@
 		B06E336A20AFDF790092C420 /* MetadataTitleRowItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06E336920AFDF790092C420 /* MetadataTitleRowItemCell.swift */; };
 		B06E336C20AFE0090092C420 /* WalletSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06E336B20AFE0090092C420 /* WalletSectionHeader.swift */; };
 		B06E336E20AFE1430092C420 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06E336D20AFE1430092C420 /* ScannerViewController.swift */; };
+		B0C1D9DB20AFF0C300EBE860 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C1D9DA20AFF0C300EBE860 /* DateFormatter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,7 @@
 		B06E336920AFDF790092C420 /* MetadataTitleRowItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataTitleRowItemCell.swift; sourceTree = "<group>"; };
 		B06E336B20AFE0090092C420 /* WalletSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletSectionHeader.swift; sourceTree = "<group>"; };
 		B06E336D20AFE1430092C420 /* ScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
+		B0C1D9DA20AFF0C300EBE860 /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		F139DA2E2CC632329B47AEB6 /* Pods_BlockCypherSwift_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockCypherSwift_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F654F7544D8FF821F8859DEE /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -153,6 +155,7 @@
 				B06E336920AFDF790092C420 /* MetadataTitleRowItemCell.swift */,
 				B06E336B20AFE0090092C420 /* WalletSectionHeader.swift */,
 				B06E336D20AFE1430092C420 /* ScannerViewController.swift */,
+				B0C1D9DA20AFF0C300EBE860 /* DateFormatter.swift */,
 			);
 			name = "Example for BlockCypherSwift";
 			path = BlockCypherSwift;
@@ -399,6 +402,7 @@
 				B00B268A20AFDB6B005A1C8B /* WalletDetailViewController.swift in Sources */,
 				B06E336420AFDEAB0092C420 /* QRDispalyViewController.swift in Sources */,
 				B00B269E20AFDE17005A1C8B /* WalletDetailRowItemCell.swift in Sources */,
+				B0C1D9DB20AFF0C300EBE860 /* DateFormatter.swift in Sources */,
 				B00B269C20AFDDCE005A1C8B /* UIAlertController.swift in Sources */,
 				B00B269A20AFDD2C005A1C8B /* WalletDetailHeaderView.swift in Sources */,
 				B00B269220AFDC48005A1C8B /* MetadataAddressTableSectionController.swift in Sources */,
