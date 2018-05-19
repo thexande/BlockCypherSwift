@@ -307,10 +307,12 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-BlockCypherSwift_Example/Pods-BlockCypherSwift_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/BlockCypherSwift/BlockCypherSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BlockCypherSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

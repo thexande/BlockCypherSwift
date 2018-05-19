@@ -1,15 +1,22 @@
 PODS:
-  - BlockCypherSwift (0.1.0)
+  - BlockCypherSwift (0.1.0):
+    - Result
+  - Result (4.0.0)
 
 DEPENDENCIES:
   - BlockCypherSwift (from `../`)
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Result
 
 EXTERNAL SOURCES:
   BlockCypherSwift:
     :path: "../"
 
 SPEC CHECKSUMS:
-  BlockCypherSwift: d673d664ecfa74c401434dd140535562b2add6e9
+  BlockCypherSwift: e495c115f42ac1db958966367b9e86deee9866c1
+  Result: 7645bb3f50c2ce726dd0ff2fa7b6f42bbe6c3713
 
 PODFILE CHECKSUM: b160f8d162b45f181ddda8dc3233b3f27fa30afc
 
