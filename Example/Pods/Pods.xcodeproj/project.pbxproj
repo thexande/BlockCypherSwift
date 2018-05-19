@@ -25,6 +25,8 @@
 		A98867CB2199201225580CB3B1B8D369 /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3D0BAA1E4054FC46FCAA4B5B773430 /* Wallet.swift */; };
 		A9ED70A5A6123906A39322F44070C947 /* Pods-BlockCypherSwift_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 66203C6395BE8B8B1F9B6E78D2B742F7 /* Pods-BlockCypherSwift_Example-dummy.m */; };
 		B0506D8020AFD63600DB2CB2 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0506D7F20AFD63600DB2CB2 /* DateFormatter.swift */; };
+		B0506D8220AFD67C00DB2CB2 /* WalletType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0506D8120AFD67C00DB2CB2 /* WalletType.swift */; };
+		B0506D8420AFD69500DB2CB2 /* UrlFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0506D8320AFD69500DB2CB2 /* UrlFactory.swift */; };
 		B0BF27F3EF196B15DBADE6F3BCACDEF4 /* WalletService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D5F23249CD01377C160DC5BE62B4ABD /* WalletService.swift */; };
 		B62028956059DA424CB04DEDD6FE97A0 /* NoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEC8237081E04A82FE6DFF0984E9DDB /* NoError.swift */; };
 		F88BE7945F802C2A9DB2774C4780F3CD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90BC75930AC15D5638EA375FD478E4C9 /* Foundation.framework */; };
@@ -105,6 +107,8 @@
 		AAAD005D4AC17ECC677D23F9068D64A0 /* BlockCypherSwift-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "BlockCypherSwift-prefix.pch"; sourceTree = "<group>"; };
 		ADAB543493D023BFCF97B94C58094E19 /* Pods-BlockCypherSwift_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-BlockCypherSwift_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		B0506D7F20AFD63600DB2CB2 /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DateFormatter.swift; path = BlockCypherSwift/Classes/DateFormatter.swift; sourceTree = "<group>"; };
+		B0506D8120AFD67C00DB2CB2 /* WalletType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WalletType.swift; path = BlockCypherSwift/Classes/WalletType.swift; sourceTree = "<group>"; };
+		B0506D8320AFD69500DB2CB2 /* UrlFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UrlFactory.swift; path = BlockCypherSwift/Classes/UrlFactory.swift; sourceTree = "<group>"; };
 		B90B13AF2058885272611249A7197F74 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C9FEA452549C9EB03EE13DC9B3245D61 /* Pods-BlockCypherSwift_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-BlockCypherSwift_Example-umbrella.h"; sourceTree = "<group>"; };
 		D3F4C950DF20AEDADAD13DE171C94BC4 /* Pods_BlockCypherSwift_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockCypherSwift_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -238,6 +242,8 @@
 				FD3D0BAA1E4054FC46FCAA4B5B773430 /* Wallet.swift */,
 				7D5F23249CD01377C160DC5BE62B4ABD /* WalletService.swift */,
 				B0506D7F20AFD63600DB2CB2 /* DateFormatter.swift */,
+				B0506D8120AFD67C00DB2CB2 /* WalletType.swift */,
+				B0506D8320AFD69500DB2CB2 /* UrlFactory.swift */,
 				BFCF17251180EBC842474DDCD65C66BD /* Pod */,
 				A968888E88BA58220D1A694C7DC74955 /* Support Files */,
 			);
@@ -497,9 +503,11 @@
 				1286DA180923DF43644A38E73EFF689F /* BlockCypherSwift-dummy.m in Sources */,
 				31CA1BE55BF7587925D5CE51574E87F0 /* Input.swift in Sources */,
 				FAC4D0BA89837C160BA6DB3685EF0839 /* Output.swift in Sources */,
+				B0506D8420AFD69500DB2CB2 /* UrlFactory.swift in Sources */,
 				B0506D8020AFD63600DB2CB2 /* DateFormatter.swift in Sources */,
 				3C9F6E79407F91C19C1E5960B704532D /* Transaction.swift in Sources */,
 				A98867CB2199201225580CB3B1B8D369 /* Wallet.swift in Sources */,
+				B0506D8220AFD67C00DB2CB2 /* WalletType.swift in Sources */,
 				B0BF27F3EF196B15DBADE6F3BCACDEF4 /* WalletService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

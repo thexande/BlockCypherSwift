@@ -1,4 +1,4 @@
-struct Output: Codable {
+public struct Output: Codable {
     let value: Int
     let script: String
     let addresses: [String]

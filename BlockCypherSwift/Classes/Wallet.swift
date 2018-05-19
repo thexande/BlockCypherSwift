@@ -1,4 +1,4 @@
-struct Wallet: Codable {
+public struct Wallet: Codable {
     let address: String
     let total_received: Int
     let total_sent: Int

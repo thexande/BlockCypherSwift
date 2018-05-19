@@ -1,4 +1,4 @@
-struct Transaction: Codable {
+public struct Transaction: Codable {
     let block_hash: String
     let block_height: Int
     let block_index: Int
