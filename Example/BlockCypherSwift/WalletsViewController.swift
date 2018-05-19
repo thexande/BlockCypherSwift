@@ -29,7 +29,7 @@ struct WalletsViewProperties {
 
 final class WalletsViewController: UITableViewController {
     public weak var dispatcher: WalletActionDispatching?
-    fileprivate let emptyState = WalletsEmptyStateView()
+//    fileprivate let emptyState = WalletsEmptyStateView()
     fileprivate let searchController = UISearchController(searchResultsController: nil)
     fileprivate var isSearching: Bool = false
     
@@ -62,9 +62,9 @@ final class WalletsViewController: UITableViewController {
         tableView.register(WalletSectionHeader.self, forHeaderFooterViewReuseIdentifier: String(describing: WalletSectionHeader.self))
         tableView.refreshControl = UIRefreshControl()
         
-        tableView.backgroundView = emptyState
-        tableView.backgroundView?.isHidden = true
-        emptyState.actionButton.addTarget(self, action: #selector(scanTapped), for: .touchUpInside)
+//        tableView.backgroundView = emptyState
+//        tableView.backgroundView?.isHidden = true
+//        emptyState.actionButton.addTarget(self, action: #selector(scanTapped), for: .touchUpInside)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(scanTapped))
         

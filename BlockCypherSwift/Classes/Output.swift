@@ -1,9 +1,9 @@
 public struct Output: Codable {
-    let value: Int
-    let script: String
-    let addresses: [String]
-    let script_type: String
-    let spent_by: String?
-    let data_hex: String?
-    let data_string: String?
+    public let value: Int
+    public let script: String
+    public let addresses: [String]
+    public let script_type: String
+    public let spent_by: String?
+    public let data_hex: String?
+    public let data_string: String?
 }

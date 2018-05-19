@@ -1,7 +1,7 @@
 import Foundation
 
-extension DateFormatter {
-    static let iso8601Full: DateFormatter = {
+public extension DateFormatter {
+    public static let iso8601Full: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
         formatter.calendar = Calendar(identifier: .iso8601)
@@ -10,7 +10,7 @@ extension DateFormatter {
         return formatter
     }()
     
-    static let yyyyMMdd: DateFormatter = {
+    public static let yyyyMMdd: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         formatter.calendar = Calendar(identifier: .iso8601)
@@ -20,8 +20,8 @@ extension DateFormatter {
     }()
 }
 
-extension Date {
-    func transactionFormatString() -> String {
+public extension Date {
+    public func transactionFormatString() -> String {
         let formatter = DateFormatter()
         formatter.timeStyle = DateFormatter.Style.short
         formatter.dateStyle = DateFormatter.Style.long

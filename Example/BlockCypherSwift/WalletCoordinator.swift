@@ -1,5 +1,6 @@
 import UIKit
 import Result
+import BlockCypherSwift
 
 enum WalletAction {
     case reloadWallets
@@ -66,6 +67,7 @@ protocol WalletRoutable {
 
 final class WalletCoordinator: WalletActionDispatching {
     fileprivate let factory = WalletControllerFactory()
+    private let walletService = WalletService()
     fileprivate let navigationController = UINavigationController(rootViewController: UIViewController())
     fileprivate let walletViewController = WalletsViewController()
     fileprivate let walletDetailViewController = WalletDetailController()
@@ -164,7 +166,7 @@ extension WalletCoordinator {
     
     fileprivate func handleQRResult(walletAddress: String, walletType: WalletType?) {
         guard let walletType = walletType else { return }
-        WalletService.fetchWallet(walletAddress: walletAddress, walletType: walletType) { [weak self] walletResult in
+        walletService.fetchWallet(walletAddress: walletAddress, walletType: walletType) { [weak self] walletResult in
             switch walletResult {
             case .success(let wallet):
                 print(wallet)
@@ -228,18 +230,7 @@ extension WalletCoordinator: WalletRoutable {
     }
 }
 
-struct Wallet: Codable {
-    let address: String
-    let total_received: Int
-    let total_sent: Int
-    let balance: Int
-    let unconfirmed_balance: Int
-    let final_balance: Int
-    let n_tx: Int
-    let unconfirmed_n_tx: Int
-    let final_n_tx: Int
-    let txs: [Transaction]
-    
+extension Wallet {
     var totalReceived: String {
         return String(total_received)
     }
@@ -262,29 +253,7 @@ struct Wallet: Codable {
         //        )
     }
 }
-
-struct Transaction: Codable {
-    let block_hash: String
-    let block_height: Int
-    let block_index: Int
-    let hash: String
-    let addresses: [String]
-    let total: Int
-    let fees: Int
-    let size: Int
-    let preference: String
-    let relayed_by: String?
-    let confirmed: Date
-    let received: String
-    let ver: Int
-    let double_spend: Bool
-    let vin_sz: Int
-    let vout_sz: Int
-    let confirmations: Int
-    let confidence: Int
-    let inputs: [Input]
-    let outputs: [Output]
-    
+extension Transaction {
     static func map(_ transaction: Transaction) -> TransactionRowItemProperties {
         
         return TransactionRowItemProperties(
@@ -312,29 +281,5 @@ struct Transaction: Codable {
         )
     }
 }
-
-struct Input: Codable {
-    let prev_hash: String
-    let output_index: Int
-    let output_value: Int
-    let script_type: String
-    let script: String
-    let addresses: [String]
-    let sequence: Int
-    let age: Int
-    let wallet_name: String?
-    let wallet_token: String?
-}
-
-struct Output: Codable {
-    let value: Int
-    let script: String
-    let addresses: [String]
-    let script_type: String
-    let spent_by: String?
-    let data_hex: String?
-    let data_string: String?
-}
-
 
 

@@ -7,6 +7,8 @@ public enum WalletServiceError: Error {
 }
 
 final public class WalletService {
+    public init() { }
+    
     open func fetchWallet(walletAddress: String, walletType: WalletType, _ completion: @escaping(Result<Wallet, WalletServiceError>) -> Void) {
         guard let url = UrlFactory.url(walletAddress: walletAddress, walletType: walletType) else {
             completion(.failure(.urlGenerationFailure))

@@ -2,16 +2,19 @@ PODS:
   - Anchorage (4.2.2)
   - BlockCypherSwift (0.1.0):
     - Result
+  - QRCode (2.0)
   - Result (4.0.0)
 
 DEPENDENCIES:
   - Anchorage
   - BlockCypherSwift (from `../`)
+  - QRCode
   - Result
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - Anchorage
+    - QRCode
     - Result
 
 EXTERNAL SOURCES:
@@ -20,9 +23,10 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Anchorage: cba8707ea6475f604e04047882ba47c07e4b2ac1
-  BlockCypherSwift: e495c115f42ac1db958966367b9e86deee9866c1
+  BlockCypherSwift: b7782367f2ca5b4a479f29eaa166076f29af97c2
+  QRCode: f98a1886c8f37523704a7512a4c0cd45b34c18a4
   Result: 7645bb3f50c2ce726dd0ff2fa7b6f42bbe6c3713
 
-PODFILE CHECKSUM: 678d5af1495c0ed10c60a6b85efd333250235829
+PODFILE CHECKSUM: 414eb01a9db49818d375a03503d660235dbe6fe3
 
 COCOAPODS: 1.5.0
