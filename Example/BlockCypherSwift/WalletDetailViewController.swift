@@ -44,8 +44,8 @@ struct TransactionRowItemProperties {
 }
 
 final class WalletDetailController: SectionProxyTableViewController, ViewPropertiesUpdating {
-    fileprivate let header = WalletDetailHeaderView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 172))
-    fileprivate let segment = UISegmentedControl(items: [ "Recent", "Largest"])
+    private let header = WalletDetailHeaderView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 172))
+    private let segment = UISegmentedControl(items: [ "Recent", "Largest"])
     
     public weak var dispatcher: WalletActionDispatching? {
         didSet {

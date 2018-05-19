@@ -2,12 +2,12 @@ import UIKit
 import Anchorage
 
 final class WalletDetailRowItemCell: UITableViewCell, ViewPropertiesUpdating {
-    fileprivate let title = UILabel()
-    fileprivate let subTitle = UILabel()
-    fileprivate let transactionIcon = UIImageView()
-    fileprivate let transactionBackground = UIView()
-    fileprivate let lockIcon = UIImageView()
-    fileprivate let confirmationCount = UILabel()
+    private let title = UILabel()
+    private let subTitle = UILabel()
+    private let transactionIcon = UIImageView()
+    private let transactionBackground = UIView()
+    private let lockIcon = UIImageView()
+    private let confirmationCount = UILabel()
     
     public var properties: TransactionRowItemProperties = .default {
         didSet {

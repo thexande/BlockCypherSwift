@@ -2,8 +2,8 @@ import UIKit
 import Anchorage
 
 final class MetadataTitleRowItemCell: UITableViewCell, ViewPropertiesUpdating {
-    fileprivate let titleLabel = UILabel()
-    fileprivate let contentLabel = UILabel()
+    private let titleLabel = UILabel()
+    private let contentLabel = UILabel()
     
     public var properties: MetadataTitleRowItemProperties = .default {
         didSet {
@@ -45,7 +45,7 @@ final class MetadataTitleRowItemCell: UITableViewCell, ViewPropertiesUpdating {
 }
 
 final class MetadataAddressRowItemCell: UITableViewCell {
-    fileprivate let addressLabel = UILabel()
+    private let addressLabel = UILabel()
     
     public var address: String? {
         didSet {
@@ -69,7 +69,7 @@ final class MetadataAddressRowItemCell: UITableViewCell {
 }
 
 final class MetadataTransactionSegmentRowItemCell: UITableViewCell {
-    fileprivate let addressLabel = UILabel()
+    private let addressLabel = UILabel()
     
     public var address: String? {
         didSet {

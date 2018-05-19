@@ -4,10 +4,10 @@ import Anchorage
 import BlockCypherSwift
 
 class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
-    fileprivate let icon = UIImageView()
-    fileprivate let overlayLabel = UILabel()
-    fileprivate let overlay = UIView()
-    fileprivate let cancelButton = UIButton()
+    private let icon = UIImageView()
+    private let overlayLabel = UILabel()
+    private let overlay = UIView()
+    private let cancelButton = UIButton()
     let headerView = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
     var captureSession: AVCaptureSession!
     var previewLayer: AVCaptureVideoPreviewLayer!
@@ -108,7 +108,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         overlayLabel.topAnchor == icon.bottomAnchor + 12
     }
     
-    @objc fileprivate func cancel() {
+    @objc private func cancel() {
         self.dismiss(animated: true, completion: nil)
     }
     

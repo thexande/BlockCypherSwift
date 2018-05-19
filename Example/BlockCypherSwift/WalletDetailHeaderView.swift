@@ -2,16 +2,16 @@
 import Anchorage
 
 final class WalletDetailHeaderView: UIView, ViewPropertiesUpdating {
-    fileprivate let background = UIImageView()
-    fileprivate let balance = UILabel()
-    fileprivate let balanceTitle = UILabel()
-    fileprivate let received = UILabel()
-    fileprivate let receivedTitle = UILabel()
-    fileprivate let sent = UILabel()
-    fileprivate let sentTitle = UILabel()
-    fileprivate let copyButton = SecondaryButton()
-    fileprivate let qrButton = PrimaryButton()
-    fileprivate let accentImageView = UIImageView(image: #imageLiteral(resourceName: "btc"))
+    private let background = UIImageView()
+    private let balance = UILabel()
+    private let balanceTitle = UILabel()
+    private let received = UILabel()
+    private let receivedTitle = UILabel()
+    private let sent = UILabel()
+    private let sentTitle = UILabel()
+    private let copyButton = SecondaryButton()
+    private let qrButton = PrimaryButton()
+    private let accentImageView = UIImageView(image: #imageLiteral(resourceName: "btc"))
     
     public var dispatcher: WalletActionDispatching?
     public var properties: WalletDetailHeaderViewProperties = .default {

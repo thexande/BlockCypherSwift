@@ -29,9 +29,9 @@ struct WalletsViewProperties {
 
 final class WalletsViewController: UITableViewController {
     public weak var dispatcher: WalletActionDispatching?
-//    fileprivate let emptyState = WalletsEmptyStateView()
-    fileprivate let searchController = UISearchController(searchResultsController: nil)
-    fileprivate var isSearching: Bool = false
+//    private let emptyState = WalletsEmptyStateView()
+    private let searchController = UISearchController(searchResultsController: nil)
+    private var isSearching: Bool = false
     
     var properties: WalletsViewProperties = .default {
         didSet {

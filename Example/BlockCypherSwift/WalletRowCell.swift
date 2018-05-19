@@ -23,11 +23,11 @@ extension WalletType {
 }
 
 final class WalletRowCell: UITableViewCell, WalletRowItemPropertiesUpdating {
-    fileprivate let icon = UIImageView()
-    fileprivate let title = UILabel()
-    fileprivate let address = UILabel()
-    fileprivate let holding = UILabel()
-    fileprivate let spent = UILabel()
+    private let icon = UIImageView()
+    private let title = UILabel()
+    private let address = UILabel()
+    private let holding = UILabel()
+    private let spent = UILabel()
     
     public var properties: WalletRowProperties = .default {
         didSet {

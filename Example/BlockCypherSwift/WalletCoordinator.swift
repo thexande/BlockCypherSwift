@@ -66,17 +66,17 @@ protocol WalletRoutable {
 
 
 final class WalletCoordinator: WalletActionDispatching {
-    fileprivate let factory = WalletControllerFactory()
+    private let factory = WalletControllerFactory()
     private let walletService = WalletService()
-    fileprivate let navigationController = UINavigationController(rootViewController: UIViewController())
-    fileprivate let walletViewController = WalletsViewController()
-    fileprivate let walletDetailViewController = WalletDetailController()
-    fileprivate let transactionDetailViewController = TransactionDetailViewController()
-    fileprivate let transactionSegmentDetailViewController = TransactionSegmentViewController()
-    fileprivate let qrDisplayViewController = QRDispalyViewController()
-    fileprivate let     scannerViewController = ScannerViewController()
-    fileprivate let walletTypeAlertController = UIAlertController(title: "Wallet Type", message: "Select your Wallet type.", preferredStyle: .actionSheet)
-    fileprivate let walletNameAlertController = UIAlertController(title: "Wallet Name", message: "Select a name for your new wallet, or input a custom name.", preferredStyle: .actionSheet)
+    private let navigationController = UINavigationController(rootViewController: UIViewController())
+    private let walletViewController = WalletsViewController()
+    private let walletDetailViewController = WalletDetailController()
+    private let transactionDetailViewController = TransactionDetailViewController()
+    private let transactionSegmentDetailViewController = TransactionSegmentViewController()
+    private let qrDisplayViewController = QRDispalyViewController()
+    private let     scannerViewController = ScannerViewController()
+    private let walletTypeAlertController = UIAlertController(title: "Wallet Type", message: "Select your Wallet type.", preferredStyle: .actionSheet)
+    private let walletNameAlertController = UIAlertController(title: "Wallet Name", message: "Select a name for your new wallet, or input a custom name.", preferredStyle: .actionSheet)
     
     public var rootViewController: UIViewController {
         return self.navigationController
@@ -156,7 +156,7 @@ final class WalletCoordinator: WalletActionDispatching {
 
 /// Coordinator Action Handling Extension
 extension WalletCoordinator {
-    fileprivate func handleCopyWalletAddressToClipboard(walletAddress: String) {
+    private func handleCopyWalletAddressToClipboard(walletAddress: String) {
         let alert = UIAlertController.confirmationAlert(
             confirmationTitle: "Coppied.",
             confirmationMessage: "Wallet address \(walletAddress) has been coppied to your clipboard."
@@ -164,7 +164,7 @@ extension WalletCoordinator {
         navigation?.present(alert, animated: true, completion: nil)
     }
     
-    fileprivate func handleQRResult(walletAddress: String, walletType: WalletType?) {
+    private func handleQRResult(walletAddress: String, walletType: WalletType?) {
         guard let walletType = walletType else { return }
         walletService.fetchWallet(walletAddress: walletAddress, walletType: walletType) { [weak self] walletResult in
             switch walletResult {
