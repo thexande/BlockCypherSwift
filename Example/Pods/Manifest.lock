@@ -7,6 +7,7 @@ PODS:
 DEPENDENCIES:
   - Anchorage
   - BlockCypherSwift (from `../`)
+  - Result
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -22,6 +23,6 @@ SPEC CHECKSUMS:
   BlockCypherSwift: e495c115f42ac1db958966367b9e86deee9866c1
   Result: 7645bb3f50c2ce726dd0ff2fa7b6f42bbe6c3713
 
-PODFILE CHECKSUM: f578cd739743c5c3f806f05ece301c3f7ed22215
+PODFILE CHECKSUM: 678d5af1495c0ed10c60a6b85efd333250235829
 
 COCOAPODS: 1.5.0

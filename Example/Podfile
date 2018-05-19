@@ -3,6 +3,7 @@ use_frameworks!
 target 'BlockCypherSwift_Example' do
   pod 'BlockCypherSwift', :path => '../'
   pod 'Anchorage'
+  pod 'Result'
 
   target 'BlockCypherSwift_Tests' do
     inherit! :search_paths

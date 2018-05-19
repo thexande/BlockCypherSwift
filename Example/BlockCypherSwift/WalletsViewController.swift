@@ -1,5 +1,6 @@
 import UIKit
 import Anchorage
+import BlockCypherSwift
 
 protocol WalletRowItemPropertiesUpdating {
     var properties: WalletRowProperties { get set }
