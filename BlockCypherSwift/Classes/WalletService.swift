@@ -7,7 +7,11 @@ public enum WalletServiceError: Error {
 }
 
 final public class WalletService {
-    public init() { }
+    private let session: URLSession
+    
+    public init(session: URLSession) {
+        self.session = session
+    }
     
     open func fetchWallet(walletAddress: String, walletType: WalletType, _ completion: @escaping(Result<Wallet, WalletServiceError>) -> Void) {
         guard let url = UrlFactory.url(walletAddress: walletAddress, walletType: walletType) else {
@@ -15,11 +19,11 @@ final public class WalletService {
             return
         }
         
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
+        session.dataTask(with: url) { (data, response, error) in
             guard let data = data else { return }
             do {
                 let decoder = JSONDecoder()
-                decoder.dateDecodingStrategy = .formatted(DateFormatter.iso8601Full)
+                decoder.dateDecodingStrategy = .formatted(DateFormatter.iso8601Full())
                 let wallet = try decoder.decode(Wallet.self, from: data)
                 completion(.success(wallet))
             } catch let error {

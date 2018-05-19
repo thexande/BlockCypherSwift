@@ -67,7 +67,7 @@ protocol WalletRoutable {
 
 final class WalletCoordinator: WalletActionDispatching {
     private let factory = WalletControllerFactory()
-    private let walletService = WalletService()
+    private let walletService = WalletService(session: URLSession())
     private let navigationController = UINavigationController(rootViewController: UIViewController())
     private let walletViewController = WalletsViewController()
     private let walletDetailViewController = WalletDetailController()
@@ -82,9 +82,7 @@ final class WalletCoordinator: WalletActionDispatching {
         return self.navigationController
     }
     
-    deinit {
-        
-    }
+
     init() {
         self.navigationController.viewControllers = [walletViewController]
         walletViewController.dispatcher = self
@@ -231,8 +229,6 @@ extension WalletCoordinator: WalletRoutable {
 }
 
 extension Wallet {
-  
-    
     static func viewProperties(_ wallet: Wallet) -> WalletDetailViewProperties {
         let headerProperties = WalletDetailHeaderViewProperties(
             balance: "",
@@ -252,7 +248,6 @@ extension Wallet {
 
 extension Transaction {
     static func map(_ transaction: Transaction) -> TransactionRowItemProperties {
-        
         return TransactionRowItemProperties(
             transactionHash: transaction.hash,
             transactionType: .recieved,

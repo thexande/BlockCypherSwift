@@ -1,16 +1,14 @@
 import XCTest
 import BlockCypherSwift
+import Result
+
 
 class Tests: XCTestCase {
+    private var walletService: WalletService?
+    private let walletAddress = "1GwifTHqRGMAYXDJwS7qxXkxjGsNED8DxH"
     
     override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
+//        walletService = WalletService(session: MockURLSession())
     }
     
     func testExample() {
@@ -18,11 +16,13 @@ class Tests: XCTestCase {
         XCTAssert(true, "Pass")
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure() {
-            // Put the code you want to measure the time of here.
-        }
+    func testWalletFetch() {
+        
+//        walletService?.fetchWallet(walletAddress: walletAddress, walletType: .bitcoin, { walletResult in
+//            switch walletResult {
+//            case .success(let wallet): XCTAssert(wallet != nil)
+//            case .failure(let error): XCTFail()
+//            }
+//        })
     }
-    
 }

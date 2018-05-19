@@ -26,6 +26,7 @@
 		B00B269C20AFDDCE005A1C8B /* UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00B269B20AFDDCE005A1C8B /* UIAlertController.swift */; };
 		B00B269E20AFDE17005A1C8B /* WalletDetailRowItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00B269D20AFDE17005A1C8B /* WalletDetailRowItemCell.swift */; };
 		B00B26A020AFDE66005A1C8B /* TransactionSegmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00B269F20AFDE66005A1C8B /* TransactionSegmentViewController.swift */; };
+		B049414220B005B10007A7E3 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = B049414120B005B10007A7E3 /* File.swift */; };
 		B0506D8620AFDA7900DB2CB2 /* WalletsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0506D8520AFDA7900DB2CB2 /* WalletsViewController.swift */; };
 		B06E336420AFDEAB0092C420 /* QRDispalyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06E336320AFDEAB0092C420 /* QRDispalyViewController.swift */; };
 		B06E336620AFDEDB0092C420 /* WalletRowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06E336520AFDEDB0092C420 /* WalletRowCell.swift */; };
@@ -75,6 +76,7 @@
 		B00B269B20AFDDCE005A1C8B /* UIAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertController.swift; sourceTree = "<group>"; };
 		B00B269D20AFDE17005A1C8B /* WalletDetailRowItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletDetailRowItemCell.swift; sourceTree = "<group>"; };
 		B00B269F20AFDE66005A1C8B /* TransactionSegmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSegmentViewController.swift; sourceTree = "<group>"; };
+		B049414120B005B10007A7E3 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		B0506D8520AFDA7900DB2CB2 /* WalletsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletsViewController.swift; sourceTree = "<group>"; };
 		B06E336320AFDEAB0092C420 /* QRDispalyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRDispalyViewController.swift; sourceTree = "<group>"; };
 		B06E336520AFDEDB0092C420 /* WalletRowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletRowCell.swift; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 			children = (
 				607FACEB1AFB9204008FA782 /* Tests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
+				B049414120B005B10007A7E3 /* File.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -392,6 +395,7 @@
 				B0506D8620AFDA7900DB2CB2 /* WalletsViewController.swift in Sources */,
 				B06E336A20AFDF790092C420 /* MetadataTitleRowItemCell.swift in Sources */,
 				B06E336820AFDF050092C420 /* Button.swift in Sources */,
+				B049414220B005B10007A7E3 /* File.swift in Sources */,
 				B00B26A020AFDE66005A1C8B /* TransactionSegmentViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				B06E336C20AFE0090092C420 /* WalletSectionHeader.swift in Sources */,

@@ -53,7 +53,7 @@ final class WalletRowCell: UITableViewCell, WalletRowItemPropertiesUpdating {
         
         let labelStack = UIStackView(arrangedSubviews: stackLabels)
         labelStack.axis = .vertical
-        labelStack.spacing = 6
+        labelStack.spacing = 2
         
         contentView.addSubview(labelStack)
         contentView.addSubview(icon)
