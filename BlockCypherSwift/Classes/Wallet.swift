@@ -9,4 +9,12 @@ public struct Wallet: Codable {
     public let unconfirmed_n_tx: Int
     public let final_n_tx: Int
     public let txs: [Transaction]
+    
+    public var totalReceived: String {
+        return String(total_received)
+    }
+    
+    public var totalSent: String {
+        return String(total_sent)
+    }
 }

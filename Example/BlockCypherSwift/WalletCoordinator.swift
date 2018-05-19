@@ -231,35 +231,32 @@ extension WalletCoordinator: WalletRoutable {
 }
 
 extension Wallet {
-    var totalReceived: String {
-        return String(total_received)
-    }
+  
     
     static func viewProperties(_ wallet: Wallet) -> WalletDetailViewProperties {
         let headerProperties = WalletDetailHeaderViewProperties(
             balance: "",
             received: wallet.totalReceived,
-            send: "",
-            address: "",
+            send: wallet.totalSent,
+            address: wallet.address,
             title: ""
         )
         
-        return .default
-        
-        //        return WalletDetailViewProperties(
-        //            title: "New Wallet",
-        //            headerProperties: headerProperties,
-        //            items: wallet.txs.map(Transaction.viewPropertyItem(_:))
-        //        )
+        return WalletDetailViewProperties(
+            title: "New Wallet",
+            headerProperties: headerProperties,
+            sections: [WalletDetailSectionProperties(title: "Transactions", items: wallet.txs.map(Transaction.map))]
+        )
     }
 }
+
 extension Transaction {
     static func map(_ transaction: Transaction) -> TransactionRowItemProperties {
         
         return TransactionRowItemProperties(
             transactionHash: transaction.hash,
             transactionType: .recieved,
-            title: "sent",
+            title: "Sent \(transaction.transactionTotal)",
             subTitle: transaction.confirmed.transactionFormatString(),
             confirmationCount: String(transaction.confirmations)
         )

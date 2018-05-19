@@ -19,4 +19,8 @@ public struct Transaction: Codable {
     public let confidence: Int
     public let inputs: [Input]
     public let outputs: [Output]
+    
+    public var transactionTotal: String {
+        return String(total)
+    }
 }
