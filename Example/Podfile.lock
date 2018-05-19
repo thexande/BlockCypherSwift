@@ -1,13 +1,16 @@
 PODS:
+  - Anchorage (4.2.2)
   - BlockCypherSwift (0.1.0):
     - Result
   - Result (4.0.0)
 
 DEPENDENCIES:
+  - Anchorage
   - BlockCypherSwift (from `../`)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
+    - Anchorage
     - Result
 
 EXTERNAL SOURCES:
@@ -15,9 +18,10 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
+  Anchorage: cba8707ea6475f604e04047882ba47c07e4b2ac1
   BlockCypherSwift: e495c115f42ac1db958966367b9e86deee9866c1
   Result: 7645bb3f50c2ce726dd0ff2fa7b6f42bbe6c3713
 
-PODFILE CHECKSUM: b160f8d162b45f181ddda8dc3233b3f27fa30afc
+PODFILE CHECKSUM: f578cd739743c5c3f806f05ece301c3f7ed22215
 
 COCOAPODS: 1.5.0
