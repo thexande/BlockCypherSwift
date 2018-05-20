@@ -27,15 +27,33 @@ struct WalletsViewProperties {
     static let `default` = WalletsViewProperties(title: "", sections: [])
 }
 
-final class WalletsViewController: UITableViewController {
+protocol PropsUpdating {
+    associatedtype Props
+    var properties: Props { get set }
+    func update(_ props: Props)
+}
+
+protocol WalletsViewPropertiesUpdating: PropsUpdating where Props == LoadableProps<WalletsViewProperties> { }
+
+final class WalletsViewController: UITableViewController, WalletsViewPropertiesUpdating {
     public weak var dispatcher: WalletActionDispatching?
 //    private let emptyState = WalletsEmptyStateView()
     private let searchController = UISearchController(searchResultsController: nil)
     private var isSearching: Bool = false
     
-    var properties: WalletsViewProperties = .default {
+    var properties: LoadableProps<WalletsViewProperties> = .loading {
         didSet {
-            
+//            update(properties)
+        }
+    }
+    
+    func update(_ props: LoadableProps<WalletsViewProperties>) {
+        switch props {
+        case .loading: return
+        case .data(let props):
+            sections = props.sections
+            tableView.reloadData()
+        case .error(let error): return
         }
     }
     
@@ -47,7 +65,7 @@ final class WalletsViewController: UITableViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    let sections: [WalletsSectionProperties] = DummyData.sections
+    var sections: [WalletsSectionProperties] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -40,7 +40,8 @@ struct TransactionRowItemProperties {
     let title: String
     let subTitle: String
     let confirmationCount: String
-    static let `default` = TransactionRowItemProperties(transactionHash: "", transactionType: .sent, title: "", subTitle: "", confirmationCount: "")
+    let isConfirmed: Bool
+    static let `default` = TransactionRowItemProperties(transactionHash: "", transactionType: .sent, title: "", subTitle: "", confirmationCount: "", isConfirmed: false)
 }
 
 final class WalletDetailController: SectionProxyTableViewController, ViewPropertiesUpdating {

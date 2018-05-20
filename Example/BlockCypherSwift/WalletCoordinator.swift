@@ -48,7 +48,7 @@ enum WalletRoute {
     case walletDetail(WalletDetailViewProperties)
     case transactionDetail(TransactionDetailViewProperties)
     case transactionSegmentDetail(TransactionSegmentViewProperties)
-    case wallets(WalletsViewProperties)
+    case wallets(LoadableProps<WalletsViewProperties>)
     case qrCodeDisplay(String, String)
     case walletTypeSelectAlert
     case walletNameSelectAlert
@@ -61,13 +61,13 @@ protocol WalletActionDispatching: class {
 
 protocol WalletRoutable {
     func handleRoute(route: WalletRoute)
-    weak var navigation: UINavigationController? { get }
+    var navigation: UINavigationController? { get }
 }
 
 
 final class WalletCoordinator: WalletActionDispatching {
     private let factory = WalletControllerFactory()
-    private let walletService = WalletService(session: URLSession())
+    private let walletService = WalletService(session: URLSession.shared)
     private let navigationController = UINavigationController(rootViewController: UIViewController())
     private let walletViewController = WalletsViewController()
     private let walletDetailViewController = WalletDetailController()
@@ -86,6 +86,7 @@ final class WalletCoordinator: WalletActionDispatching {
     init() {
         self.navigationController.viewControllers = [walletViewController]
         walletViewController.dispatcher = self
+        walletViewController.properties = .data(WalletsViewProperties(title: "New Wallet", sections: DummyData.sections))
         walletDetailViewController.dispatcher = self
         transactionDetailViewController.dispatcher = self
         factory.dispatcher = self
@@ -253,7 +254,8 @@ extension Transaction {
             transactionType: .recieved,
             title: "Sent \(transaction.transactionTotal)",
             subTitle: transaction.confirmed.transactionFormatString(),
-            confirmationCount: String(transaction.confirmations)
+            confirmationCount: String(transaction.confirmationCountMaxSixPlus),
+            isConfirmed: transaction.isConfirmed
         )
     }
     

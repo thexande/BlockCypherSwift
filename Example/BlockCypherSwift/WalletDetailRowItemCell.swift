@@ -28,6 +28,8 @@ final class WalletDetailRowItemCell: UITableViewCell, ViewPropertiesUpdating {
             transactionBackground.backgroundColor = StyleConstants.primaryRed
             transactionIcon.image = #imageLiteral(resourceName: "up_arrow")
         }
+        
+        lockIcon.tintColor = (properties.isConfirmed ? StyleConstants.primaryGreen : StyleConstants.primaryRed)
     }
     
     
@@ -62,7 +64,6 @@ final class WalletDetailRowItemCell: UITableViewCell, ViewPropertiesUpdating {
         
         let lock = #imageLiteral(resourceName: "lock")
         lockIcon.image = lock.withRenderingMode(.alwaysTemplate)
-        lockIcon.tintColor = StyleConstants.primaryGreen
         contentView.addSubview(lockIcon)
         lockIcon.sizeAnchors == CGSize(width: 32, height: 32)
         lockIcon.trailingAnchor == contentView.trailingAnchor - 12
