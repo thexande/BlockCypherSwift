@@ -24,7 +24,7 @@ public struct Transaction: Codable {
 // Computed transaction details
 extension Transaction {
     public var transactionTotal: String {
-        return "\(String(total.satoshiToBtc.toString(numberOfDecimalPlaces: 8))) BTC"
+        return String(total.satoshiToBtc.toString(numberOfDecimalPlaces: 8))
     }
     
     public var confirmationCountMaxSixPlus: String {

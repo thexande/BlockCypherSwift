@@ -45,7 +45,7 @@ struct TransactionSegmentViewProperties {
 }
 
 enum WalletRoute {
-    case walletDetail(WalletDetailViewProperties)
+    case walletDetail(LoadableProps<WalletDetailViewProperties>)
     case transactionDetail(TransactionDetailViewProperties)
     case transactionSegmentDetail(TransactionSegmentViewProperties)
     case wallets(LoadableProps<WalletsViewProperties>)
@@ -120,7 +120,7 @@ final class WalletCoordinator: WalletActionDispatching {
         case .reloadWallets: return
         case .reloadWallet(let walletAddress): return
         case .selectedWallet(let walletAddress):
-            handleRoute(route: .walletDetail(DummyData.detailProperties))
+            handleRoute(route: .walletDetail(.data(DummyData.detailProperties)))
             
         case .reloadTransaction(let transactionHash): return
         case .selectedTransaction(let transactionHash):
@@ -164,16 +164,14 @@ extension WalletCoordinator {
     }
     
     private func handleQRResult(walletAddress: String, walletType: WalletType?) {
-        guard let walletType = walletType else { return }
+        guard let walletType = walletType else {
+            return
+        }
+        handleRoute(route: .walletDetail(.loading))
         walletService.fetchWallet(walletAddress: walletAddress, walletType: walletType) { [weak self] walletResult in
             switch walletResult {
             case .success(let wallet):
-                print(wallet)
-                let properties = Wallet.viewProperties(wallet)
-                self?.walletDetailViewController.properties = properties
-                self?.handleRoute(route: .walletDetail(properties))
-                
-                
+                self?.walletDetailViewController.properties = .data(Wallet.viewProperties(wallet))
             case .failure(let error):
                 print(error.localizedDescription)
                 let alertController = UIAlertController.confirmationAlert(
@@ -232,9 +230,9 @@ extension WalletCoordinator: WalletRoutable {
 extension Wallet {
     static func viewProperties(_ wallet: Wallet) -> WalletDetailViewProperties {
         let headerProperties = WalletDetailHeaderViewProperties(
-            balance: "",
-            received: wallet.totalReceived,
-            send: wallet.totalSent,
+            balance: wallet.finalBalanceBtc.btcPostfix,
+            received: wallet.totalReceivedBtc.btcPostfix,
+            send: wallet.totalSentBtc.btcPostfix,
             address: wallet.address,
             title: ""
         )
@@ -252,7 +250,7 @@ extension Transaction {
         return TransactionRowItemProperties(
             transactionHash: transaction.hash,
             transactionType: .recieved,
-            title: "Sent \(transaction.transactionTotal)",
+            title: "Sent \(transaction.transactionTotal) BTC",
             subTitle: transaction.confirmed.transactionFormatString(),
             confirmationCount: String(transaction.confirmationCountMaxSixPlus),
             isConfirmed: transaction.isConfirmed

@@ -30,7 +30,6 @@ final class TransactionTableSectionController: NSObject, WalletTableSectionContr
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: UITableViewHeaderFooterView.self)) else {
             return UIView()
         }
-        header.textLabel?.text = "January"
         return header
     }
     

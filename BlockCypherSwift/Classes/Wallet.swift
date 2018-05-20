@@ -9,12 +9,18 @@ public struct Wallet: Codable {
     public let unconfirmed_n_tx: Int
     public let final_n_tx: Int
     public let txs: [Transaction]
-    
-    public var totalReceived: String {
-        return String(total_received)
+}
+
+extension Wallet {
+    public var totalReceivedBtc: String {
+        return String(total_received.satoshiToBtc.toString(numberOfDecimalPlaces: 8))
     }
     
-    public var totalSent: String {
-        return String(total_sent)
+    public var totalSentBtc: String {
+        return String(total_sent.satoshiToBtc.toString(numberOfDecimalPlaces: 8))
+    }
+    
+    public var finalBalanceBtc: String {
+        return String(final_balance.satoshiToBtc.toString(numberOfDecimalPlaces: 8))
     }
 }

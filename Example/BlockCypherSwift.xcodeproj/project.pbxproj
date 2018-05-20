@@ -28,6 +28,10 @@
 		B00B26A020AFDE66005A1C8B /* TransactionSegmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00B269F20AFDE66005A1C8B /* TransactionSegmentViewController.swift */; };
 		B049414220B005B10007A7E3 /* URLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B049414120B005B10007A7E3 /* URLSession.swift */; };
 		B049414620B229560007A7E3 /* LoadableProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = B049414520B229560007A7E3 /* LoadableProps.swift */; };
+		B049414820B22D820007A7E3 /* WalletEmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B049414720B22D820007A7E3 /* WalletEmptyStateView.swift */; };
+		B049414A20B22F3A0007A7E3 /* TableLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B049414920B22F3A0007A7E3 /* TableLoadingView.swift */; };
+		B049414C20B232930007A7E3 /* PropsUpdating.swift in Sources */ = {isa = PBXBuildFile; fileRef = B049414B20B232930007A7E3 /* PropsUpdating.swift */; };
+		B049414E20B23A940007A7E3 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = B049414D20B23A940007A7E3 /* String.swift */; };
 		B0506D8620AFDA7900DB2CB2 /* WalletsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0506D8520AFDA7900DB2CB2 /* WalletsViewController.swift */; };
 		B06E336420AFDEAB0092C420 /* QRDispalyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06E336320AFDEAB0092C420 /* QRDispalyViewController.swift */; };
 		B06E336620AFDEDB0092C420 /* WalletRowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06E336520AFDEDB0092C420 /* WalletRowCell.swift */; };
@@ -79,6 +83,10 @@
 		B00B269F20AFDE66005A1C8B /* TransactionSegmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSegmentViewController.swift; sourceTree = "<group>"; };
 		B049414120B005B10007A7E3 /* URLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSession.swift; sourceTree = "<group>"; };
 		B049414520B229560007A7E3 /* LoadableProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadableProps.swift; sourceTree = "<group>"; };
+		B049414720B22D820007A7E3 /* WalletEmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletEmptyStateView.swift; sourceTree = "<group>"; };
+		B049414920B22F3A0007A7E3 /* TableLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableLoadingView.swift; sourceTree = "<group>"; };
+		B049414B20B232930007A7E3 /* PropsUpdating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropsUpdating.swift; sourceTree = "<group>"; };
+		B049414D20B23A940007A7E3 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		B0506D8520AFDA7900DB2CB2 /* WalletsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletsViewController.swift; sourceTree = "<group>"; };
 		B06E336320AFDEAB0092C420 /* QRDispalyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRDispalyViewController.swift; sourceTree = "<group>"; };
 		B06E336520AFDEDB0092C420 /* WalletRowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletRowCell.swift; sourceTree = "<group>"; };
@@ -145,6 +153,7 @@
 				B00B268B20AFDB96005A1C8B /* SectionProxyTableViewController.swift */,
 				B00B268D20AFDBAE005A1C8B /* TransactionDetailViewController.swift */,
 				B00B268F20AFDBD1005A1C8B /* WalletCoordinator.swift */,
+				B049414720B22D820007A7E3 /* WalletEmptyStateView.swift */,
 				B00B269120AFDC48005A1C8B /* MetadataAddressTableSectionController.swift */,
 				B00B269320AFDC6C005A1C8B /* TransactionTableSectionController.swift */,
 				B00B269520AFDC9B005A1C8B /* UIColor.swift */,
@@ -161,6 +170,9 @@
 				B06E336D20AFE1430092C420 /* ScannerViewController.swift */,
 				B0C1D9DA20AFF0C300EBE860 /* DateFormatter.swift */,
 				B049414520B229560007A7E3 /* LoadableProps.swift */,
+				B049414920B22F3A0007A7E3 /* TableLoadingView.swift */,
+				B049414B20B232930007A7E3 /* PropsUpdating.swift */,
+				B049414D20B23A940007A7E3 /* String.swift */,
 			);
 			name = "Example for BlockCypherSwift";
 			path = BlockCypherSwift;
@@ -404,6 +416,7 @@
 				B0506D8620AFDA7900DB2CB2 /* WalletsViewController.swift in Sources */,
 				B06E336A20AFDF790092C420 /* MetadataTitleRowItemCell.swift in Sources */,
 				B06E336820AFDF050092C420 /* Button.swift in Sources */,
+				B049414A20B22F3A0007A7E3 /* TableLoadingView.swift in Sources */,
 				B049414220B005B10007A7E3 /* URLSession.swift in Sources */,
 				B00B26A020AFDE66005A1C8B /* TransactionSegmentViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
@@ -415,12 +428,15 @@
 				B00B268A20AFDB6B005A1C8B /* WalletDetailViewController.swift in Sources */,
 				B06E336420AFDEAB0092C420 /* QRDispalyViewController.swift in Sources */,
 				B00B269E20AFDE17005A1C8B /* WalletDetailRowItemCell.swift in Sources */,
+				B049414E20B23A940007A7E3 /* String.swift in Sources */,
 				B0C1D9DB20AFF0C300EBE860 /* DateFormatter.swift in Sources */,
 				B00B269C20AFDDCE005A1C8B /* UIAlertController.swift in Sources */,
 				B00B269A20AFDD2C005A1C8B /* WalletDetailHeaderView.swift in Sources */,
 				B00B269220AFDC48005A1C8B /* MetadataAddressTableSectionController.swift in Sources */,
+				B049414820B22D820007A7E3 /* WalletEmptyStateView.swift in Sources */,
 				B00B269020AFDBD1005A1C8B /* WalletCoordinator.swift in Sources */,
 				B049414620B229560007A7E3 /* LoadableProps.swift in Sources */,
+				B049414C20B232930007A7E3 /* PropsUpdating.swift in Sources */,
 				B06E336E20AFE1430092C420 /* ScannerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

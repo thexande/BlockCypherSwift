@@ -27,34 +27,32 @@ struct WalletsViewProperties {
     static let `default` = WalletsViewProperties(title: "", sections: [])
 }
 
-protocol PropsUpdating {
-    associatedtype Props
-    var properties: Props { get set }
-    func update(_ props: Props)
-}
-
 protocol WalletsViewPropertiesUpdating: PropsUpdating where Props == LoadableProps<WalletsViewProperties> { }
 
 final class WalletsViewController: UITableViewController, WalletsViewPropertiesUpdating {
     public weak var dispatcher: WalletActionDispatching?
-//    private let emptyState = WalletsEmptyStateView()
+    private let emptyState = WalletsEmptyStateView()
+    private let loading = TableLoadingView()
     private let searchController = UISearchController(searchResultsController: nil)
     private var isSearching: Bool = false
     
     var properties: LoadableProps<WalletsViewProperties> = .loading {
         didSet {
-//            update(properties)
+            update(properties)
         }
     }
     
     func update(_ props: LoadableProps<WalletsViewProperties>) {
         switch props {
-        case .loading: return
+        case .loading:
+            tableView.backgroundView = loading
         case .data(let props):
+            tableView.backgroundView?.isHidden = true
             sections = props.sections
-            tableView.reloadData()
         case .error(let error): return
         }
+        
+        tableView.reloadData()
     }
     
     init() {
@@ -79,10 +77,7 @@ final class WalletsViewController: UITableViewController, WalletsViewPropertiesU
         tableView.register(WalletRowCell.self, forCellReuseIdentifier: String(describing: WalletRowCell.self))
         tableView.register(WalletSectionHeader.self, forHeaderFooterViewReuseIdentifier: String(describing: WalletSectionHeader.self))
         tableView.refreshControl = UIRefreshControl()
-        
-//        tableView.backgroundView = emptyState
-//        tableView.backgroundView?.isHidden = true
-//        emptyState.actionButton.addTarget(self, action: #selector(scanTapped), for: .touchUpInside)
+        emptyState.actionButton.addTarget(self, action: #selector(scanTapped), for: .touchUpInside)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(scanTapped))
         

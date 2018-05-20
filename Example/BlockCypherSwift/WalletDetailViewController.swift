@@ -7,6 +7,7 @@ protocol ViewPropertiesUpdating {
     func update(_ properties: ViewProperties)
 }
 
+
 enum WalletDetailRowType {
     case sent
     case recieved
@@ -44,9 +45,12 @@ struct TransactionRowItemProperties {
     static let `default` = TransactionRowItemProperties(transactionHash: "", transactionType: .sent, title: "", subTitle: "", confirmationCount: "", isConfirmed: false)
 }
 
-final class WalletDetailController: SectionProxyTableViewController, ViewPropertiesUpdating {
+protocol WalletDetailPropertiesUpdating: ViewPropertiesUpdating where ViewProperties == LoadableProps<WalletDetailViewProperties> { }
+
+final class WalletDetailController: SectionProxyTableViewController, WalletDetailPropertiesUpdating {
     private let header = WalletDetailHeaderView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 172))
     private let segment = UISegmentedControl(items: [ "Recent", "Largest"])
+    private let loading = TableLoadingView()
     
     public weak var dispatcher: WalletActionDispatching? {
         didSet {
@@ -54,39 +58,49 @@ final class WalletDetailController: SectionProxyTableViewController, ViewPropert
         }
     }
     
-    override var sections: [WalletTableSectionController] {
-        didSet {
-            sections.forEach { $0.registerReusableTypes(tableView: tableView) }
-            tableView.reloadData()
-        }
-    }
-    
-    public var properties: WalletDetailViewProperties = .default {
+    public var properties: LoadableProps<WalletDetailViewProperties> = .loading {
         didSet {
             update(properties)
         }
     }
     
-    func update(_ properties: WalletDetailViewProperties) {
-        sections = []
-        header.properties = properties.headerProperties
-        title = properties.title
-        header.properties = properties.headerProperties
-        let controllers = properties.sections.map(TransactionTableSectionController.mapController(from:))
-        
-        controllers.forEach { controller in
-            controller.dispatcher = dispatcher
+    func update(_ properties: LoadableProps<WalletDetailViewProperties>) {
+        switch properties {
+        case .loading:
+            DispatchQueue.main.async {
+                self.tableView.backgroundView = self.loading
+                self.tableView.backgroundView?.isHidden = false
+                self.tableView.tableHeaderView?.isHidden = true
+            }
+        case .data(let properties):
+            sections = []
+            let controllers = properties.sections.map(TransactionTableSectionController.mapController(from:))
+            sections = controllers
+            
+            DispatchQueue.main.async {
+                controllers.forEach {
+                    $0.dispatcher = self.dispatcher
+                    $0.registerReusableTypes(tableView: self.tableView)
+                }
+                
+                self.header.properties = properties.headerProperties
+                self.title = properties.title
+                self.tableView.tableHeaderView?.isHidden = false
+                self.tableView.backgroundView?.isHidden = true
+                self.tableView.reloadData()
+            }
+            
+        case .error(let error):
+            return
         }
         
-        sections = controllers
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(pressedSave   ))
+//        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(pressedSave   ))
         
         navigationItem.titleView = segment
         tableView.tableHeaderView = header
