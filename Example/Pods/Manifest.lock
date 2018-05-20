@@ -2,19 +2,31 @@ PODS:
   - Anchorage (4.2.2)
   - BlockCypherSwift (0.1.0):
     - Result
+  - lottie-ios (2.5.0)
   - QRCode (2.0)
+  - Realm (3.5.0):
+    - Realm/Headers (= 3.5.0)
+  - Realm/Headers (3.5.0)
+  - RealmSwift (3.5.0):
+    - Realm (= 3.5.0)
   - Result (4.0.0)
 
 DEPENDENCIES:
   - Anchorage
   - BlockCypherSwift (from `../`)
+  - lottie-ios
   - QRCode
+  - Realm
+  - RealmSwift
   - Result
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - Anchorage
+    - lottie-ios
     - QRCode
+    - Realm
+    - RealmSwift
     - Result
 
 EXTERNAL SOURCES:
@@ -23,10 +35,13 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Anchorage: cba8707ea6475f604e04047882ba47c07e4b2ac1
-  BlockCypherSwift: b7782367f2ca5b4a479f29eaa166076f29af97c2
+  BlockCypherSwift: 65b364de57712c10c7e758cc7fc4f56bda427707
+  lottie-ios: d699fdee68d7b63e721d949388b015fef1aaa4ac
   QRCode: f98a1886c8f37523704a7512a4c0cd45b34c18a4
+  Realm: 0378021c424e4e2bd6a0e63b27881e929d9b9ad1
+  RealmSwift: 3322562622fda2ad596985ead4d8d8be30cf838c
   Result: 7645bb3f50c2ce726dd0ff2fa7b6f42bbe6c3713
 
-PODFILE CHECKSUM: 414eb01a9db49818d375a03503d660235dbe6fe3
+PODFILE CHECKSUM: 8ababd956194b511a016c34322c44cf5706f9589
 
 COCOAPODS: 1.5.0

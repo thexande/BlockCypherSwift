@@ -1,9 +1,9 @@
 {
   "name": "BlockCypherSwift",
   "version": "0.1.0",
-  "summary": "A short description of BlockCypherSwift.",
+  "summary": "💳 A lightweight, injectable swift service wrapping the BlockCypher Blockchain API",
   "description": "TODO: Add long description of the pod here.",
-  "homepage": "https://github.com/Alexander Murphy/BlockCypherSwift",
+  "homepage": "https://github.com/thexande/BlockCypherSwift",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
