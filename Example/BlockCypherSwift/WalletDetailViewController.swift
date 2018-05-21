@@ -1,5 +1,6 @@
 import UIKit
 import Anchorage
+import BlockCypherSwift
 
 protocol ViewPropertiesUpdating {
     associatedtype ViewProperties
@@ -7,16 +8,30 @@ protocol ViewPropertiesUpdating {
     func update(_ properties: ViewProperties)
 }
 
-
-enum WalletDetailRowType {
-    case sent
-    case recieved
-}
-
 struct WalletDetailSectionProperties {
     let title: String
     let items: [TransactionRowItemProperties]
     static let `default` = WalletDetailSectionProperties(title: "", items: [])
+    
+    static func map(_ properties: WalletDetailSectionProperties) -> TransactionTableSectionController {
+        let controller = TransactionTableSectionController()
+        controller.properties = properties.items
+        controller.sectionTitle = properties.title
+        return controller
+    }
+    
+//    static func sort(
+//                    _ properties: WalletDetailSectionProperties,
+//                    sortOrder: WalletAction.WalletDetailSortOrder) -> WalletDetailSectionProperties {
+//        switch sortOrder {
+//        case .largest:
+//            return WalletDetailSectionProperties(
+//                title: properties.title,
+//                items: properties.items.sort { }
+//            )
+//        case .recent:
+//        }
+//    }
 }
 
 struct WalletDetailViewProperties {
@@ -36,6 +51,11 @@ struct WalletDetailHeaderViewProperties {
 }
 
 struct TransactionRowItemProperties {
+    enum WalletDetailRowType {
+        case sent
+        case recieved
+    }
+    
     let transactionHash: String
     let transactionType: WalletDetailRowType
     let title: String
@@ -74,7 +94,7 @@ final class WalletDetailController: SectionProxyTableViewController, WalletDetai
             }
         case .data(let properties):
             sections = []
-            let controllers = properties.sections.map(TransactionTableSectionController.mapController(from:))
+            let controllers = properties.sections.map(WalletDetailSectionProperties.map)
             sections = controllers
             
             DispatchQueue.main.async {
@@ -93,28 +113,11 @@ final class WalletDetailController: SectionProxyTableViewController, WalletDetai
         case .error(let error):
             return
         }
-        
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.largeTitleDisplayMode = .always
-//        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(pressedSave   ))
-        
-        navigationItem.titleView = segment
-        tableView.tableHeaderView = header
-        tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.tableFooterView = UIView()
-        
-        tableView.refreshControl = UIRefreshControl()
-        refreshControl?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
     }
     
     init() {
         super.init(style: .grouped)
-        
-        segment.addTarget(self, action: #selector(didChangeSegmentedControl(_:)), for: .valueChanged)
+        segment.addTarget(self, action: #selector(didChangeSegmentedControl), for: .valueChanged)
         segment.selectedSegmentIndex = 0
         navigationItem.titleView = segment
     }
@@ -124,6 +127,18 @@ final class WalletDetailController: SectionProxyTableViewController, WalletDetai
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .always
+        tableView.tableHeaderView = header
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.tableFooterView = UIView()
+        
+        tableView.refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+    }
+    
     @objc func refreshData() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             self.refreshControl?.endRefreshing()
@@ -131,20 +146,45 @@ final class WalletDetailController: SectionProxyTableViewController, WalletDetai
     }
     
     @objc func didChangeSegmentedControl(_ sender: UISegmentedControl) {
-        
+        switch sender.selectedSegmentIndex {
+        case 0: dispatcher?.dispatch(walletAction: .sortWalletDetail(.recent))
+        case 1: dispatcher?.dispatch(walletAction: .sortWalletDetail(.largest))
+        default: return
+        }
     }
     
     @objc func pressedSave() {
         dispatcher?.dispatch(walletAction: .walletNameSelectAlert)
     }
+}
+
+
+
+final class WalletDetailPresenter: WalletActionDispatching {
+    weak var dispatcher: WalletActionDispatching?
+    var wallet: Wallet?
+    var deliver: ((LoadableProps<WalletDetailViewProperties>) -> Void)?
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        sections = []
+    var properties: LoadableProps<WalletDetailViewProperties> = .loading {
+        didSet {
+            deliver?(properties)
+        }
     }
     
-    //    public func prepareForReuse() {
-    //        sections = []
-    //        tableView.reloadData()
-    //    }
+    func dispatch(walletAction: WalletAction) {
+        switch walletAction {
+        case .sortWalletDetail(let sortOrder):
+            switch sortOrder {
+            case .largest:
+                if let wallet = wallet {
+                    self.properties = .data(Wallet.largestWalletDetailViewProperties(wallet))
+                }
+            case .recent:
+                if let wallet = wallet {
+                    self.properties = .data(Wallet.recentWalletDetailViewProperties(wallet))
+                }
+            }
+        default: dispatcher?.dispatch(walletAction: walletAction)
+        }
+    }
 }

@@ -35,6 +35,7 @@ final class WalletsViewController: UITableViewController, WalletsViewPropertiesU
     private let loading = TableLoadingView()
     private let searchController = UISearchController(searchResultsController: nil)
     private var isSearching: Bool = false
+    var sections: [WalletsSectionProperties] = []
     
     var properties: LoadableProps<WalletsViewProperties> = .loading {
         didSet {
@@ -47,8 +48,15 @@ final class WalletsViewController: UITableViewController, WalletsViewPropertiesU
         case .loading:
             tableView.backgroundView = loading
         case .data(let props):
+            
+            guard props.sections.count > 0 else {
+                tableView.backgroundView = emptyState
+                return
+            }
+            
             tableView.backgroundView?.isHidden = true
             sections = props.sections
+            title = props.title
         case .error(let error): return
         }
         
@@ -63,8 +71,6 @@ final class WalletsViewController: UITableViewController, WalletsViewPropertiesU
         fatalError("init(coder:) has not been implemented")
     }
     
-    var sections: [WalletsSectionProperties] = []
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Wallets"
@@ -78,6 +84,7 @@ final class WalletsViewController: UITableViewController, WalletsViewPropertiesU
         tableView.register(WalletSectionHeader.self, forHeaderFooterViewReuseIdentifier: String(describing: WalletSectionHeader.self))
         tableView.refreshControl = UIRefreshControl()
         emptyState.actionButton.addTarget(self, action: #selector(scanTapped), for: .touchUpInside)
+        emptyState.defaultButton.addTarget(self, action: #selector(defaultTapped), for: .touchUpInside)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(scanTapped))
         
@@ -90,23 +97,6 @@ final class WalletsViewController: UITableViewController, WalletsViewPropertiesU
         
         searchController.searchBar.delegate = self
         
-        let actions = [
-            UIAlertAction(title: "Bitcoin", style: .default, handler: { [weak self] _ in
-                //                self?.dispatcher?.dispatch(walletAction: .scanQR(.bitcoin))
-            }),
-            UIAlertAction(title: "Litecoin", style: .default, handler: { _ in
-                
-            }),
-            UIAlertAction(title: "Dogecoin", style: .default, handler: { _ in
-                
-            }),
-            UIAlertAction(title: "Dash", style: .default, handler: { _ in
-                
-            }),
-            UIAlertAction(title: "cancel", style: .cancel, handler: nil)
-        ]
-        
-        //        actions.forEach { action in walletTypeAlertController.addAction(action) }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -124,14 +114,14 @@ final class WalletsViewController: UITableViewController, WalletsViewPropertiesU
     
     @objc func scanTapped() {
         dispatcher?.dispatch(walletAction: .walletTypeSelectAlert)
-        //        present(walletTypeAlertController, animated: true, completion: nil)
-        
-        
-        //        present(ScannerViewController(), animated: true, completion: nil)
     }
     
     @objc func editTapped() {
         
+    }
+    
+    @objc private func defaultTapped() {
+        dispatcher?.dispatch(walletAction: .displayDefaultWallets)
     }
 }
 

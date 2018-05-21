@@ -3,6 +3,11 @@ import Result
 import BlockCypherSwift
 
 enum WalletAction {
+    enum WalletDetailSortOrder {
+        case recent
+        case largest
+    }
+    
     case reloadWallets
     case reloadWallet(String)
     case selectedWallet(String)
@@ -12,10 +17,12 @@ enum WalletAction {
     case selectedTransactionSegment(String)
     case walletTypeSelectAlert
     case walletNameSelectAlert
+    case displayDefaultWallets
     case displayWalletQR(String, String)
     case scanQR(WalletType)
     case deliverQRResult(String, WalletType?)
     case copyWalletAddressToClipboard(String)
+    case sortWalletDetail(WalletDetailSortOrder)
 }
 
 enum WalletDescription {
@@ -65,31 +72,50 @@ protocol WalletRoutable {
 }
 
 
-final class WalletCoordinator: WalletActionDispatching {
+final class WalletCoordinator {
+    private var currentRoute: WalletRoute = .wallets(.data(.default))
     private let factory = WalletControllerFactory()
     private let walletService = WalletService(session: URLSession.shared)
     private let navigationController = UINavigationController(rootViewController: UIViewController())
     private let walletViewController = WalletsViewController()
+    
     private let walletDetailViewController = WalletDetailController()
+    private let walletDetailPresenter = WalletDetailPresenter()
+    
     private let transactionDetailViewController = TransactionDetailViewController()
     private let transactionSegmentDetailViewController = TransactionSegmentViewController()
     private let qrDisplayViewController = QRDispalyViewController()
-    private let     scannerViewController = ScannerViewController()
-    private let walletTypeAlertController = UIAlertController(title: "Wallet Type", message: "Select your Wallet type.", preferredStyle: .actionSheet)
-    private let walletNameAlertController = UIAlertController(title: "Wallet Name", message: "Select a name for your new wallet, or input a custom name.", preferredStyle: .actionSheet)
+    private let scannerViewController = ScannerViewController()
+    
+    private let walletTypeAlertController = UIAlertController(
+        title: "Wallet Type",
+        message: "Select your Wallet type.",
+        preferredStyle: .actionSheet
+    )
+    
+    private let walletNameAlertController = UIAlertController(
+        title: "Wallet Name",
+        message: "Select a name for your new wallet, or input a custom name.",
+        preferredStyle: .actionSheet
+    )
     
     public var rootViewController: UIViewController {
         return self.navigationController
     }
-    
 
     init() {
         self.navigationController.viewControllers = [walletViewController]
         walletViewController.dispatcher = self
-        walletViewController.properties = .data(WalletsViewProperties(title: "New Wallet", sections: DummyData.sections))
-        walletDetailViewController.dispatcher = self
         transactionDetailViewController.dispatcher = self
         factory.dispatcher = self
+        
+        walletDetailPresenter.dispatcher = self
+        walletDetailViewController.dispatcher = walletDetailPresenter
+        walletDetailPresenter.deliver = { [weak self] props in
+            self?.walletDetailViewController.properties = props
+        }
+        
+        walletViewController.properties = .data(WalletsViewProperties(title: "Wallets", sections: []))
         
         scannerViewController.success = { [weak self] address, walletType in
             self?.dispatch(walletAction: .deliverQRResult(address, walletType))
@@ -114,7 +140,9 @@ final class WalletCoordinator: WalletActionDispatching {
         //        UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
         //
     }
-    
+}
+
+extension WalletCoordinator: WalletActionDispatching {
     func dispatch(walletAction: WalletAction) {
         switch walletAction {
         case .reloadWallets: return
@@ -128,7 +156,7 @@ final class WalletCoordinator: WalletActionDispatching {
             
         case .reloadTransactionSegment(let transactionSegmentAddress): return
         case .selectedTransactionSegment(let transactionSegmentAddress):
-            handleRoute(route: .transactionSegmentDetail(TransactionSegmentViewProperties(title: "segment detail", sections: DummyData.transacctionDetailProps.sections)))
+            handleRoute(route: .transactionSegmentDetail(TransactionSegmentViewProperties(title: "segment detail", sections: []))) // DummyData.transacctionDetailProps.sections
             
             
         case .displayWalletQR(let walletAddress, let walletTitle):
@@ -149,6 +177,10 @@ final class WalletCoordinator: WalletActionDispatching {
             
         case .walletNameSelectAlert:
             handleRoute(route: .walletNameSelectAlert)
+            
+        case .displayDefaultWallets:
+            handleRoute(route: .wallets(.data(WalletsViewProperties(title: "Example Wallets", sections: DummyData.sections))))
+        default: return
         }
     }
 }
@@ -171,7 +203,8 @@ extension WalletCoordinator {
         walletService.fetchWallet(walletAddress: walletAddress, walletType: walletType) { [weak self] walletResult in
             switch walletResult {
             case .success(let wallet):
-                self?.walletDetailViewController.properties = .data(Wallet.viewProperties(wallet))
+                self?.walletDetailPresenter.wallet = wallet
+                self?.walletDetailViewController.properties = .data(Wallet.recentWalletDetailViewProperties(wallet))
             case .failure(let error):
                 print(error.localizedDescription)
                 let alertController = UIAlertController.confirmationAlert(
@@ -205,18 +238,26 @@ extension WalletCoordinator: WalletRoutable {
                 self?.navigation?.pushViewController(controller, animated: true)
             }
         case .wallets(let properties):
+            if navigation?.viewControllers.contains(walletViewController) ?? false {
+                walletViewController.properties = properties
+                return
+            }
             walletViewController.properties = properties
             navigation?.pushViewController(walletViewController, animated: true)
+            
         case .transactionDetail(let properties):
             transactionDetailViewController.properties = properties
             navigation?.pushViewController(transactionDetailViewController, animated: true)
+            
         case .transactionSegmentDetail(let properties):
             transactionSegmentDetailViewController.properties = properties
             navigation?.pushViewController(transactionSegmentDetailViewController, animated: true)
+            
         case .qrCodeDisplay(let walletAddress, let walletTitle):
             qrDisplayViewController.address = walletAddress
             qrDisplayViewController.title = walletTitle
             navigation?.present(UINavigationController(rootViewController: qrDisplayViewController), animated: true, completion: nil)
+            
         case .walletTypeSelectAlert:
             navigation?.present(walletTypeAlertController, animated: true, completion: nil)
         case .scanQRCode:
@@ -228,7 +269,7 @@ extension WalletCoordinator: WalletRoutable {
 }
 
 extension Wallet {
-    static func viewProperties(_ wallet: Wallet) -> WalletDetailViewProperties {
+    static func recentWalletDetailViewProperties(_ wallet: Wallet) -> WalletDetailViewProperties {
         let headerProperties = WalletDetailHeaderViewProperties(
             balance: wallet.finalBalanceBtc.btcPostfix,
             received: wallet.totalReceivedBtc.btcPostfix,
@@ -237,11 +278,54 @@ extension Wallet {
             title: ""
         )
         
+        let monthSections = DateFormatter().monthSymbols.compactMap { month -> WalletDetailSectionProperties? in
+            let transactions = wallet.txs
+                .sorted(by: { $0.confirmed < $1.confirmed })
+                .filter { $0.confirmed.monthAsString() == month }
+            
+            guard transactions.count > 0 else {
+                return nil
+            }
+            
+            return WalletDetailSectionProperties(title: month, items: transactions.map(Transaction.map))
+        }
+        
         return WalletDetailViewProperties(
             title: "New Wallet",
             headerProperties: headerProperties,
-            sections: [WalletDetailSectionProperties(title: "Transactions", items: wallet.txs.map(Transaction.map))]
+            sections: monthSections
         )
+    }
+    
+    static func largestWalletDetailViewProperties(_ wallet: Wallet) -> WalletDetailViewProperties {
+        let headerProperties = WalletDetailHeaderViewProperties(
+            balance: wallet.finalBalanceBtc.btcPostfix,
+            received: wallet.totalReceivedBtc.btcPostfix,
+            send: wallet.totalSentBtc.btcPostfix,
+            address: wallet.address,
+            title: ""
+        )
+       
+        let largestSection = WalletDetailSectionProperties(
+            title: "New Wallet",
+            items: wallet.txs
+                            .sorted(by: { $0.total < $1.total })
+                            .map(Transaction.map)
+        )
+        
+        return WalletDetailViewProperties(
+            title: "New Wallet",
+            headerProperties: headerProperties,
+            sections: [largestSection]
+        )
+    }
+}
+
+extension Date {
+    func monthAsString() -> String {
+        let df = DateFormatter()
+        df.setLocalizedDateFormatFromTemplate("MMMM")
+        return df.string(from: self)
     }
 }
 
@@ -250,7 +334,7 @@ extension Transaction {
         return TransactionRowItemProperties(
             transactionHash: transaction.hash,
             transactionType: .recieved,
-            title: "Sent \(transaction.transactionTotal) BTC",
+            title: transaction.transactionTotal.btcPostfix,
             subTitle: transaction.confirmed.transactionFormatString(),
             confirmationCount: String(transaction.confirmationCountMaxSixPlus),
             isConfirmed: transaction.isConfirmed
@@ -268,8 +352,8 @@ extension Transaction {
                     MetadataTitleRowItemProperties(title: "Block Height", content: "19823129038"),
                     MetadataTitleRowItemProperties(title: "Confirmations", content: "123"),
                     ]
-                ),
-                ]
+                )
+            ]
         )
     }
 }

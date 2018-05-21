@@ -5,6 +5,7 @@ import Lottie
 final class WalletsEmptyStateView: UIView {
     let animation = LOTAnimationView(name: "qr_animation")
     let actionButton = UIButton()
+    let defaultButton = UIButton()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -16,15 +17,25 @@ final class WalletsEmptyStateView: UIView {
         animation.loopAnimation = true
         animation.play()
         
-        addSubview(actionButton)
-        actionButton.horizontalAnchors == horizontalAnchors + 18
         actionButton.heightAnchor == 54
-        actionButton.topAnchor == animation.bottomAnchor + 36
+        defaultButton.heightAnchor == 54
+        
+        let buttonStack = UIStackView(arrangedSubviews: [actionButton, defaultButton])
+        buttonStack.axis = .vertical
+        buttonStack.spacing = 24
+        
+        addSubview(buttonStack)
+        buttonStack.horizontalAnchors == horizontalAnchors + 18
+        buttonStack.topAnchor == animation.bottomAnchor + 36
         
         actionButton.setTitle("Scan Wallet QR", for: .normal)
         actionButton.backgroundColor = .black
         actionButton.layer.cornerRadius = 10
         actionButton.tintColor = .gray
+        
+        defaultButton.setTitleColor(.black, for: .normal)
+        defaultButton.setTitle("check out example wallets", for: .normal)
+        
     }
     
     required init?(coder aDecoder: NSCoder) {

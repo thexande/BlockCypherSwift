@@ -30,16 +30,11 @@ final class TransactionTableSectionController: NSObject, WalletTableSectionContr
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: UITableViewHeaderFooterView.self)) else {
             return UIView()
         }
+        header.textLabel?.text = sectionTitle
         return header
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 38
-    }
-    
-    static func mapController(from properties: WalletDetailSectionProperties) -> TransactionTableSectionController {
-        let controller = TransactionTableSectionController()
-        controller.properties = properties.items
-        return controller
     }
 }

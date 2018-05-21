@@ -33,6 +33,8 @@
 		B049414C20B232930007A7E3 /* PropsUpdating.swift in Sources */ = {isa = PBXBuildFile; fileRef = B049414B20B232930007A7E3 /* PropsUpdating.swift */; };
 		B049414E20B23A940007A7E3 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = B049414D20B23A940007A7E3 /* String.swift */; };
 		B0506D8620AFDA7900DB2CB2 /* WalletsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0506D8520AFDA7900DB2CB2 /* WalletsViewController.swift */; };
+		B051CF3C20B2425600EE87EF /* qr_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = B051CF3A20B2425500EE87EF /* qr_animation.json */; };
+		B051CF3D20B2425600EE87EF /* WalletService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B051CF3B20B2425600EE87EF /* WalletService.swift */; };
 		B06E336420AFDEAB0092C420 /* QRDispalyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06E336320AFDEAB0092C420 /* QRDispalyViewController.swift */; };
 		B06E336620AFDEDB0092C420 /* WalletRowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06E336520AFDEDB0092C420 /* WalletRowCell.swift */; };
 		B06E336820AFDF050092C420 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06E336720AFDF050092C420 /* Button.swift */; };
@@ -88,6 +90,8 @@
 		B049414B20B232930007A7E3 /* PropsUpdating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropsUpdating.swift; sourceTree = "<group>"; };
 		B049414D20B23A940007A7E3 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		B0506D8520AFDA7900DB2CB2 /* WalletsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletsViewController.swift; sourceTree = "<group>"; };
+		B051CF3A20B2425500EE87EF /* qr_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = qr_animation.json; sourceTree = "<group>"; };
+		B051CF3B20B2425600EE87EF /* WalletService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletService.swift; sourceTree = "<group>"; };
 		B06E336320AFDEAB0092C420 /* QRDispalyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRDispalyViewController.swift; sourceTree = "<group>"; };
 		B06E336520AFDEDB0092C420 /* WalletRowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletRowCell.swift; sourceTree = "<group>"; };
 		B06E336720AFDF050092C420 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
@@ -143,6 +147,8 @@
 		607FACD21AFB9204008FA782 /* Example for BlockCypherSwift */ = {
 			isa = PBXGroup;
 			children = (
+				B051CF3A20B2425500EE87EF /* qr_animation.json */,
+				B051CF3B20B2425600EE87EF /* WalletService.swift */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
@@ -324,6 +330,7 @@
 			files = (
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
+				B051CF3C20B2425600EE87EF /* qr_animation.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,6 +445,7 @@
 				B049414620B229560007A7E3 /* LoadableProps.swift in Sources */,
 				B049414C20B232930007A7E3 /* PropsUpdating.swift in Sources */,
 				B06E336E20AFE1430092C420 /* ScannerViewController.swift in Sources */,
+				B051CF3D20B2425600EE87EF /* WalletService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
