@@ -9,7 +9,7 @@ enum WalletAction {
     }
     
     case reloadWallets
-    case reloadWallet(String)
+    case reloadWallet(String, WalletType)
     case selectedWallet(String)
     case reloadTransaction(String)
     case selectedTransaction(String)
@@ -79,7 +79,7 @@ final class WalletCoordinator {
     private let navigationController = UINavigationController(rootViewController: UIViewController())
     private let walletViewController = WalletsViewController()
     
-    private let walletDetailViewController = WalletDetailController()
+    private var walletDetailViewController = WalletDetailController()
     private let walletDetailPresenter = WalletDetailPresenter()
     
     private let transactionDetailViewController = TransactionDetailViewController()
@@ -125,20 +125,6 @@ final class WalletCoordinator {
         
         factory.addWalletSelectAlertActions(walletTypeAlertController, walletTypes: walletTypes)
         factory.addWalletNameAlertActions(walletNameAlertController, walletDescriptions: WalletDescription.props)
-        //
-        //        let attributes = [
-        //            NSAttributedStringKey.foregroundColor : UIColor.white
-        //        ]
-        //
-        //        navigation?.navigationBar.largeTitleTextAttributes = attributes
-        //
-        //        var navigationBarAppearace = UINavigationBar.appearance()
-        //        navigationBarAppearace.tintColor = .white
-        //        navigationBarAppearace.barTintColor = WalletType.litecoin.color
-        //        // change navigation item title color
-        //        navigationBarAppearace.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
-        //        UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
-        //
     }
 }
 
@@ -163,6 +149,8 @@ extension WalletCoordinator: WalletActionDispatching {
             handleRoute(route: .qrCodeDisplay(walletAddress, walletTitle))
             
         case .scanQR(let walletType):
+            walletDetailViewController.sections = []
+            walletDetailViewController.properties = .loading
             scannerViewController.walletType = walletType
             handleRoute(route: .scanQRCode)
             
@@ -204,7 +192,9 @@ extension WalletCoordinator {
             switch walletResult {
             case .success(let wallet):
                 self?.walletDetailPresenter.wallet = wallet
-                self?.walletDetailViewController.properties = .data(Wallet.recentWalletDetailViewProperties(wallet))
+                var props = Wallet.recentWalletDetailViewProperties(wallet)
+                props.headerProperties.backgroundImage = walletType.icon
+                self?.walletDetailViewController.properties = .data(props)
             case .failure(let error):
                 print(error.localizedDescription)
                 let alertController = UIAlertController.confirmationAlert(
@@ -287,13 +277,26 @@ extension Wallet {
                 return nil
             }
             
-            return WalletDetailSectionProperties(title: month, items: transactions.map(Transaction.map))
+            let total = transactions
+                                .map({ $0.total })
+                                .reduce(0, +)
+                                .satoshiToBtc
+                                .toString(numberOfDecimalPlaces: 8)
+                                .btcPostfix
+            
+            return WalletDetailSectionProperties(
+                title: month,
+                sub: "Transaction Total: \(total)",
+                items: transactions.map(Transaction.map)
+            )
         }
         
         return WalletDetailViewProperties(
             title: "New Wallet",
             headerProperties: headerProperties,
-            sections: monthSections
+            sections: monthSections,
+            identifier: wallet.address,
+            showNavLoader: false
         )
     }
     
@@ -307,7 +310,7 @@ extension Wallet {
         )
        
         let largestSection = WalletDetailSectionProperties(
-            title: "New Wallet",
+            title: "Largest Transactions",
             items: wallet.txs
                             .sorted(by: { $0.total < $1.total })
                             .map(Transaction.map)
@@ -316,7 +319,9 @@ extension Wallet {
         return WalletDetailViewProperties(
             title: "New Wallet",
             headerProperties: headerProperties,
-            sections: [largestSection]
+            sections: [largestSection],
+            identifier: wallet.address,
+            showNavLoader: false
         )
     }
 }

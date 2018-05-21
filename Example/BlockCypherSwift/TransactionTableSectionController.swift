@@ -3,6 +3,7 @@ import UIKit
 final class TransactionTableSectionController: NSObject, WalletTableSectionController {
     public var dispatcher: WalletActionDispatching?
     public var sectionTitle: String?
+    var sectionSubtitle: String?
     public var properties: [TransactionRowItemProperties] = []
     
     func registerReusableTypes(tableView: UITableView) {
@@ -31,10 +32,11 @@ final class TransactionTableSectionController: NSObject, WalletTableSectionContr
             return UIView()
         }
         header.textLabel?.text = sectionTitle
+        header.detailTextLabel?.text = sectionSubtitle
         return header
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 38
+        return UITableViewAutomaticDimension
     }
 }

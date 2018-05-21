@@ -10,35 +10,32 @@ protocol ViewPropertiesUpdating {
 
 struct WalletDetailSectionProperties {
     let title: String
+    let sub: String?
     let items: [TransactionRowItemProperties]
     static let `default` = WalletDetailSectionProperties(title: "", items: [])
+    
+    init(title: String, sub: String? = nil, items: [TransactionRowItemProperties]) {
+        self.title = title
+        self.sub = sub
+        self.items = items
+    }
     
     static func map(_ properties: WalletDetailSectionProperties) -> TransactionTableSectionController {
         let controller = TransactionTableSectionController()
         controller.properties = properties.items
         controller.sectionTitle = properties.title
+        controller.sectionSubtitle = properties.sub
         return controller
     }
-    
-//    static func sort(
-//                    _ properties: WalletDetailSectionProperties,
-//                    sortOrder: WalletAction.WalletDetailSortOrder) -> WalletDetailSectionProperties {
-//        switch sortOrder {
-//        case .largest:
-//            return WalletDetailSectionProperties(
-//                title: properties.title,
-//                items: properties.items.sort { }
-//            )
-//        case .recent:
-//        }
-//    }
 }
 
 struct WalletDetailViewProperties {
     let title: String
-    let headerProperties: WalletDetailHeaderViewProperties
+    var headerProperties: WalletDetailHeaderViewProperties
     let sections: [WalletDetailSectionProperties]
-    static let `default` = WalletDetailViewProperties(title: "", headerProperties: WalletDetailHeaderViewProperties(balance: "", received: "", send: "", address: "", title: ""), sections: [])
+    let identifier: String
+    var showNavLoader: Bool
+    static let `default` = WalletDetailViewProperties(title: "", headerProperties: .default, sections: [], identifier: "", showNavLoader: false)
 }
 
 struct WalletDetailHeaderViewProperties {
@@ -47,7 +44,17 @@ struct WalletDetailHeaderViewProperties {
     let send: String
     let address: String
     let title: String
-    static let `default` = WalletDetailHeaderViewProperties(balance: "", received: "", send: "", address: "", title: "")
+    var backgroundImage: UIImage?
+    static let `default` = WalletDetailHeaderViewProperties(balance: "", received: "", send: "", address: "", title: "", backgroundImage: UIImage())
+    
+    init(balance: String, received: String, send: String, address: String, title: String, backgroundImage: UIImage? = nil) {
+        self.balance = balance
+        self.received = received
+        self.send = send
+        self.address = address
+        self.title = title
+        self.backgroundImage = backgroundImage
+    }
 }
 
 struct TransactionRowItemProperties {
@@ -71,6 +78,7 @@ final class WalletDetailController: SectionProxyTableViewController, WalletDetai
     private let header = WalletDetailHeaderView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 172))
     private let segment = UISegmentedControl(items: [ "Recent", "Largest"])
     private let loading = TableLoadingView()
+    private let refresh = UIRefreshControl()
     
     public weak var dispatcher: WalletActionDispatching? {
         didSet {
@@ -108,6 +116,11 @@ final class WalletDetailController: SectionProxyTableViewController, WalletDetai
                 self.tableView.tableHeaderView?.isHidden = false
                 self.tableView.backgroundView?.isHidden = true
                 self.tableView.reloadData()
+                
+                switch properties.showNavLoader {
+                case true: self.refresh.beginRefreshing()
+                case false: self.refresh.endRefreshing()
+                }
             }
             
         case .error(let error):
@@ -135,13 +148,14 @@ final class WalletDetailController: SectionProxyTableViewController, WalletDetai
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.tableFooterView = UIView()
         
-        tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl = refresh
         refreshControl?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
     }
     
     @objc func refreshData() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            self.refreshControl?.endRefreshing()
+        switch properties {
+        case .data(let props): dispatcher?.dispatch(walletAction: .reloadWallet(props.identifier, .bitcoin))
+        default: return
         }
     }
     
@@ -155,36 +169,5 @@ final class WalletDetailController: SectionProxyTableViewController, WalletDetai
     
     @objc func pressedSave() {
         dispatcher?.dispatch(walletAction: .walletNameSelectAlert)
-    }
-}
-
-
-
-final class WalletDetailPresenter: WalletActionDispatching {
-    weak var dispatcher: WalletActionDispatching?
-    var wallet: Wallet?
-    var deliver: ((LoadableProps<WalletDetailViewProperties>) -> Void)?
-    
-    var properties: LoadableProps<WalletDetailViewProperties> = .loading {
-        didSet {
-            deliver?(properties)
-        }
-    }
-    
-    func dispatch(walletAction: WalletAction) {
-        switch walletAction {
-        case .sortWalletDetail(let sortOrder):
-            switch sortOrder {
-            case .largest:
-                if let wallet = wallet {
-                    self.properties = .data(Wallet.largestWalletDetailViewProperties(wallet))
-                }
-            case .recent:
-                if let wallet = wallet {
-                    self.properties = .data(Wallet.recentWalletDetailViewProperties(wallet))
-                }
-            }
-        default: dispatcher?.dispatch(walletAction: walletAction)
-        }
     }
 }

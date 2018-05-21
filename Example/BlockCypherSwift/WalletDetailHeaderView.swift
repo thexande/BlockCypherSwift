@@ -11,7 +11,7 @@ final class WalletDetailHeaderView: UIView, ViewPropertiesUpdating {
     private let sentTitle = UILabel()
     private let copyButton = SecondaryButton()
     private let qrButton = PrimaryButton()
-    private let accentImageView = UIImageView(image: #imageLiteral(resourceName: "btc"))
+    private let accentImageView = UIImageView()
     
     public var dispatcher: WalletActionDispatching?
     public var properties: WalletDetailHeaderViewProperties = .default {
@@ -24,6 +24,7 @@ final class WalletDetailHeaderView: UIView, ViewPropertiesUpdating {
         balance.text = properties.balance
         received.text = properties.received
         sent.text = properties.send
+        accentImageView.image = properties.backgroundImage
     }
     
     @objc func showWalletQR() {

@@ -27,7 +27,7 @@ struct DummyData {
                 TransactionRowItemProperties(transactionHash: "5be6b54c89d5be512f099914f52725b77b7c8168fc6e16c2d1b5dc8842576a67", transactionType: .recieved, title: "Sent 149.48672345 LTC", subTitle: "3:56 PM, June 29, 2019", confirmationCount: "6+", isConfirmed: true),
                 TransactionRowItemProperties(transactionHash: "5be6b54c89d5be512f099914f52725b77b7c8168fc6e16c2d1b5dc8842576a67", transactionType: .sent, title: "Sent 149.48672345 LTC", subTitle: "3:56 PM, June 29, 2019", confirmationCount: "6+", isConfirmed: true)
                 ])
-        ])
+        ], identifier: "", showNavLoader: false)
     
     static let transacctionDetailProps = TransactionDetailViewProperties(
         title: "Outgoing LTC",

@@ -37,13 +37,13 @@ extension Transaction {
 }
 
 extension Double {
-    func toString(numberOfDecimalPlaces:Int) -> String {
+    public func toString(numberOfDecimalPlaces:Int) -> String {
         return String(format:"%."+numberOfDecimalPlaces.description+"f", self)
     }
 }
 
 extension Int {
-    var satoshiToBtc: Double {
+    public var satoshiToBtc: Double {
         return Double(self) * 0.00000001
     }
 }
