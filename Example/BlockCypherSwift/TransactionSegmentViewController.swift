@@ -26,7 +26,7 @@ final class TransactionSegmentViewController: SectionProxyTableViewController, V
     
     func update(_ properties: TransactionSegmentViewProperties) {
         title = properties.title
-        let metadataSections = MetadataTableSectionHelper.mapControllerFromSections(properties.sections, dispatcher: dispatcher)
+        let metadataSections = MetadataTableSectionFactory.mapControllerFromSections(properties.sections, dispatcher: dispatcher)
         sections = metadataSections
         tableView.reloadData()
     }

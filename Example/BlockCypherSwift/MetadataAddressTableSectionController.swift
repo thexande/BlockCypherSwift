@@ -1,35 +1,5 @@
 import UIKit
 
-final class MetadataTableSectionHelper {
-    static func mapControllerFromSections(_ sections: [MetadataSectionProperties], dispatcher: WalletActionDispatching?) -> [WalletTableSectionController] {
-        return sections.flatMap { section -> WalletTableSectionController? in
-            if let properties = section as? MetadataAddressSectionProperties {
-                guard let items = properties.items as? [MetadataAddressRowItemProperties] else { return nil }
-                let controller = MetadataAddressTableSectionController.mapControllerFromProperties(items)
-                controller.dispatcher = dispatcher
-                controller.sectionTitle = properties.title
-                return controller
-            } else if let properties = section as? MetadataTitleSectionProperties {
-                guard let items = properties.items as? [MetadataTitleRowItemProperties] else { return nil }
-                let controller = MetadataTitleTableSectionController.mapControllerFromProperties(items)
-                controller.dispatcher = dispatcher
-                controller.sectionTitle = properties.title
-                return controller
-            } else if let properties = section as? MetadataTransactionSegmentSectionProperties {
-                guard let items = properties.items as? [MetadataTransactionSegmentRowItemProperties] else { return nil }
-                let controller = MetadataTransactionSegmentTableSectionController()
-                controller.dispatcher = dispatcher
-                controller.properties = items
-                controller.sectionTitle = properties.title
-                return controller
-            }
-            else {
-                return nil
-            }
-        }
-    }
-}
-
 final class MetadataAddressTableSectionController: NSObject, WalletTableSectionController {
     public var dispatcher: WalletActionDispatching?
     public var properties: [MetadataAddressRowItemProperties] = []

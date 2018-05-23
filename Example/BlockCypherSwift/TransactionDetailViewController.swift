@@ -91,7 +91,7 @@ final class TransactionDetailViewController: SectionProxyTableViewController, Vi
     
     func update(_ properties: TransactionDetailViewProperties) {
         title = properties.title
-        let metadataSections = MetadataTableSectionHelper.mapControllerFromSections(properties.sections, dispatcher: dispatcher)
+        let metadataSections = MetadataTableSectionFactory.mapControllerFromSections(properties.sections, dispatcher: dispatcher)
         let transactionController = TransactionTableSectionController()
         transactionController.properties = [properties.transactionItemProperties]
         
