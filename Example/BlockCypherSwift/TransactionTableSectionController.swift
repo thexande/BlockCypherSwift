@@ -7,7 +7,7 @@ final class TransactionTableSectionController: NSObject, WalletTableSectionContr
     public var properties: [TransactionRowItemProperties] = []
     
     func registerReusableTypes(tableView: UITableView) {
-        tableView.register(WalletDetailRowItemCell.self, forCellReuseIdentifier: String(describing: WalletDetailRowItemCell.self))
+        tableView.register(TransactionRowItemCell.self, forCellReuseIdentifier: String(describing: TransactionRowItemCell.self))
         tableView.register(UITableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: String(describing: UITableViewHeaderFooterView.self))
     }
     
@@ -16,7 +16,7 @@ final class TransactionTableSectionController: NSObject, WalletTableSectionContr
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: WalletDetailRowItemCell.self), for: indexPath) as? WalletDetailRowItemCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: TransactionRowItemCell.self), for: indexPath) as? TransactionRowItemCell else {
             return UITableViewCell()
         }
         cell.properties = properties[indexPath.row]

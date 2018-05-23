@@ -1,5 +1,31 @@
-//0import UIKit
+import UIKit
 import Anchorage
+
+struct WalletDetailHeaderViewProperties {
+    let balance: String
+    let received: String
+    let send: String
+    let address: String
+    let title: String
+    var backgroundImage: UIImage?
+    static let `default` = WalletDetailHeaderViewProperties(
+        balance: "",
+        received: "",
+        send: "",
+        address: "",
+        title: "",
+        backgroundImage: UIImage()
+    )
+    
+    init(balance: String, received: String, send: String, address: String, title: String, backgroundImage: UIImage? = nil) {
+        self.balance = balance
+        self.received = received
+        self.send = send
+        self.address = address
+        self.title = title
+        self.backgroundImage = backgroundImage
+    }
+}
 
 final class WalletDetailHeaderView: UIView, ViewPropertiesUpdating {
     private let background = UIImageView()
@@ -12,8 +38,8 @@ final class WalletDetailHeaderView: UIView, ViewPropertiesUpdating {
     private let copyButton = SecondaryButton()
     private let qrButton = PrimaryButton()
     private let accentImageView = UIImageView()
-    
     public var dispatcher: WalletActionDispatching?
+    
     public var properties: WalletDetailHeaderViewProperties = .default {
         didSet {
             update(properties)

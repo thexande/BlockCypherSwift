@@ -197,13 +197,20 @@ extension WalletCoordinator {
                 self?.walletDetailViewController.properties = .data(props)
             case .failure(let error):
                 print(error.localizedDescription)
-                let alertController = UIAlertController.confirmationAlert(
-                    confirmationTitle: "Sorry.",
-                    confirmationMessage: String(
+                let alertController = UIAlertController(
+                    title: "Oops.",
+                    message:  String(
                         format: "We could not find a wallet with that address on the %@ blockchain.",
                         walletType.rawValue.capitalized
-                    )
+                    ),
+                    preferredStyle: .alert
                 )
+                alertController.addAction(UIAlertAction(title: "ok", style: .default, handler: { [weak self] _ in
+                    DispatchQueue.main.async {
+                        self?.navigation?.popViewController(animated: true)
+                    }
+                }))
+                
                 DispatchQueue.main.async {
                     self?.navigation?.present(alertController, animated: true, completion: nil)
                 }
@@ -270,7 +277,7 @@ extension Wallet {
         
         let monthSections = DateFormatter().monthSymbols.compactMap { month -> WalletDetailSectionProperties? in
             let transactions = wallet.txs
-                .sorted(by: { $0.confirmed < $1.confirmed })
+                .sorted(by: { $0.confirmed > $1.confirmed })
                 .filter { $0.confirmed.monthAsString() == month }
             
             guard transactions.count > 0 else {
@@ -312,7 +319,7 @@ extension Wallet {
         let largestSection = WalletDetailSectionProperties(
             title: "Largest Transactions",
             items: wallet.txs
-                            .sorted(by: { $0.total < $1.total })
+                            .sorted(by: { $0.total > $1.total })
                             .map(Transaction.map)
         )
         
@@ -342,7 +349,8 @@ extension Transaction {
             title: transaction.transactionTotal.btcPostfix,
             subTitle: transaction.confirmed.transactionFormatString(),
             confirmationCount: String(transaction.confirmationCountMaxSixPlus),
-            isConfirmed: transaction.isConfirmed
+            isConfirmed: transaction.isConfirmed,
+            identifier: transaction.hash
         )
     }
     

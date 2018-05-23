@@ -1,7 +1,25 @@
 import UIKit
 import Anchorage
 
-final class WalletDetailRowItemCell: UITableViewCell, ViewPropertiesUpdating {
+struct TransactionRowItemProperties {
+    enum WalletDetailRowType {
+        case sent
+        case recieved
+    }
+    
+    let transactionHash: String
+    let transactionType: WalletDetailRowType
+    let title: String
+    let subTitle: String
+    let confirmationCount: String
+    let isConfirmed: Bool
+    let identifier: String
+    static let `default` = TransactionRowItemProperties(transactionHash: "", transactionType: .sent, title: "", subTitle: "", confirmationCount: "", isConfirmed: false, identifier: "")
+}
+
+protocol TransactionRowViewPropertiesUpdating: ViewPropertiesUpdating where ViewProperties == TransactionRowItemProperties { }
+
+final class TransactionRowItemCell: UITableViewCell, TransactionRowViewPropertiesUpdating {
     private let title = UILabel()
     private let subTitle = UILabel()
     private let transactionIcon = UIImageView()

@@ -35,41 +35,13 @@ struct WalletDetailViewProperties {
     let sections: [WalletDetailSectionProperties]
     let identifier: String
     var showNavLoader: Bool
-    static let `default` = WalletDetailViewProperties(title: "", headerProperties: .default, sections: [], identifier: "", showNavLoader: false)
-}
-
-struct WalletDetailHeaderViewProperties {
-    let balance: String
-    let received: String
-    let send: String
-    let address: String
-    let title: String
-    var backgroundImage: UIImage?
-    static let `default` = WalletDetailHeaderViewProperties(balance: "", received: "", send: "", address: "", title: "", backgroundImage: UIImage())
-    
-    init(balance: String, received: String, send: String, address: String, title: String, backgroundImage: UIImage? = nil) {
-        self.balance = balance
-        self.received = received
-        self.send = send
-        self.address = address
-        self.title = title
-        self.backgroundImage = backgroundImage
-    }
-}
-
-struct TransactionRowItemProperties {
-    enum WalletDetailRowType {
-        case sent
-        case recieved
-    }
-    
-    let transactionHash: String
-    let transactionType: WalletDetailRowType
-    let title: String
-    let subTitle: String
-    let confirmationCount: String
-    let isConfirmed: Bool
-    static let `default` = TransactionRowItemProperties(transactionHash: "", transactionType: .sent, title: "", subTitle: "", confirmationCount: "", isConfirmed: false)
+    static let `default` = WalletDetailViewProperties(
+        title: "",
+        headerProperties: .default,
+        sections: [],
+        identifier: "",
+        showNavLoader: false
+    )
 }
 
 protocol WalletDetailPropertiesUpdating: ViewPropertiesUpdating where ViewProperties == LoadableProps<WalletDetailViewProperties> { }
@@ -103,13 +75,14 @@ final class WalletDetailController: SectionProxyTableViewController, WalletDetai
         case .data(let properties):
             sections = []
             let controllers = properties.sections.map(WalletDetailSectionProperties.map)
-            sections = controllers
             
             DispatchQueue.main.async {
                 controllers.forEach {
-                    $0.dispatcher = self.dispatcher
                     $0.registerReusableTypes(tableView: self.tableView)
+                    $0.dispatcher = self.dispatcher
                 }
+                
+                self.sections = controllers
                 
                 self.header.properties = properties.headerProperties
                 self.title = properties.title
@@ -142,6 +115,7 @@ final class WalletDetailController: SectionProxyTableViewController, WalletDetai
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        UIView.setAnimationsEnabled(false)
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
         tableView.tableHeaderView = header
