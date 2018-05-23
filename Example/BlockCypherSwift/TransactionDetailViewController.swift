@@ -74,7 +74,9 @@ struct TransactionDetailViewProperties {
     static let `default` = TransactionDetailViewProperties(title: "", transactionItemProperties: .default, sections: [])
 }
 
-final class TransactionDetailViewController: SectionProxyTableViewController, ViewPropertiesUpdating {
+protocol TransactionDetailViewPropertiesUpdating: ViewPropertiesUpdating where ViewProperties == LoadableProps<TransactionDetailViewProperties> { }
+
+final class TransactionDetailViewController: SectionProxyTableViewController, TransactionDetailViewPropertiesUpdating {
     weak var dispatcher: WalletActionDispatching?
     override var sections: [WalletTableSectionController] {
         didSet {
@@ -83,24 +85,29 @@ final class TransactionDetailViewController: SectionProxyTableViewController, Vi
         }
     }
     
-    var properties: TransactionDetailViewProperties = .default {
+    var properties: LoadableProps<TransactionDetailViewProperties> = .loading {
         didSet {
             update(properties)
         }
     }
     
-    func update(_ properties: TransactionDetailViewProperties) {
-        title = properties.title
-        let metadataSections = MetadataTableSectionFactory.mapControllerFromSections(properties.sections, dispatcher: dispatcher)
-        let transactionController = TransactionTableSectionController()
-        transactionController.properties = [properties.transactionItemProperties]
-        
-        var sectionControllers: [WalletTableSectionController] = []
-        sectionControllers.append(transactionController)
-        sectionControllers.append(contentsOf: metadataSections)
-        
-        sections = sectionControllers
-        tableView.reloadData()
+    func update(_ properties: LoadableProps<TransactionDetailViewProperties>) {
+        switch properties {
+        case .data(let properties):
+            title = properties.title
+            let metadataSections = MetadataTableSectionFactory.mapControllerFromSections(properties.sections, dispatcher: dispatcher)
+            let transactionController = TransactionTableSectionController()
+            transactionController.properties = [properties.transactionItemProperties]
+            
+            var sectionControllers: [WalletTableSectionController] = []
+            sectionControllers.append(transactionController)
+            sectionControllers.append(contentsOf: metadataSections)
+            
+            sections = sectionControllers
+            tableView.reloadData()
+        case .error(let error): return
+        case .loading: return
+        }
     }
     
     init() {

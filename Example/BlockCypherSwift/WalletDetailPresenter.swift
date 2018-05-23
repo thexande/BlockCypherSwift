@@ -17,7 +17,7 @@ final class WalletDetailPresenter: WalletActionDispatching {
         dataProperties.showNavLoader = true
         properties = .data(dataProperties)
         
-        walletService.fetchWallet(walletAddress: walletAddress, walletType: walletType) { [weak self] walletResult in
+        walletService.wallet(address: walletAddress, currency: walletType) { [weak self] walletResult in
             switch walletResult {
             case .success(let wallet):
                 let walletProps = Wallet.recentWalletDetailViewProperties(wallet)

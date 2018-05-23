@@ -53,7 +53,7 @@ struct TransactionSegmentViewProperties {
 
 enum WalletRoute {
     case walletDetail(LoadableProps<WalletDetailViewProperties>)
-    case transactionDetail(TransactionDetailViewProperties)
+    case transactionDetail(LoadableProps<TransactionDetailViewProperties>)
     case transactionSegmentDetail(TransactionSegmentViewProperties)
     case wallets(LoadableProps<WalletsViewProperties>)
     case qrCodeDisplay(String, String)
@@ -74,6 +74,7 @@ protocol WalletRoutable {
 
 final class WalletCoordinator {
     private var currentRoute: WalletRoute = .wallets(.data(.default))
+    private var fetchedWallet: Wallet?
     private let factory = WalletControllerFactory()
     private let walletService = WalletService(session: URLSession.shared)
     private let navigationController = UINavigationController(rootViewController: UIViewController())
@@ -83,6 +84,8 @@ final class WalletCoordinator {
     private let walletDetailPresenter = WalletDetailPresenter()
     
     private let transactionDetailViewController = TransactionDetailViewController()
+    private let transactionDetailPresenter = TransactionDetailPresenter()
+    
     private let transactionSegmentDetailViewController = TransactionSegmentViewController()
     private let qrDisplayViewController = QRDispalyViewController()
     private let scannerViewController = ScannerViewController()
@@ -128,6 +131,31 @@ final class WalletCoordinator {
     }
 }
 
+final class TransactionDetailPresenter: WalletActionDispatching {
+    var deliver: ((LoadableProps<TransactionDetailViewProperties>) -> Void)?
+    
+    var transaction: Transaction? {
+        didSet {
+            if let transaction = transaction {
+                properties = .data(Transaction.map(transaction))
+            }
+        }
+    }
+    
+    var properties: LoadableProps<TransactionDetailViewProperties> = .loading {
+        didSet {
+            deliver?(properties)
+        }
+    }
+    
+    func dispatch(walletAction: WalletAction) {
+        switch walletAction {
+        case .reloadTransaction(let transactionHash): return
+        default: return
+        }
+    }
+}
+
 extension WalletCoordinator: WalletActionDispatching {
     func dispatch(walletAction: WalletAction) {
         switch walletAction {
@@ -138,7 +166,11 @@ extension WalletCoordinator: WalletActionDispatching {
             
         case .reloadTransaction(let transactionHash): return
         case .selectedTransaction(let transactionHash):
-            handleRoute(route: .transactionDetail(DummyData.transacctionDetailProps))
+            guard let transaction = self.fetchedWallet?.txs.first(where: { $0.hash == transactionHash }) else {
+                return
+            }
+            
+            handleRoute(route: .transactionDetail(.data(Transaction.map(transaction))))
             
         case .reloadTransactionSegment(let transactionSegmentAddress): return
         case .selectedTransactionSegment(let transactionSegmentAddress):
@@ -188,9 +220,10 @@ extension WalletCoordinator {
             return
         }
         handleRoute(route: .walletDetail(.loading))
-        walletService.fetchWallet(walletAddress: walletAddress, walletType: walletType) { [weak self] walletResult in
+        walletService.wallet(address: walletAddress, currency: walletType) { [weak self] walletResult in
             switch walletResult {
             case .success(let wallet):
+                self?.fetchedWallet = wallet
                 self?.walletDetailPresenter.wallet = wallet
                 var props = Wallet.recentWalletDetailViewProperties(wallet)
                 props.headerProperties.backgroundImage = walletType.icon

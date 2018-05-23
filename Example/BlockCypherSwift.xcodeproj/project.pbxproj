@@ -28,6 +28,8 @@
 		B00B26A020AFDE66005A1C8B /* TransactionSegmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00B269F20AFDE66005A1C8B /* TransactionSegmentViewController.swift */; };
 		B0147A8F20B290700049A85A /* WalletDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0147A8E20B290700049A85A /* WalletDetailPresenter.swift */; };
 		B0147A9120B51BF70049A85A /* MetadataTableSectionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0147A9020B51BF70049A85A /* MetadataTableSectionFactory.swift */; };
+		B0147A9320B51CCF0049A85A /* MetadataTitleTableSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0147A9220B51CCF0049A85A /* MetadataTitleTableSectionController.swift */; };
+		B0147A9520B51CFA0049A85A /* MetadataTransactionSegmentTableSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0147A9420B51CFA0049A85A /* MetadataTransactionSegmentTableSectionController.swift */; };
 		B049414220B005B10007A7E3 /* URLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B049414120B005B10007A7E3 /* URLSession.swift */; };
 		B049414620B229560007A7E3 /* LoadableProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = B049414520B229560007A7E3 /* LoadableProps.swift */; };
 		B049414820B22D820007A7E3 /* WalletEmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B049414720B22D820007A7E3 /* WalletEmptyStateView.swift */; };
@@ -87,6 +89,8 @@
 		B00B269F20AFDE66005A1C8B /* TransactionSegmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSegmentViewController.swift; sourceTree = "<group>"; };
 		B0147A8E20B290700049A85A /* WalletDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletDetailPresenter.swift; sourceTree = "<group>"; };
 		B0147A9020B51BF70049A85A /* MetadataTableSectionFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataTableSectionFactory.swift; sourceTree = "<group>"; };
+		B0147A9220B51CCF0049A85A /* MetadataTitleTableSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataTitleTableSectionController.swift; sourceTree = "<group>"; };
+		B0147A9420B51CFA0049A85A /* MetadataTransactionSegmentTableSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataTransactionSegmentTableSectionController.swift; sourceTree = "<group>"; };
 		B049414120B005B10007A7E3 /* URLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSession.swift; sourceTree = "<group>"; };
 		B049414520B229560007A7E3 /* LoadableProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadableProps.swift; sourceTree = "<group>"; };
 		B049414720B22D820007A7E3 /* WalletEmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletEmptyStateView.swift; sourceTree = "<group>"; };
@@ -185,6 +189,8 @@
 				B049414D20B23A940007A7E3 /* String.swift */,
 				B0147A8E20B290700049A85A /* WalletDetailPresenter.swift */,
 				B0147A9020B51BF70049A85A /* MetadataTableSectionFactory.swift */,
+				B0147A9220B51CCF0049A85A /* MetadataTitleTableSectionController.swift */,
+				B0147A9420B51CFA0049A85A /* MetadataTransactionSegmentTableSectionController.swift */,
 			);
 			name = "Example for BlockCypherSwift";
 			path = BlockCypherSwift;
@@ -428,6 +434,7 @@
 				B00B268820AFDB2B005A1C8B /* DummyData.swift in Sources */,
 				B0506D8620AFDA7900DB2CB2 /* WalletsViewController.swift in Sources */,
 				B06E336A20AFDF790092C420 /* MetadataTitleRowItemCell.swift in Sources */,
+				B0147A9320B51CCF0049A85A /* MetadataTitleTableSectionController.swift in Sources */,
 				B06E336820AFDF050092C420 /* Button.swift in Sources */,
 				B049414A20B22F3A0007A7E3 /* TableLoadingView.swift in Sources */,
 				B049414220B005B10007A7E3 /* URLSession.swift in Sources */,
@@ -453,6 +460,7 @@
 				B049414620B229560007A7E3 /* LoadableProps.swift in Sources */,
 				B049414C20B232930007A7E3 /* PropsUpdating.swift in Sources */,
 				B06E336E20AFE1430092C420 /* ScannerViewController.swift in Sources */,
+				B0147A9520B51CFA0049A85A /* MetadataTransactionSegmentTableSectionController.swift in Sources */,
 				B051CF3D20B2425600EE87EF /* WalletService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

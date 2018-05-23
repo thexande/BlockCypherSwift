@@ -1,6 +1,11 @@
 public struct UrlFactory {
-    static func url(walletAddress: String, walletType: WalletType) -> URL? {
-        let address = "https://api.blockcypher.com/v1/\(walletType.symbol.lowercased())/main/addrs/\(walletAddress)/full?limit=50"
+    static func url(walletAddress: String, currency: WalletType) -> URL? {
+        let address = "https://api.blockcypher.com/v1/\(currency.symbol.lowercased())/main/addrs/\(walletAddress)/full?limit=200"
+        return URL(string: address)
+    }
+    
+    static func url(transactionHash: String, currency: WalletType) -> URL? {
+        let address = "https://api.blockcypher.com/v1/\(currency.symbol.lowercased())/main/txs/\(transactionHash)/full?limit=50"
         return URL(string: address)
     }
     

@@ -1,12 +1,12 @@
 import UIKit
 
-final class MetadataAddressTableSectionController: NSObject, WalletTableSectionController {
+final class MetadataTransactionSegmentTableSectionController: NSObject, WalletTableSectionController {
     public var dispatcher: WalletActionDispatching?
-    public var properties: [MetadataAddressRowItemProperties] = []
+    public var properties: [MetadataTransactionSegmentRowItemProperties] = []
     var sectionTitle: String?
     
     func registerReusableTypes(tableView: UITableView) {
-        tableView.register(MetadataAddressRowItemCell.self, forCellReuseIdentifier: String(describing: MetadataAddressRowItemCell.self))
+        tableView.register(MetadataTransactionSegmentRowItemCell.self, forCellReuseIdentifier: String(describing: MetadataTransactionSegmentRowItemCell.self))
         tableView.register(WalletSectionHeader.self, forHeaderFooterViewReuseIdentifier: String(describing: WalletSectionHeader.self))
     }
     
@@ -15,12 +15,13 @@ final class MetadataAddressTableSectionController: NSObject, WalletTableSectionC
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: MetadataAddressRowItemCell.self)) as? MetadataAddressRowItemCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: MetadataTransactionSegmentRowItemCell.self)) as? MetadataTransactionSegmentRowItemCell else {
             return UITableViewCell()
         }
         cell.address = properties[indexPath.row].address
         return cell
     }
+    
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 38
@@ -38,9 +39,10 @@ final class MetadataAddressTableSectionController: NSObject, WalletTableSectionC
         dispatcher?.dispatch(walletAction: .selectedTransactionSegment(properties[indexPath.row].address))
     }
     
-    static func mapControllerFromProperties(_ properties: [MetadataAddressRowItemProperties]) -> MetadataAddressTableSectionController {
-        let controller = MetadataAddressTableSectionController()
+    static func mapControllerFromProperties(_ properties: [MetadataTitleRowItemProperties]) -> MetadataTitleTableSectionController {
+        let controller = MetadataTitleTableSectionController()
         controller.properties = properties
         return controller
     }
 }
+

@@ -115,7 +115,6 @@ final class WalletDetailController: SectionProxyTableViewController, WalletDetai
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        UIView.setAnimationsEnabled(false)
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
         tableView.tableHeaderView = header
