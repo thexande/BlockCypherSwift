@@ -8,6 +8,7 @@ public enum WalletServiceError: Error {
     case transactionNotFound
 }
 
+
 final public class WalletService {
     private let session: URLSession
     private let decoder = JSONDecoder()
@@ -23,8 +24,7 @@ final public class WalletService {
     ///   - address: the public key for a given wallet.
     ///   - currency: BTC, LTC, DOGE, DASH
     ///   - completion: callback with serialized `Wallet` or an error
-    open func wallet(
-                    address: String,
+    open func wallet(address: String,
                     currency: WalletType,
                     completion: @escaping(Result<Wallet, WalletServiceError>) -> Void) {
         
@@ -38,13 +38,11 @@ final public class WalletService {
                 let data = data,
                 let decoder = self?.decoder
             else {
-                    return
+                return
             }
             
-            
             do {
-                let wallet = try decoder.decode(Wallet.self, from: data)
-                completion(.success(wallet))
+                completion(.success(try decoder.decode(Wallet.self, from: data)))
             } catch let error {
                 completion(.failure(.walletDoesNotExist))
                 print(error.localizedDescription)
@@ -58,8 +56,7 @@ final public class WalletService {
     ///   - hash: The hash for a given transaction.
     ///   - currency: BTC, LTC, DOGE, DASH
     ///   - completion: callback with serialized `Transaction` or an error
-    open func transaction(
-                        hash: String,
+    open func transaction(hash: String,
                         currency: WalletType,
                         completion: @escaping(Result<Transaction, WalletServiceError>) -> Void) {
         guard let url = UrlFactory.url(transactionHash: hash, currency: currency) else {
@@ -76,8 +73,7 @@ final public class WalletService {
             }
             
             do {
-                let transaction = try decoder.decode(Transaction.self, from: data)
-                completion(.success(transaction))
+                completion(.success(try decoder.decode(Transaction.self, from: data)))
             } catch let error {
                 completion(.failure(.transactionNotFound))
                 print(error.localizedDescription)

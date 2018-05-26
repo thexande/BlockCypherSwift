@@ -89,13 +89,13 @@ final class WalletsViewController: UITableViewController, WalletsViewPropertiesU
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(scanTapped))
         
         // Setup the Search Controller
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search"
-        navigationItem.searchController = searchController
-        definesPresentationContext = true
+//        searchController.searchResultsUpdater = self
+//        searchController.obscuresBackgroundDuringPresentation = false
+//        searchController.searchBar.placeholder = "Search"
+//        navigationItem.searchController = searchController
+//        definesPresentationContext = true
         
-        searchController.searchBar.delegate = self
+//        searchController.searchBar.delegate = self
         
     }
     
@@ -173,7 +173,7 @@ extension WalletsViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: WalletRowCell.self)) as? WalletRowCell {
-            dispatcher?.dispatch(walletAction: .selectedWallet(cell.properties.address))
+            dispatcher?.dispatch(walletAction: .selectedWallet(cell.properties.address, cell.properties.walletType))
         }
         //        let detailController = WalletDetailController()
         //        detailController.properties = detailProperties

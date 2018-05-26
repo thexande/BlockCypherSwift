@@ -10,7 +10,7 @@ enum WalletAction {
     
     case reloadWallets
     case reloadWallet(String, WalletType)
-    case selectedWallet(String)
+    case selectedWallet(String, WalletType)
     case reloadTransaction(String)
     case selectedTransaction(String)
     case reloadTransactionSegment(String)
@@ -76,9 +76,11 @@ final class WalletCoordinator {
     private var currentRoute: WalletRoute = .wallets(.data(.default))
     private var fetchedWallet: Wallet?
     private let factory = WalletControllerFactory()
-    private let walletService = WalletService(session: URLSession.shared)
+    private let walletService: WalletService
     private let navigationController = UINavigationController(rootViewController: UIViewController())
+    
     private let walletViewController = WalletsViewController()
+    private let walletPresenter: WalletsPresenter
     
     private var walletDetailViewController = WalletDetailController()
     private let walletDetailPresenter = WalletDetailPresenter()
@@ -107,8 +109,18 @@ final class WalletCoordinator {
     }
 
     init() {
+        let walletService = WalletService(session: URLSession.shared)
+        self.walletService = walletService
+        
+        walletPresenter = WalletsPresenter(walletService: walletService)
+        
         self.navigationController.viewControllers = [walletViewController]
-        walletViewController.dispatcher = self
+        walletViewController.dispatcher = walletPresenter
+        walletPresenter.deliver = { [weak self] props in
+            self?.walletViewController.properties = props
+        }
+        walletPresenter.dispatcher = self
+        
         transactionDetailViewController.dispatcher = self
         factory.dispatcher = self
         
@@ -156,12 +168,45 @@ final class TransactionDetailPresenter: WalletActionDispatching {
     }
 }
 
+final class WalletsPresenter: WalletActionDispatching {
+    weak var dispatcher: WalletActionDispatching?
+    var deliver: ((LoadableProps<WalletsViewProperties>) -> Void)?
+    var dataProperties: WalletsViewProperties = .default
+    private var walletService: WalletService
+    
+    var properties: LoadableProps<WalletsViewProperties> = .loading {
+        didSet {
+            deliver?(properties)
+        }
+    }
+    
+    init(walletService: WalletService) {
+        self.walletService = walletService
+    }
+    
+    func dispatch(walletAction: WalletAction) {
+        switch walletAction {
+        case .displayDefaultWallets: properties = .data(WalletsViewProperties(title: "Example Wallets", sections: DummyData.sections))
+        case .reloadWallets: reloadCurrentWallets()
+        default: dispatcher?.dispatch(walletAction: walletAction)
+        }
+    }
+    
+    private func reloadCurrentWallets() {
+        let queue = OperationQueue()
+        
+        let wallets: [(String, WalletType)] = dataProperties.sections.compactMap { section in
+            return section.items.map { ($0.address, $0.walletType) }
+        }
+    }
+}
+
 extension WalletCoordinator: WalletActionDispatching {
     func dispatch(walletAction: WalletAction) {
         switch walletAction {
         case .reloadWallets: return
         case .reloadWallet(let walletAddress): return
-        case .selectedWallet(let walletAddress):
+        case .selectedWallet(let walletAddress, let walletType):
             handleRoute(route: .walletDetail(.data(DummyData.detailProperties)))
             
         case .reloadTransaction(let transactionHash): return
@@ -198,8 +243,6 @@ extension WalletCoordinator: WalletActionDispatching {
         case .walletNameSelectAlert:
             handleRoute(route: .walletNameSelectAlert)
             
-        case .displayDefaultWallets:
-            handleRoute(route: .wallets(.data(WalletsViewProperties(title: "Example Wallets", sections: DummyData.sections))))
         default: return
         }
     }
@@ -269,10 +312,11 @@ extension WalletCoordinator: WalletRoutable {
             }
         case .wallets(let properties):
             if navigation?.viewControllers.contains(walletViewController) ?? false {
-                walletViewController.properties = properties
+                walletPresenter.properties = properties
                 return
             }
-            walletViewController.properties = properties
+            
+            walletPresenter.properties = properties
             navigation?.pushViewController(walletViewController, animated: true)
             
         case .transactionDetail(let properties):
