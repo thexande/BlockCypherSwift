@@ -21,6 +21,7 @@ final class WalletDetailPresenter: WalletActionDispatching {
     var cryptoWallet: (String, WalletCurrency)? {
         didSet {
             if let wallet = cryptoWallet {
+                properties = .loading
                 reloadWallet(walletAddress: wallet.0, walletType: wallet.1)
             }
         }
@@ -35,11 +36,11 @@ final class WalletDetailPresenter: WalletActionDispatching {
                 let walletProps = Wallet.recentWalletDetailViewProperties(wallet)
                 self?.wallet = wallet
                 self?.dataProperties = walletProps
-                self?.dataProperties.showNavLoader = false
+//                self?.dataProperties.showNavLoader = false
                 
-                if let props = self?.dataProperties {
-                    self?.properties = .data(props)
-                }
+//                if let props = self?.dataProperties {
+//                    self?.properties = .data(props)
+//                }
             case .failure(let error):
                 print(error.localizedDescription)
             }

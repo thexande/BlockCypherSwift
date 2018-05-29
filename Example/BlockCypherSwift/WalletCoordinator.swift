@@ -144,41 +144,10 @@ final class WalletCoordinator {
     }
 }
 
-final class TransactionDetailPresenter: WalletActionDispatching {
-    var deliver: ((LoadableProps<TransactionDetailViewProperties>) -> Void)?
-    
-    var transaction: Transaction? {
-        didSet {
-            if let transaction = transaction {
-                properties = .data(Transaction.map(transaction))
-            }
-        }
-    }
-    
-    var properties: LoadableProps<TransactionDetailViewProperties> = .loading {
-        didSet {
-            deliver?(properties)
-        }
-    }
-    
-    func dispatch(walletAction: WalletAction) {
-        switch walletAction {
-        case .reloadTransaction(let transactionHash): return
-        default: return
-        }
-    }
-}
-
 struct CryptoWallet {
     let wallet: Wallet
     let currency: WalletCurrency
 }
-
-extension DummyData {
-
-}
-
-
 
 
 extension WalletService {
@@ -339,83 +308,7 @@ extension WalletCoordinator: WalletRoutable {
     }
 }
 
-extension Wallet {
-    static func walletItemViewProperties(_ wallet: Wallet, walletCurrency: WalletCurrency) -> WalletRowProperties {
-        return WalletRowProperties(
-            name: wallet.address,
-            address: wallet.address,
-            holdings: wallet.finalBalanceBtc,
-            spent: wallet.totalSentBtc,
-            walletType: .bitcoin
-        )
-    }
-    
-    static func recentWalletDetailViewProperties(_ wallet: Wallet) -> WalletDetailViewProperties {
-        let headerProperties = WalletDetailHeaderViewProperties(
-            balance: wallet.finalBalanceBtc.btcPostfix,
-            received: wallet.totalReceivedBtc.btcPostfix,
-            send: wallet.totalSentBtc.btcPostfix,
-            address: wallet.address,
-            title: ""
-        )
-        
-        let monthSections = DateFormatter().monthSymbols.compactMap { month -> WalletDetailSectionProperties? in
-            let transactions = wallet.txs
-                .sorted(by: { $0.confirmed > $1.confirmed })
-                .filter { $0.confirmed.monthAsString() == month }
-            
-            guard transactions.count > 0 else {
-                return nil
-            }
-            
-            let total = transactions
-                                .map({ $0.total })
-                                .reduce(0, +)
-                                .satoshiToBtc
-                                .toString(numberOfDecimalPlaces: 8)
-                                .btcPostfix
-            
-            return WalletDetailSectionProperties(
-                title: month,
-                sub: "Transaction Total: \(total)",
-                items: transactions.map(Transaction.map)
-            )
-        }
-        
-        return WalletDetailViewProperties(
-            title: "New Wallet",
-            headerProperties: headerProperties,
-            sections: monthSections,
-            identifier: wallet.address,
-            showNavLoader: false
-        )
-    }
-    
-    static func largestWalletDetailViewProperties(_ wallet: Wallet) -> WalletDetailViewProperties {
-        let headerProperties = WalletDetailHeaderViewProperties(
-            balance: wallet.finalBalanceBtc.btcPostfix,
-            received: wallet.totalReceivedBtc.btcPostfix,
-            send: wallet.totalSentBtc.btcPostfix,
-            address: wallet.address,
-            title: ""
-        )
-       
-        let largestSection = WalletDetailSectionProperties(
-            title: "Largest Transactions",
-            items: wallet.txs
-                            .sorted(by: { $0.total > $1.total })
-                            .map(Transaction.map)
-        )
-        
-        return WalletDetailViewProperties(
-            title: "New Wallet",
-            headerProperties: headerProperties,
-            sections: [largestSection],
-            identifier: wallet.address,
-            showNavLoader: false
-        )
-    }
-}
+
 
 extension Date {
     func monthAsString() -> String {
@@ -425,34 +318,6 @@ extension Date {
     }
 }
 
-extension Transaction {
-    static func map(_ transaction: Transaction) -> TransactionRowItemProperties {
-        return TransactionRowItemProperties(
-            transactionHash: transaction.hash,
-            transactionType: .recieved,
-            title: transaction.transactionTotal.btcPostfix,
-            subTitle: transaction.confirmed.transactionFormatString(),
-            confirmationCount: String(transaction.confirmationCountMaxSixPlus),
-            isConfirmed: transaction.isConfirmed,
-            identifier: transaction.hash
-        )
-    }
-    
-    static func map(_ transaction: Transaction) -> TransactionDetailViewProperties {
-        return TransactionDetailViewProperties(
-            title: "detail",
-            transactionItemProperties: Transaction.map(transaction),
-            sections: [
-                MetadataTitleSectionProperties(displayStyle: .metadata, title: "Transaction Metadata", items: [
-                    MetadataTitleRowItemProperties(title: "Hash", content: transaction.hash),
-                    MetadataTitleRowItemProperties(title: "Block Index", content: "58"),
-                    MetadataTitleRowItemProperties(title: "Block Height", content: "19823129038"),
-                    MetadataTitleRowItemProperties(title: "Confirmations", content: "123"),
-                    ]
-                )
-            ]
-        )
-    }
-}
+
 
 

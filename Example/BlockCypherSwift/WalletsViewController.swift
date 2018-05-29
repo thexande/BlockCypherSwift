@@ -181,12 +181,10 @@ extension WalletsViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: WalletRowCell.self)) as? WalletRowCell {
-            dispatcher?.dispatch(walletAction: .selectedWallet(cell.properties.address, cell.properties.walletType))
-        }
         switch properties {
         case .data(let props):
             let selectedWallet = props.sections[indexPath.section].items[indexPath.row]
+            dispatcher?.dispatch(walletAction: .selectedWallet(selectedWallet.address, selectedWallet.walletType))
         default: return
         }
     }

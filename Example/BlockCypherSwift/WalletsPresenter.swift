@@ -46,7 +46,11 @@ final class WalletsPresenter: WalletActionDispatching {
                     walletCurrency: cryptoWallet.currency
                 )
             }
-            return WalletsSectionProperties(items: rowItems, title: section.first?.currency.symbol.uppercased() ?? "")
+            
+            return WalletsSectionProperties(
+                items: rowItems,
+                title: section.first?.currency.rawValue.uppercased() ?? ""
+            )
         }
         
         dataProperties = WalletsViewProperties(title: "Example Wallets", sections: sectionProps, displayLoading: false)

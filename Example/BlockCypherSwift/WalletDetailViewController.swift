@@ -96,8 +96,7 @@ final class WalletDetailController: SectionProxyTableViewController, WalletDetai
                 }
             }
             
-        case .error(let error):
-            return
+        case .error(let error): return
         }
     }
     
