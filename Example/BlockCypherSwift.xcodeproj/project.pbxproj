@@ -45,6 +45,8 @@
 		B06E336A20AFDF790092C420 /* MetadataTitleRowItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06E336920AFDF790092C420 /* MetadataTitleRowItemCell.swift */; };
 		B06E336C20AFE0090092C420 /* WalletSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06E336B20AFE0090092C420 /* WalletSectionHeader.swift */; };
 		B06E336E20AFE1430092C420 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06E336D20AFE1430092C420 /* ScannerViewController.swift */; };
+		B086DCB820BD148D00EEB5C5 /* StyleConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B086DCB720BD148D00EEB5C5 /* StyleConstants.swift */; };
+		B0B1070620BD12B500A9B6C1 /* WalletsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0B1070520BD12B500A9B6C1 /* WalletsPresenter.swift */; };
 		B0C1D9DB20AFF0C300EBE860 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C1D9DA20AFF0C300EBE860 /* DateFormatter.swift */; };
 /* End PBXBuildFile section */
 
@@ -106,6 +108,8 @@
 		B06E336920AFDF790092C420 /* MetadataTitleRowItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataTitleRowItemCell.swift; sourceTree = "<group>"; };
 		B06E336B20AFE0090092C420 /* WalletSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletSectionHeader.swift; sourceTree = "<group>"; };
 		B06E336D20AFE1430092C420 /* ScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
+		B086DCB720BD148D00EEB5C5 /* StyleConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleConstants.swift; sourceTree = "<group>"; };
+		B0B1070520BD12B500A9B6C1 /* WalletsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletsPresenter.swift; sourceTree = "<group>"; };
 		B0C1D9DA20AFF0C300EBE860 /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		F139DA2E2CC632329B47AEB6 /* Pods_BlockCypherSwift_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockCypherSwift_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F654F7544D8FF821F8859DEE /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
@@ -191,6 +195,8 @@
 				B0147A9020B51BF70049A85A /* MetadataTableSectionFactory.swift */,
 				B0147A9220B51CCF0049A85A /* MetadataTitleTableSectionController.swift */,
 				B0147A9420B51CFA0049A85A /* MetadataTransactionSegmentTableSectionController.swift */,
+				B0B1070520BD12B500A9B6C1 /* WalletsPresenter.swift */,
+				B086DCB720BD148D00EEB5C5 /* StyleConstants.swift */,
 			);
 			name = "Example for BlockCypherSwift";
 			path = BlockCypherSwift;
@@ -453,6 +459,7 @@
 				B00B269E20AFDE17005A1C8B /* WalletDetailRowItemCell.swift in Sources */,
 				B049414E20B23A940007A7E3 /* String.swift in Sources */,
 				B0C1D9DB20AFF0C300EBE860 /* DateFormatter.swift in Sources */,
+				B086DCB820BD148D00EEB5C5 /* StyleConstants.swift in Sources */,
 				B00B269C20AFDDCE005A1C8B /* UIAlertController.swift in Sources */,
 				B00B269A20AFDD2C005A1C8B /* WalletDetailHeaderView.swift in Sources */,
 				B0147A8F20B290700049A85A /* WalletDetailPresenter.swift in Sources */,
@@ -460,6 +467,7 @@
 				B049414820B22D820007A7E3 /* WalletEmptyStateView.swift in Sources */,
 				B00B269020AFDBD1005A1C8B /* WalletCoordinator.swift in Sources */,
 				B049414620B229560007A7E3 /* LoadableProps.swift in Sources */,
+				B0B1070620BD12B500A9B6C1 /* WalletsPresenter.swift in Sources */,
 				B049414C20B232930007A7E3 /* PropsUpdating.swift in Sources */,
 				B06E336E20AFE1430092C420 /* ScannerViewController.swift in Sources */,
 				B0147A9520B51CFA0049A85A /* MetadataTransactionSegmentTableSectionController.swift in Sources */,

@@ -24,7 +24,8 @@ struct WalletRowProperties {
 struct WalletsViewProperties {
     let title: String
     var sections: [WalletsSectionProperties]
-    static let `default` = WalletsViewProperties(title: "", sections: [])
+    var displayLoading: Bool
+    static let `default` = WalletsViewProperties(title: "", sections: [], displayLoading: false)
 }
 
 protocol WalletsViewPropertiesUpdating: PropsUpdating where Props == LoadableProps<WalletsViewProperties> { }
@@ -35,6 +36,7 @@ final class WalletsViewController: UITableViewController, WalletsViewPropertiesU
     private let loading = TableLoadingView()
     private let searchController = UISearchController(searchResultsController: nil)
     private var isSearching: Bool = false
+    private var refresh = UIRefreshControl()
     var sections: [WalletsSectionProperties] = []
     
     var properties: LoadableProps<WalletsViewProperties> = .loading {
@@ -57,6 +59,14 @@ final class WalletsViewController: UITableViewController, WalletsViewPropertiesU
             tableView.backgroundView?.isHidden = true
             sections = props.sections
             title = props.title
+            
+            switch props.displayLoading {
+            case true: refresh.beginRefreshing()
+            case false:
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    self.refresh.endRefreshing()
+                }
+            }
         case .error(let error): return
         }
         
@@ -82,7 +92,8 @@ final class WalletsViewController: UITableViewController, WalletsViewPropertiesU
         tableView.tableFooterView = UIView()
         tableView.register(WalletRowCell.self, forCellReuseIdentifier: String(describing: WalletRowCell.self))
         tableView.register(WalletSectionHeader.self, forHeaderFooterViewReuseIdentifier: String(describing: WalletSectionHeader.self))
-        tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl = refresh
+        refresh.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         emptyState.actionButton.addTarget(self, action: #selector(scanTapped), for: .touchUpInside)
         emptyState.defaultButton.addTarget(self, action: #selector(defaultTapped), for: .touchUpInside)
         
@@ -173,9 +184,11 @@ extension WalletsViewController {
         if let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: WalletRowCell.self)) as? WalletRowCell {
             dispatcher?.dispatch(walletAction: .selectedWallet(cell.properties.address, cell.properties.walletType))
         }
-        //        let detailController = WalletDetailController()
-        //        detailController.properties = detailProperties
-        //        navigationController?.pushViewController(detailController, animated: true)
+        switch properties {
+        case .data(let props):
+            let selectedWallet = props.sections[indexPath.section].items[indexPath.row]
+        default: return
+        }
     }
     
     @available(iOS 11.0, *)
@@ -199,25 +212,6 @@ extension WalletsViewController {
     }
 }
 
-enum StyleConstants {
-    enum color {
-        static let primaryGreen: UIColor = UIColor(hex: "4A9D86")
-        static let emerald: UIColor = UIColor(hex: "65C87A")
-        static let primaryRed: UIColor = UIColor(hex: "D65745")
-        static let orange: UIColor = UIColor(hex: "E79F3C")
-        static let purple: UIColor = UIColor(hex: "925EB1")
-        static let bitOrange: UIColor = UIColor(hex: "E9973D")
-        static let primaryGray: UIColor = UIColor(hex: "F0EFF4")
-        static let secondaryGray: UIColor = UIColor(hex: "9B9B9C")
-        static let lightGray: UIColor = UIColor(hex: "BCBBC1")
-    }
-    
-    static let lightestGray: UIColor = UIColor(red: 239/255, green: 239/255, blue: 244/255, alpha: 1)
-    static let primaryBlue: UIColor = UIColor(red:0.00, green:0.48, blue:1.00, alpha:1.0)
-    static let primaryGreen: UIColor = UIColor(red:0.16, green:0.73, blue:0.37, alpha:1.0)
-    static let primaryRed: UIColor = UIColor(red:0.99, green:0.30, blue:0.33, alpha:1.0)
-    static let navGray: UIColor = UIColor(red:0.98, green:0.98, blue:0.98, alpha:1.0)
-}
 
 
 

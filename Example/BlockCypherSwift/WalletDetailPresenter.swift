@@ -3,7 +3,6 @@ import BlockCypherSwift
 final class WalletDetailPresenter: WalletActionDispatching {
     weak var dispatcher: WalletActionDispatching?
     private let walletService = WalletService(session: URLSession.shared)
-    private var dataProperties: WalletDetailViewProperties = .default
     var wallet: Wallet?
     var deliver: ((LoadableProps<WalletDetailViewProperties>) -> Void)?
     
@@ -13,9 +12,22 @@ final class WalletDetailPresenter: WalletActionDispatching {
         }
     }
     
+    private var dataProperties: WalletDetailViewProperties = .default {
+        didSet {
+            properties = .data(dataProperties)
+        }
+    }
+    
+    var cryptoWallet: (String, WalletCurrency)? {
+        didSet {
+            if let wallet = cryptoWallet {
+                reloadWallet(walletAddress: wallet.0, walletType: wallet.1)
+            }
+        }
+    }
+    
     private func reloadWallet(walletAddress: String, walletType: WalletCurrency) {
         dataProperties.showNavLoader = true
-        properties = .data(dataProperties)
         
         walletService.wallet(address: walletAddress, currency: walletType) { [weak self] walletResult in
             switch walletResult {

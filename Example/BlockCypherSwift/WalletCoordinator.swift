@@ -53,7 +53,7 @@ struct TransactionSegmentViewProperties {
 }
 
 enum WalletRoute {
-    case walletDetail(LoadableProps<WalletDetailViewProperties>)
+    case walletDetail(String, WalletCurrency)
     case transactionDetail(LoadableProps<TransactionDetailViewProperties>)
     case transactionSegmentDetail(TransactionSegmentViewProperties)
     case wallets(LoadableProps<WalletsViewProperties>)
@@ -131,7 +131,7 @@ final class WalletCoordinator {
             self?.walletDetailViewController.properties = props
         }
         
-        walletViewController.properties = .data(WalletsViewProperties(title: "Wallets", sections: []))
+        walletViewController.properties = .data(WalletsViewProperties(title: "Wallets", sections: [], displayLoading: false))
         
         scannerViewController.success = { [weak self] address, walletType in
             self?.dispatch(walletAction: .deliverQRResult(address, walletType))
@@ -178,73 +178,7 @@ extension DummyData {
 
 }
 
-final class WalletsPresenter: WalletActionDispatching {
-    weak var dispatcher: WalletActionDispatching?
-    var deliver: ((LoadableProps<WalletsViewProperties>) -> Void)?
-    private var walletService: WalletService
-    
-    var properties: LoadableProps<WalletsViewProperties> = .loading {
-        didSet {
-            deliver?(properties)
-        }
-    }
-    
-    var dataProperties: WalletsViewProperties = .default {
-        didSet {
-            properties = .data(dataProperties)
-        }
-    }
 
-    
-    init(walletService: WalletService) {
-        self.walletService = walletService
-        dataProperties = WalletsViewProperties(title: "title", sections: DummyData.sections)
-        reloadCurrentWallets()
-    }
-    
-    func dispatch(walletAction: WalletAction) {
-        switch walletAction {
-        case .displayDefaultWallets: properties = .data(WalletsViewProperties(title: "Example Wallets", sections: DummyData.sections))
-        case .reloadWallets: reloadCurrentWallets()
-        default: dispatcher?.dispatch(walletAction: walletAction)
-        }
-    }
-    
-    private func recieveWallets(_ wallets: [CryptoWallet]) {
-        let currencies = Set(wallets.map { $0.currency })
-        let sections: [[CryptoWallet]] = currencies.map { currency in
-            return wallets.filter({ $0.currency == currency })
-        }
-        
-        let sectionProps: [WalletsSectionProperties] = sections.map { section in
-            let rowItems = section.map { cryptoWallet in
-                return Wallet.walletItemViewProperties(
-                    cryptoWallet.wallet,
-                    walletCurrency: cryptoWallet.currency
-                )
-            }
-            
-            return WalletsSectionProperties(items: rowItems, title: section.first?.currency.symbol.uppercased() ?? "")
-        }
-        
-        dataProperties = WalletsViewProperties(title: "Wallets", sections: sectionProps)
-    }
-    
-    
-    
-    private func reloadCurrentWallets() {
-        let walletProps: [(String, WalletCurrency)] = dataProperties.sections.flatMap { section in
-            return section.items.compactMap { ($0.address, $0.walletType) }
-        }
-        
-        all(walletProps.map({ walletService.wallet(address: $0.0, type: $0.1) })).then { [weak self] wallets in
-            let cryptoWallets = wallets
-                            .enumerated()
-                            .map { CryptoWallet(wallet: $0.element, currency: walletProps[$0.offset].1) }
-            self?.recieveWallets(cryptoWallets)
-        }
-    }
-}
 
 
 extension WalletService {
@@ -268,10 +202,8 @@ extension WalletService {
 extension WalletCoordinator: WalletActionDispatching {
     func dispatch(walletAction: WalletAction) {
         switch walletAction {
-        case .reloadWallets: return
-        case .reloadWallet(let walletAddress): return
         case .selectedWallet(let walletAddress, let walletType):
-            handleRoute(route: .walletDetail(.data(DummyData.detailProperties)))
+            handleRoute(route: .walletDetail(walletAddress, walletType))
             
         case .reloadTransaction(let transactionHash): return
         case .selectedTransaction(let transactionHash):
@@ -326,7 +258,8 @@ extension WalletCoordinator {
         guard let walletType = walletType else {
             return
         }
-        handleRoute(route: .walletDetail(.loading))
+//        handleRoute(route: .walletDetail(.loading))
+        
         walletService.wallet(address: walletAddress, currency: walletType) { [weak self] walletResult in
             switch walletResult {
             case .success(let wallet):
@@ -368,19 +301,19 @@ extension WalletCoordinator: WalletRoutable {
     
     func handleRoute(route: WalletRoute) {
         switch route {
-        case .walletDetail(let properties):
-            walletDetailViewController.properties = properties
+        case .walletDetail(let address, let walletType):
+            walletDetailPresenter.cryptoWallet = (address, walletType)
             DispatchQueue.main.async { [weak self] in
                 guard let controller = self?.walletDetailViewController else { return }
                 self?.navigation?.pushViewController(controller, animated: true)
             }
         case .wallets(let properties):
             if navigation?.viewControllers.contains(walletViewController) ?? false {
-                walletPresenter.properties = properties
+                walletPresenter.loaableProperties = properties
                 return
             }
             
-            walletPresenter.properties = properties
+            walletPresenter.loaableProperties = properties
             navigation?.pushViewController(walletViewController, animated: true)
             
         case .transactionDetail(let properties):
