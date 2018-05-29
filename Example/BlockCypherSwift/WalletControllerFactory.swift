@@ -3,8 +3,8 @@ import BlockCypherSwift
 
 protocol WalletFactory {
     func makeWalletSelectorAlertController() -> UIAlertController
-    func makeWalletSelectorAction(_ walletType: WalletType) -> UIAlertAction
-    func addWalletSelectAlertActions(_ controller: UIAlertController, walletTypes: [WalletType])
+    func makeWalletSelectorAction(_ walletType: WalletCurrency) -> UIAlertAction
+    func addWalletSelectAlertActions(_ controller: UIAlertController, walletTypes: [WalletCurrency])
 }
 
 final class WalletControllerFactory: WalletFactory {
@@ -12,11 +12,11 @@ final class WalletControllerFactory: WalletFactory {
     
     func makeWalletSelectorAlertController() -> UIAlertController {
         let controller = UIAlertController(title: "Wallet Type", message: "Select your Wallet type.", preferredStyle: .actionSheet)
-        let walletTypes: [WalletType] = [.bitcoin, .litecoin, .dash, .dogecoin]
+        let walletTypes: [WalletCurrency] = [.bitcoin, .litecoin, .dash, .dogecoin]
         return controller
     }
     
-    func addWalletSelectAlertActions(_ controller: UIAlertController, walletTypes: [WalletType]) {
+    func addWalletSelectAlertActions(_ controller: UIAlertController, walletTypes: [WalletCurrency]) {
         var actions: [UIAlertAction] = walletTypes.map(self.makeWalletSelectorAction(_:))
         actions.append(.cancel())
         
@@ -34,7 +34,7 @@ final class WalletControllerFactory: WalletFactory {
         }
     }
     
-    func makeWalletSelectorAction(_ walletType: WalletType) -> UIAlertAction {
+    func makeWalletSelectorAction(_ walletType: WalletCurrency) -> UIAlertAction {
         return UIAlertAction(title: walletType.rawValue.capitalized, style: .default, handler: { [weak self] _ in
             self?.dispatcher?.dispatch(walletAction: .scanQR(walletType))
         })

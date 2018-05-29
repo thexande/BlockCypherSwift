@@ -1,6 +1,7 @@
 import UIKit
 import Result
 import BlockCypherSwift
+import Hydra
 
 enum WalletAction {
     enum WalletDetailSortOrder {
@@ -9,8 +10,8 @@ enum WalletAction {
     }
     
     case reloadWallets
-    case reloadWallet(String, WalletType)
-    case selectedWallet(String, WalletType)
+    case reloadWallet(String, WalletCurrency)
+    case selectedWallet(String, WalletCurrency)
     case reloadTransaction(String)
     case selectedTransaction(String)
     case reloadTransactionSegment(String)
@@ -19,8 +20,8 @@ enum WalletAction {
     case walletNameSelectAlert
     case displayDefaultWallets
     case displayWalletQR(String, String)
-    case scanQR(WalletType)
-    case deliverQRResult(String, WalletType?)
+    case scanQR(WalletCurrency)
+    case deliverQRResult(String, WalletCurrency?)
     case copyWalletAddressToClipboard(String)
     case sortWalletDetail(WalletDetailSortOrder)
 }
@@ -136,7 +137,7 @@ final class WalletCoordinator {
             self?.dispatch(walletAction: .deliverQRResult(address, walletType))
         }
         
-        let walletTypes: [WalletType] = [.bitcoin, .litecoin, .dash, .dogecoin]
+        let walletTypes: [WalletCurrency] = [.bitcoin, .litecoin, .dash, .dogecoin]
         
         factory.addWalletSelectAlertActions(walletTypeAlertController, walletTypes: walletTypes)
         factory.addWalletNameAlertActions(walletNameAlertController, walletDescriptions: WalletDescription.props)
@@ -168,10 +169,18 @@ final class TransactionDetailPresenter: WalletActionDispatching {
     }
 }
 
+struct CryptoWallet {
+    let wallet: Wallet
+    let currency: WalletCurrency
+}
+
+extension DummyData {
+
+}
+
 final class WalletsPresenter: WalletActionDispatching {
     weak var dispatcher: WalletActionDispatching?
     var deliver: ((LoadableProps<WalletsViewProperties>) -> Void)?
-    var dataProperties: WalletsViewProperties = .default
     private var walletService: WalletService
     
     var properties: LoadableProps<WalletsViewProperties> = .loading {
@@ -180,8 +189,17 @@ final class WalletsPresenter: WalletActionDispatching {
         }
     }
     
+    var dataProperties: WalletsViewProperties = .default {
+        didSet {
+            properties = .data(dataProperties)
+        }
+    }
+
+    
     init(walletService: WalletService) {
         self.walletService = walletService
+        dataProperties = WalletsViewProperties(title: "title", sections: DummyData.sections)
+        reloadCurrentWallets()
     }
     
     func dispatch(walletAction: WalletAction) {
@@ -192,12 +210,58 @@ final class WalletsPresenter: WalletActionDispatching {
         }
     }
     
-    private func reloadCurrentWallets() {
-        let queue = OperationQueue()
-        
-        let wallets: [(String, WalletType)] = dataProperties.sections.compactMap { section in
-            return section.items.map { ($0.address, $0.walletType) }
+    private func recieveWallets(_ wallets: [CryptoWallet]) {
+        let currencies = Set(wallets.map { $0.currency })
+        let sections: [[CryptoWallet]] = currencies.map { currency in
+            return wallets.filter({ $0.currency == currency })
         }
+        
+        let sectionProps: [WalletsSectionProperties] = sections.map { section in
+            let rowItems = section.map { cryptoWallet in
+                return Wallet.walletItemViewProperties(
+                    cryptoWallet.wallet,
+                    walletCurrency: cryptoWallet.currency
+                )
+            }
+            
+            return WalletsSectionProperties(items: rowItems, title: section.first?.currency.symbol.uppercased() ?? "")
+        }
+        
+        dataProperties = WalletsViewProperties(title: "Wallets", sections: sectionProps)
+    }
+    
+    
+    
+    private func reloadCurrentWallets() {
+        let walletProps: [(String, WalletCurrency)] = dataProperties.sections.flatMap { section in
+            return section.items.compactMap { ($0.address, $0.walletType) }
+        }
+        
+        all(walletProps.map({ walletService.wallet(address: $0.0, type: $0.1) })).then { [weak self] wallets in
+            let cryptoWallets = wallets
+                            .enumerated()
+                            .map { CryptoWallet(wallet: $0.element, currency: walletProps[$0.offset].1) }
+            self?.recieveWallets(cryptoWallets)
+        }
+    }
+}
+
+
+extension WalletService {
+    func wallet(address: String, type: WalletCurrency) -> Promise<Wallet> {
+        return Promise<Wallet>(in: .background, { [weak self] resolve, reject, _  in
+            guard let `self` = self else {
+                reject(WalletServiceError.walletDoesNotExist)
+                return
+            }
+            
+            self.wallet(address: address, currency: type, completion: { result in
+                switch result {
+                case let .success(data): resolve(data)
+                case let .failure(error): reject(error)
+                }
+            })
+        })
     }
 }
 
@@ -258,7 +322,7 @@ extension WalletCoordinator {
         navigation?.present(alert, animated: true, completion: nil)
     }
     
-    private func handleQRResult(walletAddress: String, walletType: WalletType?) {
+    private func handleQRResult(walletAddress: String, walletType: WalletCurrency?) {
         guard let walletType = walletType else {
             return
         }
@@ -343,6 +407,16 @@ extension WalletCoordinator: WalletRoutable {
 }
 
 extension Wallet {
+    static func walletItemViewProperties(_ wallet: Wallet, walletCurrency: WalletCurrency) -> WalletRowProperties {
+        return WalletRowProperties(
+            name: wallet.address,
+            address: wallet.address,
+            holdings: wallet.finalBalanceBtc,
+            spent: wallet.totalSentBtc,
+            walletType: .bitcoin
+        )
+    }
+    
     static func recentWalletDetailViewProperties(_ wallet: Wallet) -> WalletDetailViewProperties {
         let headerProperties = WalletDetailHeaderViewProperties(
             balance: wallet.finalBalanceBtc.btcPostfix,

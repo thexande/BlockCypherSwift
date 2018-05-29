@@ -13,7 +13,7 @@ final class WalletDetailPresenter: WalletActionDispatching {
         }
     }
     
-    private func reloadWallet(walletAddress: String, walletType: WalletType) {
+    private func reloadWallet(walletAddress: String, walletType: WalletCurrency) {
         dataProperties.showNavLoader = true
         properties = .data(dataProperties)
         

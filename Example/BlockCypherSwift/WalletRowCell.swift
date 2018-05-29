@@ -2,7 +2,7 @@ import UIKit
 import Anchorage
 import BlockCypherSwift
 
-extension WalletType {
+extension WalletCurrency {
     public var icon: UIImage {
         switch self {
         case .bitcoin: return #imageLiteral(resourceName: "btc")

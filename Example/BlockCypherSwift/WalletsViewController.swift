@@ -17,7 +17,7 @@ struct WalletRowProperties {
     let address: String
     let holdings: String
     let spent: String
-    let walletType: WalletType
+    let walletType: WalletCurrency
     static let `default` = WalletRowProperties(name: "", address: "", holdings: "", spent: "", walletType: .bitcoin)
 }
 
@@ -107,9 +107,7 @@ final class WalletsViewController: UITableViewController, WalletsViewPropertiesU
     }
     
     @objc func refreshData() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            self.tableView.refreshControl?.endRefreshing()
-        }
+        dispatcher?.dispatch(walletAction: .reloadWallets)
     }
     
     @objc func scanTapped() {

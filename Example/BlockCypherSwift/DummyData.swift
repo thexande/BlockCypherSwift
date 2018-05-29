@@ -81,25 +81,25 @@ struct DummyData {
     
     static let sections: [WalletsSectionProperties] = [
         WalletsSectionProperties(items: [
-            WalletRowProperties(name: "Coinbase", address: "Lb3sAACgGk8i6GsMApKqpTi2DWoybaU5BV", holdings: "Holding: 0.87999823 BTC", spent: "Spent: 0.87999823 BTC", walletType: .bitcoin),
-            WalletRowProperties(name: "Exodus Wallet", address: "Lb3sAACgGk8i6GsMApKqpTi2DWoybaU5BV", holdings: "Holding: 0.87999823 BTC", spent: "Spent: 0.87999823 BTC", walletType: .bitcoin),
-            WalletRowProperties(name: "Cold Storage", address: "Lb3sAACgGk8i6GsMApKqpTi2DWoybaU5BV", holdings: "Holding: 0.87999823 BTC", spent: "Spent: 0.87999823 BTC", walletType: .bitcoin),
+            WalletRowProperties(name: "Coinbase", address: "34amGv3nJbixFYz46HVFCHqqFRsXyvuxBh", holdings: "Holding: 0.87999823 BTC", spent: "Spent: 0.87999823 BTC", walletType: .bitcoin),
+            WalletRowProperties(name: "Exodus Wallet", address: "34amGv3nJbixFYz46HVFCHqqFRsXyvuxBh", holdings: "Holding: 0.87999823 BTC", spent: "Spent: 0.87999823 BTC", walletType: .bitcoin),
+            WalletRowProperties(name: "Cold Storage", address: "34amGv3nJbixFYz46HVFCHqqFRsXyvuxBh", holdings: "Holding: 0.87999823 BTC", spent: "Spent: 0.87999823 BTC", walletType: .bitcoin),
             ], title: "Bitcoin"),
-        WalletsSectionProperties(items: [
-            WalletRowProperties(name: "Bunker Cold Storage 300 miles off grid", address: "Lb3sAACgGk8i6GsMApKqpTi2DWoybaU5BV", holdings: "Holding: 0.87999823 BTC", spent: "Spent: 0.87999823 BTC", walletType: .litecoin),
-            WalletRowProperties(name: "Exodus Wallet", address: "Lb3sAACgGk8i6GsMApKqpTi2DWoybaU5BV", holdings: "Holding: 0.87999823 BTC", spent: "Spent: 0.87999823 BTC", walletType: .litecoin),
-            ], title: "Litecoin"),
-        
-        WalletsSectionProperties(items: [
-            WalletRowProperties(name: "Cold Storage", address: "Lb3sAACgGk8i6GsMApKqpTi2DWoybaU5BV", holdings: "Holding: 0.87999823 BTC", spent: "Spent: 0.87999823 BTC", walletType: .dash),
-            WalletRowProperties(name: "Trezor", address: "Lb3sAACgGk8i6GsMApKqpTi2DWoybaU5BV", holdings: "Holding: 0.87999823 BTC", spent: "Spent: 0.87999823 BTC", walletType: .dash),
-            WalletRowProperties(name: "CloudFoundry Master Node", address: "Lb3sAACgGk8i6GsMApKqpTi2DWoybaU5BV", holdings: "Holding: 0.87999823 BTC", spent: "Spent: 0.87999823 BTC", walletType: .dash)
-            ], title: "Dash"),
-        
-        WalletsSectionProperties(items: [
-            WalletRowProperties(name: "Dogecoin Core", address: "Lb3sAACgGk8i6GsMApKqpTi2DWoybaU5BV", holdings: "Holding: 0.87999823 BTC", spent: "Spent: 0.87999823 BTC", walletType: .dogecoin),
-            WalletRowProperties(name: "Dogebase", address: "Lb3sAACgGk8i6GsMApKqpTi2DWoybaU5BV", holdings: "Holding: 0.87999823 BTC", spent: "Spent: 0.87999823 BTC", walletType: .dogecoin)
-            ], title: "Dogecoin"),
+//        WalletsSectionProperties(items: [
+//            WalletRowProperties(name: "Bunker Cold Storage 300 miles off grid", address: "Lb3sAACgGk8i6GsMApKqpTi2DWoybaU5BV", holdings: "Holding: 0.87999823 BTC", spent: "Spent: 0.87999823 BTC", walletType: .litecoin),
+//            WalletRowProperties(name: "Exodus Wallet", address: "Lb3sAACgGk8i6GsMApKqpTi2DWoybaU5BV", holdings: "Holding: 0.87999823 BTC", spent: "Spent: 0.87999823 BTC", walletType: .litecoin),
+//            ], title: "Litecoin"),
+//        
+//        WalletsSectionProperties(items: [
+//            WalletRowProperties(name: "Cold Storage", address: "Lb3sAACgGk8i6GsMApKqpTi2DWoybaU5BV", holdings: "Holding: 0.87999823 BTC", spent: "Spent: 0.87999823 BTC", walletType: .dash),
+//            WalletRowProperties(name: "Trezor", address: "Lb3sAACgGk8i6GsMApKqpTi2DWoybaU5BV", holdings: "Holding: 0.87999823 BTC", spent: "Spent: 0.87999823 BTC", walletType: .dash),
+//            WalletRowProperties(name: "CloudFoundry Master Node", address: "Lb3sAACgGk8i6GsMApKqpTi2DWoybaU5BV", holdings: "Holding: 0.87999823 BTC", spent: "Spent: 0.87999823 BTC", walletType: .dash)
+//            ], title: "Dash"),
+//        
+//        WalletsSectionProperties(items: [
+//            WalletRowProperties(name: "Dogecoin Core", address: "Lb3sAACgGk8i6GsMApKqpTi2DWoybaU5BV", holdings: "Holding: 0.87999823 BTC", spent: "Spent: 0.87999823 BTC", walletType: .dogecoin),
+//            WalletRowProperties(name: "Dogebase", address: "Lb3sAACgGk8i6GsMApKqpTi2DWoybaU5BV", holdings: "Holding: 0.87999823 BTC", spent: "Spent: 0.87999823 BTC", walletType: .dogecoin)
+//            ], title: "Dogecoin"),
         ]
 }
 

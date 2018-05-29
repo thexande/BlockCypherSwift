@@ -1,4 +1,4 @@
-public enum WalletType: String {
+public enum WalletCurrency: String {
     case bitcoin
     case litecoin
     case dogecoin

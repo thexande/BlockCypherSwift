@@ -11,9 +11,9 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     let headerView = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
     var captureSession: AVCaptureSession!
     var previewLayer: AVCaptureVideoPreviewLayer!
-    public var success: ((String, WalletType?) -> Void)?
+    public var success: ((String, WalletCurrency?) -> Void)?
     
-    public var walletType: WalletType? {
+    public var walletType: WalletCurrency? {
         didSet {
             icon.image = walletType?.icon
             overlayLabel.text = "Scan your \(walletType?.symbol ?? "") wallet address."
