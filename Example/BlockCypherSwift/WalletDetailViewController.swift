@@ -20,13 +20,13 @@ struct WalletDetailSectionProperties: Equatable {
         self.items = items
     }
     
-    static func map(_ properties: WalletDetailSectionProperties) -> TransactionTableSectionController {
-        let controller = TransactionTableSectionController()
-        controller.properties = properties.items
-        controller.sectionTitle = properties.title
-        controller.sectionSubtitle = properties.sub
-        return controller
-    }
+//    static func map(_ properties: WalletDetailSectionProperties) -> TransactionTableSectionController {
+//        let controller = TransactionTableSectionController()
+//        controller.properties = properties.items
+//        controller.sectionTitle = properties.title
+//        controller.sectionSubtitle = properties.sub
+//        return controller
+//    }
 }
 
 struct WalletDetailViewProperties: Equatable {
@@ -63,9 +63,10 @@ final class WalletDetailController: SectionProxyTableViewController {
         switch properties {
         case .loading:
             DispatchQueue.main.async {
-                self.tableView.backgroundView = self.loading
                 self.tableView.backgroundView?.isHidden = false
                 self.tableView.tableHeaderView?.isHidden = true
+                self.tableView.bringSubview(toFront: self.loading)
+                self.tableView.tableHeaderView = UIView()
             }
         case .data(let properties): update(from: self.properties, to: properties)
         case .error(let error): return
@@ -82,7 +83,7 @@ final class WalletDetailController: SectionProxyTableViewController {
         self.properties = new
         
         sections = []
-        let controllers = new.sections.map(WalletDetailSectionProperties.map)
+        let controllers = new.sections.map(TransactionTableSectionController.init)
         
         DispatchQueue.main.async {
             controllers.forEach {
@@ -94,9 +95,12 @@ final class WalletDetailController: SectionProxyTableViewController {
             
             self.header.properties = new.headerProperties
             self.title = new.title
+            self.tableView.reloadData()
+            
             self.tableView.tableHeaderView?.isHidden = false
             self.tableView.backgroundView?.isHidden = true
-            self.tableView.reloadData()
+            self.tableView.sendSubview(toBack: self.loading)
+            self.tableView.tableHeaderView = self.header
             
             switch new.showNavLoader {
             case true: self.refresh.beginRefreshing()
@@ -107,11 +111,7 @@ final class WalletDetailController: SectionProxyTableViewController {
     
     init() {
         super.init(style: .grouped)
-        segment.addTarget(self, action: #selector(didChangeSegmentedControl), for: .valueChanged)
-        segment.selectedSegmentIndex = 0
-        navigationItem.titleView = segment
     }
-    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -119,14 +119,19 @@ final class WalletDetailController: SectionProxyTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
-        tableView.tableHeaderView = header
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.tableFooterView = UIView()
+        tableView.backgroundView = self.loading
         
         tableView.refreshControl = refresh
         refreshControl?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        
+        segment.addTarget(self, action: #selector(didChangeSegmentedControl), for: .valueChanged)
+        segment.selectedSegmentIndex = 0
+        navigationItem.titleView = segment
     }
     
     @objc func refreshData() {
