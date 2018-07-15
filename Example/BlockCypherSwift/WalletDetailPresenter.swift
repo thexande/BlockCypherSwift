@@ -29,7 +29,6 @@ final class WalletDetailPresenter: WalletActionDispatching {
     
     private func reloadWallet(walletAddress: String, walletType: WalletCurrency) {
         dataProperties.showNavLoader = true
-        
         walletService.wallet(address: walletAddress,
                              currency: walletType) { [weak self] walletResult in
             switch walletResult {
@@ -37,11 +36,10 @@ final class WalletDetailPresenter: WalletActionDispatching {
                 let walletProps = Wallet.recentWalletDetailViewProperties(wallet)
                 self?.wallet = wallet
                 self?.dataProperties = walletProps
-                self?.dataProperties.showNavLoader = false
                 
-                if let props = self?.dataProperties {
-                    self?.properties = .data(props)
-                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
+                    self?.dataProperties.showNavLoader = false
+                })
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -61,8 +59,9 @@ final class WalletDetailPresenter: WalletActionDispatching {
                     self.properties = .data(Wallet.recentWalletDetailViewProperties(wallet))
                 }
             }
-        case .reloadWallet(let wallet, let type): reloadWallet(walletAddress: wallet,
-                                                               walletType: type)
+        case .reloadWallet(let wallet, let type): return
+            reloadWallet(walletAddress: wallet,
+                         walletType: type)
         case .showMoreTransactions: return
         default: dispatcher?.dispatch(walletAction: walletAction)
         }

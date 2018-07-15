@@ -32,7 +32,7 @@ struct WalletDetailViewProperties: Equatable {
         headerProperties: .default,
         sections: [],
         identifier: "",
-        showNavLoader: false
+        showNavLoader: true
     )
 }
 
@@ -49,6 +49,7 @@ final class WalletDetailController: SectionProxyTableViewController {
     public weak var dispatcher: WalletActionDispatching? {
         didSet {
             header.dispatcher = dispatcher
+            footer.dispatcher = dispatcher
         }
     }
     
@@ -97,9 +98,8 @@ final class WalletDetailController: SectionProxyTableViewController {
             self.tableView.tableHeaderView = self.header
             self.tableView.tableFooterView = self.footer
             
-            switch new.showNavLoader {
-            case true: self.refresh.beginRefreshing()
-            case false: self.refresh.endRefreshing()
+            if !new.showNavLoader {
+                self.refresh.endRefreshing()
             }
         }
     }

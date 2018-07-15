@@ -48,7 +48,7 @@ extension Wallet {
             headerProperties: headerProperties,
             sections: monthSections,
             identifier: wallet.address,
-            showNavLoader: false
+            showNavLoader: true
         )
     }
     

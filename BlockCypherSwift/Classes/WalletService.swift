@@ -9,6 +9,23 @@ public enum WalletServiceError: Error {
 }
 
 
+/// Source: http://kean.github.io/post/codable-tips-and-tricks
+public struct Safe<Base: Decodable>: Decodable {
+    public let value: Base?
+    
+    public init(from decoder: Decoder) throws {
+        do {
+            let container = try decoder.singleValueContainer()
+            self.value = try container.decode(Base.self)
+        } catch {
+            assertionFailure("ERROR: \(error)")
+            // TODO: automatically send a report about a corrupted data
+            self.value = nil
+        }
+    }
+}
+
+
 final public class WalletService {
     private let session: URLSession
     private let decoder = JSONDecoder()
@@ -42,7 +59,9 @@ final public class WalletService {
             }
             
             do {
-                completion(.success(try decoder.decode(Wallet.self, from: data)))
+                if let wallet = try decoder.decode(Safe<Wallet>.self, from: data).value {
+                    completion(.success(wallet))
+                }
             } catch let error {
                 completion(.failure(.walletDoesNotExist))
                 print(error.localizedDescription)
