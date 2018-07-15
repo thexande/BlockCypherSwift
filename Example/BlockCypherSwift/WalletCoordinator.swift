@@ -71,6 +71,20 @@ protocol WalletRoutable {
     func handleRoute(route: WalletRoute)
     var navigation: UINavigationController? { get }
 }
+//
+//protocol WalletViewControllerProducing {
+//    func makeWalletDetailViewController(presenter: WalletDetailPresenter) -> WalletDetailController
+//}
+//
+//final class WalletViewControllerFactory: WalletViewControllerProducing {
+//    func makeWalletDetailViewController(presenter: WalletDetailPresenter) -> WalletDetailController {
+//        let vc = WalletDetailController()
+//        vc.dispatcher = presenter
+//        vc.deliver = { [weak presenter] props in
+//
+//        }
+//    }
+//}
 
 
 final class WalletCoordinator {
@@ -83,7 +97,7 @@ final class WalletCoordinator {
     private let walletViewController = WalletsViewController()
     private let walletPresenter: WalletsPresenter
     
-    private var walletDetailViewController = WalletDetailController()
+//    private var walletDetailViewController = WalletDetailController()
     private let walletDetailPresenter = WalletDetailPresenter()
     
     private let transactionDetailViewController = TransactionDetailViewController()
@@ -108,6 +122,16 @@ final class WalletCoordinator {
     public var rootViewController: UIViewController {
         return self.navigationController
     }
+    
+    private func makeWalletDetailViewController() -> WalletDetailController {
+        let walletDetailViewController = WalletDetailController()
+        walletDetailPresenter.dispatcher = self
+        walletDetailViewController.dispatcher = walletDetailPresenter
+        walletDetailPresenter.deliver = { [weak self] props in
+            walletDetailViewController.render(props)
+        }
+        return walletDetailViewController
+    }
 
     init() {
         let walletService = WalletService(session: URLSession.shared)
@@ -125,11 +149,6 @@ final class WalletCoordinator {
         transactionDetailViewController.dispatcher = self
         factory.dispatcher = self
         
-        walletDetailPresenter.dispatcher = self
-        walletDetailViewController.dispatcher = walletDetailPresenter
-        walletDetailPresenter.deliver = { [weak self] props in
-            self?.walletDetailViewController.properties = props
-        }
         
         walletViewController.properties = .data(WalletsViewProperties(title: "Wallets", sections: [], displayLoading: false))
         
@@ -191,8 +210,7 @@ extension WalletCoordinator: WalletActionDispatching {
             handleRoute(route: .qrCodeDisplay(walletAddress, walletTitle))
             
         case .scanQR(let walletType):
-            walletDetailViewController.sections = []
-            walletDetailViewController.properties = .loading
+//            walletDetailViewController.properties = .loading
             scannerViewController.walletType = walletType
             handleRoute(route: .scanQRCode)
             
@@ -236,7 +254,10 @@ extension WalletCoordinator {
                 self?.walletDetailPresenter.wallet = wallet
                 var props = Wallet.recentWalletDetailViewProperties(wallet)
                 props.headerProperties.backgroundImage = walletType.icon
-                self?.walletDetailViewController.properties = .data(props)
+                
+//                self?.handleRoute(route: .wallet)
+                
+//                self?.walletDetailViewController.properties = .data(props)
             case .failure(let error):
                 print(error.localizedDescription)
                 let alertController = UIAlertController(
@@ -271,9 +292,10 @@ extension WalletCoordinator: WalletRoutable {
     func handleRoute(route: WalletRoute) {
         switch route {
         case .walletDetail(let address, let walletType):
+            
             walletDetailPresenter.cryptoWallet = (address, walletType)
             DispatchQueue.main.async { [weak self] in
-                guard let controller = self?.walletDetailViewController else { return }
+                guard let controller = self?.makeWalletDetailViewController() else { return }
                 self?.navigation?.pushViewController(controller, animated: true)
             }
         case .wallets(let properties):

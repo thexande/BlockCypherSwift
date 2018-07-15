@@ -1,7 +1,7 @@
 import UIKit
 import Anchorage
 
-struct WalletDetailHeaderViewProperties {
+struct WalletDetailHeaderViewProperties: Equatable {
     let balance: String
     let received: String
     let send: String

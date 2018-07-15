@@ -8,7 +8,7 @@ protocol ViewPropertiesUpdating {
     func update(_ properties: ViewProperties)
 }
 
-struct WalletDetailSectionProperties {
+struct WalletDetailSectionProperties: Equatable {
     let title: String
     let sub: String?
     let items: [TransactionRowItemProperties]
@@ -29,7 +29,7 @@ struct WalletDetailSectionProperties {
     }
 }
 
-struct WalletDetailViewProperties {
+struct WalletDetailViewProperties: Equatable {
     let title: String
     var headerProperties: WalletDetailHeaderViewProperties
     let sections: [WalletDetailSectionProperties]
@@ -44,13 +44,14 @@ struct WalletDetailViewProperties {
     )
 }
 
-protocol WalletDetailPropertiesUpdating: ViewPropertiesUpdating where ViewProperties == LoadableProps<WalletDetailViewProperties> { }
+//protocol WalletDetailPropertiesUpdating: ViewPropertiesUpdating where ViewProperties == LoadableProps<WalletDetailViewProperties> { }
 
-final class WalletDetailController: SectionProxyTableViewController, WalletDetailPropertiesUpdating {
+final class WalletDetailController: SectionProxyTableViewController {
     private let header = WalletDetailHeaderView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 172))
     private let segment = UISegmentedControl(items: [ "Recent", "Largest"])
     private let loading = TableLoadingView()
     private let refresh = UIRefreshControl()
+    public var properties: WalletDetailViewProperties = .default
     
     public weak var dispatcher: WalletActionDispatching? {
         didSet {
@@ -58,13 +59,7 @@ final class WalletDetailController: SectionProxyTableViewController, WalletDetai
         }
     }
     
-    public var properties: LoadableProps<WalletDetailViewProperties> = .loading {
-        didSet {
-            update(properties)
-        }
-    }
-    
-    func update(_ properties: LoadableProps<WalletDetailViewProperties>) {
+    func render(_ properties: LoadableProps<WalletDetailViewProperties>) {
         switch properties {
         case .loading:
             DispatchQueue.main.async {
@@ -72,31 +67,41 @@ final class WalletDetailController: SectionProxyTableViewController, WalletDetai
                 self.tableView.backgroundView?.isHidden = false
                 self.tableView.tableHeaderView?.isHidden = true
             }
-        case .data(let properties):
-            sections = []
-            let controllers = properties.sections.map(WalletDetailSectionProperties.map)
-            
-            DispatchQueue.main.async {
-                controllers.forEach {
-                    $0.registerReusableTypes(tableView: self.tableView)
-                    $0.dispatcher = self.dispatcher
-                }
-                
-                self.sections = controllers
-                
-                self.header.properties = properties.headerProperties
-                self.title = properties.title
-                self.tableView.tableHeaderView?.isHidden = false
-                self.tableView.backgroundView?.isHidden = true
-                self.tableView.reloadData()
-                
-                switch properties.showNavLoader {
-                case true: self.refresh.beginRefreshing()
-                case false: self.refresh.endRefreshing()
-                }
+        case .data(let properties): update(from: self.properties, to: properties)
+        case .error(let error): return
+        }
+    }
+    
+    func update(from old: WalletDetailViewProperties,
+                to new: WalletDetailViewProperties) {
+        
+        guard old != new else {
+            return
+        }
+        
+        self.properties = new
+        
+        sections = []
+        let controllers = new.sections.map(WalletDetailSectionProperties.map)
+        
+        DispatchQueue.main.async {
+            controllers.forEach {
+                $0.registerReusableTypes(tableView: self.tableView)
+                $0.dispatcher = self.dispatcher
             }
             
-        case .error(let error): return
+            self.sections = controllers
+            
+            self.header.properties = new.headerProperties
+            self.title = new.title
+            self.tableView.tableHeaderView?.isHidden = false
+            self.tableView.backgroundView?.isHidden = true
+            self.tableView.reloadData()
+            
+            switch new.showNavLoader {
+            case true: self.refresh.beginRefreshing()
+            case false: self.refresh.endRefreshing()
+            }
         }
     }
     
@@ -125,10 +130,7 @@ final class WalletDetailController: SectionProxyTableViewController, WalletDetai
     }
     
     @objc func refreshData() {
-        switch properties {
-        case .data(let props): dispatcher?.dispatch(walletAction: .reloadWallet(props.identifier, .bitcoin))
-        default: return
-        }
+        dispatcher?.dispatch(walletAction: .reloadWallet(properties.identifier, .bitcoin))
     }
     
     @objc func didChangeSegmentedControl(_ sender: UISegmentedControl) {

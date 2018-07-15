@@ -1,7 +1,7 @@
 import UIKit
 import Anchorage
 
-struct TransactionRowItemProperties {
+struct TransactionRowItemProperties: Equatable {
     enum WalletDetailRowType {
         case sent
         case recieved
