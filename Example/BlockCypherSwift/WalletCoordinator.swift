@@ -24,6 +24,7 @@ enum WalletAction {
     case deliverQRResult(String, WalletCurrency?)
     case copyWalletAddressToClipboard(String)
     case sortWalletDetail(WalletDetailSortOrder)
+    case showMoreTransactions
 }
 
 enum WalletDescription {

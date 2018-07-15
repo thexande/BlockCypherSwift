@@ -19,14 +19,6 @@ struct WalletDetailSectionProperties: Equatable {
         self.sub = sub
         self.items = items
     }
-    
-//    static func map(_ properties: WalletDetailSectionProperties) -> TransactionTableSectionController {
-//        let controller = TransactionTableSectionController()
-//        controller.properties = properties.items
-//        controller.sectionTitle = properties.title
-//        controller.sectionSubtitle = properties.sub
-//        return controller
-//    }
 }
 
 struct WalletDetailViewProperties: Equatable {
@@ -48,6 +40,7 @@ struct WalletDetailViewProperties: Equatable {
 
 final class WalletDetailController: SectionProxyTableViewController {
     private let header = WalletDetailHeaderView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 172))
+    private let footer = WalletDetailShowMoreResultsFooterView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 80))
     private let segment = UISegmentedControl(items: [ "Recent", "Largest"])
     private let loading = TableLoadingView()
     private let refresh = UIRefreshControl()
@@ -67,6 +60,7 @@ final class WalletDetailController: SectionProxyTableViewController {
                 self.tableView.tableHeaderView?.isHidden = true
                 self.tableView.bringSubview(toFront: self.loading)
                 self.tableView.tableHeaderView = UIView()
+                self.tableView.tableFooterView = UIView()
             }
         case .data(let properties): update(from: self.properties, to: properties)
         case .error(let error): return
@@ -101,6 +95,7 @@ final class WalletDetailController: SectionProxyTableViewController {
             self.tableView.backgroundView?.isHidden = true
             self.tableView.sendSubview(toBack: self.loading)
             self.tableView.tableHeaderView = self.header
+            self.tableView.tableFooterView = self.footer
             
             switch new.showNavLoader {
             case true: self.refresh.beginRefreshing()

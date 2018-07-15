@@ -24,7 +24,7 @@ final public class WalletService {
     ///   - address: the public key for a given wallet.
     ///   - currency: BTC, LTC, DOGE, DASH
     ///   - completion: callback with serialized `Wallet` or an error
-    open func wallet(address: String,
+    public func wallet(address: String,
                     currency: WalletCurrency,
                     completion: @escaping(Result<Wallet, WalletServiceError>) -> Void) {
         
@@ -56,7 +56,7 @@ final public class WalletService {
     ///   - hash: The hash for a given transaction.
     ///   - currency: BTC, LTC, DOGE, DASH
     ///   - completion: callback with serialized `Transaction` or an error
-    open func transaction(hash: String,
+    public func transaction(hash: String,
                         currency: WalletCurrency,
                         completion: @escaping(Result<Transaction, WalletServiceError>) -> Void) {
         guard let url = UrlFactory.url(transactionHash: hash, currency: currency) else {

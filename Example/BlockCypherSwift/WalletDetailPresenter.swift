@@ -63,6 +63,7 @@ final class WalletDetailPresenter: WalletActionDispatching {
             }
         case .reloadWallet(let wallet, let type): reloadWallet(walletAddress: wallet,
                                                                walletType: type)
+        case .showMoreTransactions: return
         default: dispatcher?.dispatch(walletAction: walletAction)
         }
     }

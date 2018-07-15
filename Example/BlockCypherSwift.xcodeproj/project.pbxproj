@@ -50,6 +50,7 @@
 		B086DCBC20BD1FFA00EEB5C5 /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B086DCBB20BD1FFA00EEB5C5 /* Wallet.swift */; };
 		B086DCBE20BD202D00EEB5C5 /* TransactionDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B086DCBD20BD202D00EEB5C5 /* TransactionDetailPresenter.swift */; };
 		B0B1070620BD12B500A9B6C1 /* WalletsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0B1070520BD12B500A9B6C1 /* WalletsPresenter.swift */; };
+		B0B78A9320FBF11C0012FD05 /* WalletDetailShowMoreResultsFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0B78A9220FBF11C0012FD05 /* WalletDetailShowMoreResultsFooterView.swift */; };
 		B0C1D9DB20AFF0C300EBE860 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C1D9DA20AFF0C300EBE860 /* DateFormatter.swift */; };
 /* End PBXBuildFile section */
 
@@ -116,6 +117,7 @@
 		B086DCBB20BD1FFA00EEB5C5 /* Wallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wallet.swift; sourceTree = "<group>"; };
 		B086DCBD20BD202D00EEB5C5 /* TransactionDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailPresenter.swift; sourceTree = "<group>"; };
 		B0B1070520BD12B500A9B6C1 /* WalletsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletsPresenter.swift; sourceTree = "<group>"; };
+		B0B78A9220FBF11C0012FD05 /* WalletDetailShowMoreResultsFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletDetailShowMoreResultsFooterView.swift; sourceTree = "<group>"; };
 		B0C1D9DA20AFF0C300EBE860 /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		F139DA2E2CC632329B47AEB6 /* Pods_BlockCypherSwift_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockCypherSwift_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F654F7544D8FF821F8859DEE /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 				B086DCB920BD1FDA00EEB5C5 /* Transaction.swift */,
 				B086DCBB20BD1FFA00EEB5C5 /* Wallet.swift */,
 				B086DCBD20BD202D00EEB5C5 /* TransactionDetailPresenter.swift */,
+				B0B78A9220FBF11C0012FD05 /* WalletDetailShowMoreResultsFooterView.swift */,
 			);
 			name = "Example for BlockCypherSwift";
 			path = BlockCypherSwift;
@@ -456,6 +459,7 @@
 				B049414A20B22F3A0007A7E3 /* TableLoadingView.swift in Sources */,
 				B086DCBE20BD202D00EEB5C5 /* TransactionDetailPresenter.swift in Sources */,
 				B049414220B005B10007A7E3 /* URLSession.swift in Sources */,
+				B0B78A9320FBF11C0012FD05 /* WalletDetailShowMoreResultsFooterView.swift in Sources */,
 				B0147A9120B51BF70049A85A /* MetadataTableSectionFactory.swift in Sources */,
 				B00B26A020AFDE66005A1C8B /* TransactionSegmentViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
