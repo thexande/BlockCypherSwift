@@ -77,7 +77,10 @@ struct TransactionDetailViewProperties {
 protocol TransactionDetailViewPropertiesUpdating: ViewPropertiesUpdating where ViewProperties == LoadableProps<TransactionDetailViewProperties> { }
 
 final class TransactionDetailViewController: SectionProxyTableViewController, TransactionDetailViewPropertiesUpdating {
+    private let loading = TableLoadingView()
     weak var dispatcher: WalletDetailActionDispatching?
+    var properties: TransactionDetailViewProperties = .default
+    
     override var sections: [WalletTableSectionController] {
         didSet {
             sections.forEach { $0.registerReusableTypes(tableView: tableView) }
@@ -85,29 +88,44 @@ final class TransactionDetailViewController: SectionProxyTableViewController, Tr
         }
     }
     
-    var properties: LoadableProps<TransactionDetailViewProperties> = .loading {
-        didSet {
-            render(properties)
-        }
-    }
-    
     func render(_ properties: LoadableProps<TransactionDetailViewProperties>) {
         switch properties {
         case .data(let properties):
-            title = properties.title
-            let metadataSections = MetadataTableSectionFactory.mapControllerFromSections(properties.sections, dispatcher: dispatcher)
-            let transactionController = TransactionTableSectionController()
-            transactionController.properties = [properties.transactionItemProperties]
-            
-            var sectionControllers: [WalletTableSectionController] = []
-            sectionControllers.append(transactionController)
-            sectionControllers.append(contentsOf: metadataSections)
-            
-            sections = sectionControllers
-            tableView.reloadData()
+            update(from: properties, to: properties)
         case .error(let error): return
-        case .loading: return
+        case .loading:
+            DispatchQueue.main.async {
+                self.tableView.backgroundView?.isHidden = false
+                self.tableView.tableHeaderView?.isHidden = true
+                self.tableView.bringSubview(toFront: self.loading)
+                self.tableView.tableHeaderView = UIView()
+                self.tableView.tableFooterView = UIView()
+            }
         }
+    }
+    
+    func update(from old: TransactionDetailViewProperties,
+                to new: TransactionDetailViewProperties) {
+        
+//        guard old != new else {
+//            return
+//        }
+//
+        self.properties = new
+        
+        sections = []
+        title = new.title
+        let metadataSections = MetadataTableSectionFactory.mapControllerFromSections(properties.sections, dispatcher: dispatcher)
+        let transactionController = TransactionTableSectionController()
+        transactionController.properties = [properties.transactionItemProperties]
+        
+        var sectionControllers: [WalletTableSectionController] = []
+        sectionControllers.append(transactionController)
+        sectionControllers.append(contentsOf: metadataSections)
+        
+        sections = sectionControllers
+        tableView.reloadData()
+        self.tableView.sendSubview(toBack: self.loading)
     }
     
     init() {

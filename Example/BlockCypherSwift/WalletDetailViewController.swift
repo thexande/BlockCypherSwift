@@ -4,7 +4,7 @@ import BlockCypherSwift
 
 protocol ViewPropertiesUpdating {
     associatedtype ViewProperties
-    var properties: ViewProperties { get set }
+//    var properties: ViewProperties { get set }
     func render(_ properties: ViewProperties)
 }
 

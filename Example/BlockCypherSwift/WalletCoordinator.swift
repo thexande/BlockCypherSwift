@@ -132,7 +132,6 @@ final class WalletCoordinator {
         transactionDetailPresenter.deliver = { props in
             controller.render(props)
         }
-        controller.properties = .loading
         return controller
     }
 
