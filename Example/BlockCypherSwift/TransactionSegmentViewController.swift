@@ -5,7 +5,7 @@ final class TransactionSegmentViewController: SectionProxyTableViewController, V
     public var dispatcher: WalletActionDispatching?
     public var properties: TransactionSegmentViewProperties = .default {
         didSet {
-            update(properties)
+            render(properties)
         }
     }
     
@@ -24,7 +24,7 @@ final class TransactionSegmentViewController: SectionProxyTableViewController, V
         fatalError("init(coder:) has not been implemented")
     }
     
-    func update(_ properties: TransactionSegmentViewProperties) {
+    func render(_ properties: TransactionSegmentViewProperties) {
         title = properties.title
         let metadataSections = MetadataTableSectionFactory.mapControllerFromSections(properties.sections, dispatcher: dispatcher)
         sections = metadataSections

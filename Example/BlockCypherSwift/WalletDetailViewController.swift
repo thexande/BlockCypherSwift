@@ -5,7 +5,7 @@ import BlockCypherSwift
 protocol ViewPropertiesUpdating {
     associatedtype ViewProperties
     var properties: ViewProperties { get set }
-    func update(_ properties: ViewProperties)
+    func render(_ properties: ViewProperties)
 }
 
 struct WalletDetailSectionProperties: Equatable {
@@ -36,7 +36,7 @@ struct WalletDetailViewProperties: Equatable {
     )
 }
 
-//protocol WalletDetailPropertiesUpdating: ViewPropertiesUpdating where ViewProperties == LoadableProps<WalletDetailViewProperties> { }
+protocol WalletDetailPropertiesUpdating: ViewPropertiesUpdating where ViewProperties == LoadableProps<WalletDetailViewProperties> { }
 
 final class WalletDetailController: SectionProxyTableViewController {
     private let header = WalletDetailHeaderView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 172))
@@ -130,18 +130,18 @@ final class WalletDetailController: SectionProxyTableViewController {
     }
     
     @objc func refreshData() {
-        dispatcher?.dispatch(walletAction: .reloadWallet(properties.identifier, .bitcoin))
+        dispatcher?.dispatch(.reloadWallet(properties.identifier, .bitcoin))
     }
     
     @objc func didChangeSegmentedControl(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
-        case 0: dispatcher?.dispatch(walletAction: .sortWalletDetail(.recent))
-        case 1: dispatcher?.dispatch(walletAction: .sortWalletDetail(.largest))
+        case 0: dispatcher?.dispatch(.sortWalletDetail(.recent))
+        case 1: dispatcher?.dispatch(.sortWalletDetail(.largest))
         default: return
         }
     }
     
     @objc func pressedSave() {
-        dispatcher?.dispatch(walletAction: .walletNameSelectAlert)
+        dispatcher?.dispatch(.walletNameSelectAlert)
     }
 }

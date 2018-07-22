@@ -14,7 +14,7 @@ final class WalletDetailShowMoreResultsFooterView: UIView {
     }
     
     @objc private func showMoreTransactions() {
-        dispatcher?.dispatch(walletAction: .showMoreTransactions)
+        dispatcher?.dispatch(.showMoreTransactions)
     }
     
     required init?(coder aDecoder: NSCoder) {

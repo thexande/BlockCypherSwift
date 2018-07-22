@@ -18,8 +18,8 @@ final class TransactionDetailPresenter: WalletActionDispatching {
         }
     }
     
-    func dispatch(walletAction: WalletAction) {
-        switch walletAction {
+    func dispatch(_ action: WalletAction) {
+        switch action {
         case .reloadTransaction(let transactionHash): return
         default: return
         }

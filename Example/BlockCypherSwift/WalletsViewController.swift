@@ -118,11 +118,11 @@ final class WalletsViewController: UITableViewController, WalletsViewPropertiesU
     }
     
     @objc func refreshData() {
-        dispatcher?.dispatch(walletAction: .reloadWallets)
+        dispatcher?.dispatch(.reloadWallets)
     }
     
     @objc func scanTapped() {
-        dispatcher?.dispatch(walletAction: .walletTypeSelectAlert)
+        dispatcher?.dispatch(.walletTypeSelectAlert)
     }
     
     @objc func editTapped() {
@@ -130,7 +130,7 @@ final class WalletsViewController: UITableViewController, WalletsViewPropertiesU
     }
     
     @objc private func defaultTapped() {
-        dispatcher?.dispatch(walletAction: .displayDefaultWallets)
+        dispatcher?.dispatch(.displayDefaultWallets)
     }
 }
 
@@ -184,7 +184,7 @@ extension WalletsViewController {
         switch properties {
         case .data(let props):
             let selectedWallet = props.sections[indexPath.section].items[indexPath.row]
-            dispatcher?.dispatch(walletAction: .selectedWallet(selectedWallet.address, selectedWallet.walletType))
+            dispatcher?.dispatch(.selectedWallet(selectedWallet.address, selectedWallet.walletType))
         default: return
         }
     }

@@ -42,11 +42,11 @@ final class WalletDetailHeaderView: UIView, ViewPropertiesUpdating {
     
     public var properties: WalletDetailHeaderViewProperties = .default {
         didSet {
-            update(properties)
+            render(properties)
         }
     }
     
-    func update(_ properties: WalletDetailHeaderViewProperties) {
+    func render(_ properties: WalletDetailHeaderViewProperties) {
         balance.text = properties.balance
         received.text = properties.received
         sent.text = properties.send
@@ -54,11 +54,11 @@ final class WalletDetailHeaderView: UIView, ViewPropertiesUpdating {
     }
     
     @objc func showWalletQR() {
-        dispatcher?.dispatch(walletAction: .displayWalletQR(properties.address, properties.title))
+        dispatcher?.dispatch(.displayWalletQR(properties.address, properties.title))
     }
     
     @objc func copyWalletAddress() {
-        dispatcher?.dispatch(walletAction: .copyWalletAddressToClipboard(properties.address))
+        dispatcher?.dispatch(.copyWalletAddressToClipboard(properties.address))
     }
     
     override init(frame: CGRect) {

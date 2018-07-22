@@ -87,11 +87,11 @@ final class TransactionDetailViewController: SectionProxyTableViewController, Tr
     
     var properties: LoadableProps<TransactionDetailViewProperties> = .loading {
         didSet {
-            update(properties)
+            render(properties)
         }
     }
     
-    func update(_ properties: LoadableProps<TransactionDetailViewProperties>) {
+    func render(_ properties: LoadableProps<TransactionDetailViewProperties>) {
         switch properties {
         case .data(let properties):
             title = properties.title

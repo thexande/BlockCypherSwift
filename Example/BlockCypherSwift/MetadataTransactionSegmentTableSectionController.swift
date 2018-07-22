@@ -36,7 +36,7 @@ final class MetadataTransactionSegmentTableSectionController: NSObject, WalletTa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        dispatcher?.dispatch(walletAction: .selectedTransactionSegment(properties[indexPath.row].address))
+        dispatcher?.dispatch(.selectedTransactionSegment(properties[indexPath.row].address))
     }
     
     static func mapControllerFromProperties(_ properties: [MetadataTitleRowItemProperties]) -> MetadataTitleTableSectionController {

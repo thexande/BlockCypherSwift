@@ -65,7 +65,7 @@ enum WalletRoute {
 }
 
 protocol WalletActionDispatching: class {
-    func dispatch(walletAction: WalletAction)
+    func dispatch(_ action: WalletAction)
 }
 
 protocol WalletRoutable {
@@ -154,7 +154,7 @@ final class WalletCoordinator {
         walletViewController.properties = .data(WalletsViewProperties(title: "Wallets", sections: [], displayLoading: false))
         
         scannerViewController.success = { [weak self] address, walletType in
-            self?.dispatch(walletAction: .deliverQRResult(address, walletType))
+            self?.dispatch(.deliverQRResult(address, walletType))
         }
         
         let walletTypes: [WalletCurrency] = [.bitcoin, .litecoin, .dash, .dogecoin]
@@ -189,8 +189,8 @@ extension WalletService {
 }
 
 extension WalletCoordinator: WalletActionDispatching {
-    func dispatch(walletAction: WalletAction) {
-        switch walletAction {
+    func dispatch(_ action: WalletAction) {
+        switch action {
         case .selectedWallet(let walletAddress, let walletType):
             handleRoute(route: .walletDetail(walletAddress, walletType))
             

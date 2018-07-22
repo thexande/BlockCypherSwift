@@ -29,11 +29,11 @@ final class TransactionRowItemCell: UITableViewCell, TransactionRowViewPropertie
     
     public var properties: TransactionRowItemProperties = .default {
         didSet {
-            update(properties)
+            render(properties)
         }
     }
     
-    func update(_ properties: TransactionRowItemProperties) {
+    func render(_ properties: TransactionRowItemProperties) {
         title.text = properties.title
         subTitle.text = properties.subTitle
         confirmationCount.text = properties.confirmationCount
@@ -41,9 +41,11 @@ final class TransactionRowItemCell: UITableViewCell, TransactionRowViewPropertie
         switch properties.transactionType {
         case .recieved:
             transactionBackground.backgroundColor = StyleConstants.primaryGreen
+            transactionBackground.tintColor = StyleConstants.primaryGreen
             transactionIcon.image = #imageLiteral(resourceName: "down_arrow")
         case.sent:
             transactionBackground.backgroundColor = StyleConstants.primaryRed
+            transactionBackground.tintColor = StyleConstants.primaryRed
             transactionIcon.image = #imageLiteral(resourceName: "up_arrow")
         }
         

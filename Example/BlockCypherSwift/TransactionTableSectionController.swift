@@ -35,7 +35,7 @@ final class TransactionTableSectionController: NSObject, WalletTableSectionContr
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        dispatcher?.dispatch(walletAction: .selectedTransaction(properties[indexPath.row].transactionHash))
+        dispatcher?.dispatch(.selectedTransaction(properties[indexPath.row].transactionHash))
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

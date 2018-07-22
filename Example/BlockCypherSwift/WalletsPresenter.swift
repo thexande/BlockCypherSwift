@@ -23,13 +23,13 @@ final class WalletsPresenter: WalletActionDispatching {
         self.walletService = walletService
     }
     
-    func dispatch(walletAction: WalletAction) {
-        switch walletAction {
+    func dispatch(_ action: WalletAction) {
+        switch action {
         case .displayDefaultWallets: dataProperties = WalletsViewProperties(title: "Example Wallets", sections: DummyData.sections, displayLoading: false)
         case .reloadWallets:
             dataProperties.displayLoading = true
             reloadCurrentWallets()
-        default: dispatcher?.dispatch(walletAction: walletAction)
+        default: dispatcher?.dispatch(action)
         }
     }
     

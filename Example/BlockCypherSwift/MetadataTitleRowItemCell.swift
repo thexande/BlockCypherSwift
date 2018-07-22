@@ -5,13 +5,13 @@ final class MetadataTitleRowItemCell: UITableViewCell, ViewPropertiesUpdating {
     private let titleLabel = UILabel()
     private let contentLabel = UILabel()
     
-    public var properties: MetadataTitleRowItemProperties = .default {
+    var properties: MetadataTitleRowItemProperties = .default {
         didSet {
-            update(properties)
+            render(properties)
         }
     }
     
-    func update(_ properties: MetadataTitleRowItemProperties) {
+    func render(_ properties: MetadataTitleRowItemProperties) {
         titleLabel.text = properties.title
         contentLabel.text = properties.content
         

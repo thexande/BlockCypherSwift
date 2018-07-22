@@ -36,13 +36,13 @@ final class WalletControllerFactory: WalletFactory {
     
     func makeWalletSelectorAction(_ walletType: WalletCurrency) -> UIAlertAction {
         return UIAlertAction(title: walletType.rawValue.capitalized, style: .default, handler: { [weak self] _ in
-            self?.dispatcher?.dispatch(walletAction: .scanQR(walletType))
+            self?.dispatcher?.dispatch(.scanQR(walletType))
         })
     }
     
     func makeWalletNameSelectorAction(_ walletName: WalletDescription) -> UIAlertAction {
         return UIAlertAction(title: walletName.title, style: .default, handler: { [weak self] _ in
-            //            self?.dispatch(walletAction: .scanQR(walletType))
+            //            self?.dispatch(_ action: .scanQR(walletType))
         })
     }
 }

@@ -46,8 +46,8 @@ final class WalletDetailPresenter: WalletActionDispatching {
         }
     }
     
-    func dispatch(walletAction: WalletAction) {
-        switch walletAction {
+    func dispatch(_ action: WalletAction) {
+        switch action {
         case .sortWalletDetail(let sortOrder):
             switch sortOrder {
             case .largest:
@@ -63,7 +63,7 @@ final class WalletDetailPresenter: WalletActionDispatching {
             reloadWallet(walletAddress: wallet,
                          walletType: type)
         case .showMoreTransactions: return
-        default: dispatcher?.dispatch(walletAction: walletAction)
+        default: dispatcher?.dispatch(action)
         }
     }
 }
