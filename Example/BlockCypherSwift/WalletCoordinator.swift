@@ -4,17 +4,12 @@ import BlockCypherSwift
 import Hydra
 
 enum WalletAction {
-    enum WalletDetailSortOrder {
-        case recent
-        case largest
-    }
-    
     case reloadWallets
-    case reloadWallet(String, WalletCurrency)
     case selectedWallet(String, WalletCurrency)
     case reloadTransaction(String)
-    case selectedTransaction(String)
     case reloadTransactionSegment(String)
+    case selectedTransaction(String, WalletCurrency)
+
     case selectedTransactionSegment(String)
     case walletTypeSelectAlert
     case walletNameSelectAlert
@@ -23,8 +18,6 @@ enum WalletAction {
     case scanQR(WalletCurrency)
     case deliverQRResult(String, WalletCurrency?)
     case copyWalletAddressToClipboard(String)
-    case sortWalletDetail(WalletDetailSortOrder)
-    case showMoreTransactions
 }
 
 enum WalletDescription {
@@ -55,7 +48,7 @@ struct TransactionSegmentViewProperties {
 
 enum WalletRoute {
     case walletDetail(String, WalletCurrency)
-    case transactionDetail(LoadableProps<TransactionDetailViewProperties>)
+    case transactionDetail(String, WalletCurrency)
     case transactionSegmentDetail(TransactionSegmentViewProperties)
     case wallets(LoadableProps<WalletsViewProperties>)
     case qrCodeDisplay(String, String)
@@ -132,6 +125,16 @@ final class WalletCoordinator {
         }
         return walletDetailViewController
     }
+    
+    private func makeTransactionDetailViewController() -> TransactionDetailViewController {
+        let controller = TransactionDetailViewController()
+        controller.dispatcher = walletDetailPresenter
+        transactionDetailPresenter.deliver = { props in
+            controller.render(props)
+        }
+        controller.properties = .loading
+        return controller
+    }
 
     init() {
         let walletService = WalletService(session: URLSession.shared)
@@ -146,7 +149,7 @@ final class WalletCoordinator {
         }
         walletPresenter.dispatcher = self
         
-        transactionDetailViewController.dispatcher = self
+        transactionDetailViewController.dispatcher = walletDetailPresenter
         factory.dispatcher = self
         
         
@@ -194,12 +197,8 @@ extension WalletCoordinator: WalletActionDispatching {
             handleRoute(route: .walletDetail(walletAddress, walletType))
             
         case .reloadTransaction(let transactionHash): return
-        case .selectedTransaction(let transactionHash):
-            guard let transaction = self.fetchedWallet?.txs.first(where: { $0.hash == transactionHash }) else {
-                return
-            }
-            
-            handleRoute(route: .transactionDetail(.data(Transaction.map(transaction))))
+        case let .selectedTransaction(transactionHash, walletCurrency):
+            handleRoute(route: .transactionDetail(transactionHash, walletCurrency))
             
         case .reloadTransactionSegment(let transactionSegmentAddress): return
         case .selectedTransactionSegment(let transactionSegmentAddress):
@@ -307,9 +306,11 @@ extension WalletCoordinator: WalletRoutable {
             walletPresenter.loaableProperties = properties
             navigation?.pushViewController(walletsViewController, animated: true)
             
-        case .transactionDetail(let properties):
-            transactionDetailViewController.properties = properties
-            navigation?.pushViewController(transactionDetailViewController, animated: true)
+        case .transactionDetail: return
+//            transactionDetailViewController.properties = properties
+//            let controller = makeTransactionDetailViewController()
+            
+//            navigation?.pushViewController(transactionDetailViewController, animated: true)
             
         case .transactionSegmentDetail(let properties):
             transactionSegmentDetailViewController.properties = properties

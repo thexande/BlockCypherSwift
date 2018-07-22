@@ -1,6 +1,26 @@
 import BlockCypherSwift
 
-final class WalletDetailPresenter: WalletActionDispatching {
+enum WalletDetailAcitons {
+    enum WalletDetailSortOrder {
+        case recent
+        case largest
+    }
+    case sortWalletDetail(WalletDetailSortOrder)
+    case showMoreTransactions
+    case reloadWallet(String, WalletCurrency)
+    case selectedTransaction(String)
+    case displayWalletQR(String, String)
+    case copyWalletAddressToClipboard(String)
+    case selectedTransactionSegment(String)
+    case walletNameSelectAlert
+
+}
+
+protocol WalletDetailActionDispatching: AnyObject {
+    func dispatch(_ action: WalletDetailAcitons)
+}
+
+final class WalletDetailPresenter: WalletDetailActionDispatching {
     weak var dispatcher: WalletActionDispatching?
     private let walletService = WalletService(session: URLSession.shared)
     var wallet: Wallet?
@@ -46,7 +66,7 @@ final class WalletDetailPresenter: WalletActionDispatching {
         }
     }
     
-    func dispatch(_ action: WalletAction) {
+    func dispatch(_ action: WalletDetailAcitons) {
         switch action {
         case .sortWalletDetail(let sortOrder):
             switch sortOrder {
@@ -63,7 +83,7 @@ final class WalletDetailPresenter: WalletActionDispatching {
             reloadWallet(walletAddress: wallet,
                          walletType: type)
         case .showMoreTransactions: return
-        default: dispatcher?.dispatch(action)
+        default: return //dispatcher?.dispatch(action)
         }
     }
 }

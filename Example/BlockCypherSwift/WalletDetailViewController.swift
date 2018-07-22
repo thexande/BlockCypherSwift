@@ -46,7 +46,7 @@ final class WalletDetailController: SectionProxyTableViewController {
     private let refresh = UIRefreshControl()
     public var properties: WalletDetailViewProperties = .default
     
-    public weak var dispatcher: WalletActionDispatching? {
+    public weak var dispatcher: WalletDetailActionDispatching? {
         didSet {
             header.dispatcher = dispatcher
             footer.dispatcher = dispatcher

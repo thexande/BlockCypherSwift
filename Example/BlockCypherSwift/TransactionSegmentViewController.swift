@@ -2,7 +2,7 @@ import UIKit
 
 final class TransactionSegmentViewController: SectionProxyTableViewController, ViewPropertiesUpdating {
     typealias ViewProperties = TransactionSegmentViewProperties
-    public var dispatcher: WalletActionDispatching?
+    public var dispatcher: WalletDetailActionDispatching?
     public var properties: TransactionSegmentViewProperties = .default {
         didSet {
             render(properties)

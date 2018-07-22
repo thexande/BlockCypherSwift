@@ -4,7 +4,7 @@ import BlockCypherSwift
 final class TransactionDetailPresenter: WalletActionDispatching {
     var deliver: ((LoadableProps<TransactionDetailViewProperties>) -> Void)?
     
-    var transaction: Transaction? {
+    private var transaction: Transaction? {
         didSet {
             if let transaction = transaction {
                 properties = .data(Transaction.map(transaction))
@@ -16,6 +16,10 @@ final class TransactionDetailPresenter: WalletActionDispatching {
         didSet {
             deliver?(properties)
         }
+    }
+    
+    func loadTransaction(hash: String, currency: WalletCurrency) {
+        
     }
     
     func dispatch(_ action: WalletAction) {

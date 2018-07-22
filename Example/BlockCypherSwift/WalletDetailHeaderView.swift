@@ -38,7 +38,7 @@ final class WalletDetailHeaderView: UIView, ViewPropertiesUpdating {
     private let copyButton = SecondaryButton()
     private let qrButton = PrimaryButton()
     private let accentImageView = UIImageView()
-    public var dispatcher: WalletActionDispatching?
+    public var dispatcher: WalletDetailActionDispatching?
     
     public var properties: WalletDetailHeaderViewProperties = .default {
         didSet {

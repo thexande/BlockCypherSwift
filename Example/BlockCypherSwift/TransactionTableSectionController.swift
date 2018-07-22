@@ -1,7 +1,7 @@
 import UIKit
 
 final class TransactionTableSectionController: NSObject, WalletTableSectionController {
-    public var dispatcher: WalletActionDispatching?
+    public var dispatcher: WalletDetailActionDispatching?
     public var sectionTitle: String?
     var sectionSubtitle: String?
     public var properties: [TransactionRowItemProperties] = []
@@ -35,7 +35,8 @@ final class TransactionTableSectionController: NSObject, WalletTableSectionContr
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        dispatcher?.dispatch(.selectedTransaction(properties[indexPath.row].transactionHash))
+        let hash = properties[indexPath.row].transactionHash
+        dispatcher?.dispatch(.selectedTransaction(hash))
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

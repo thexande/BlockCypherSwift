@@ -3,7 +3,7 @@ import Anchorage
 
 final class WalletDetailShowMoreResultsFooterView: UIView {
     let button = PrimaryButton()
-    weak var dispatcher: WalletActionDispatching?
+    weak var dispatcher: WalletDetailActionDispatching?
     
     override init(frame: CGRect) {
         super.init(frame: frame)

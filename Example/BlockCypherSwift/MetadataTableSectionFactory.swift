@@ -1,5 +1,5 @@
 final class MetadataTableSectionFactory {
-    static func mapControllerFromSections(_ sections: [MetadataSectionProperties], dispatcher: WalletActionDispatching?) -> [WalletTableSectionController] {
+    static func mapControllerFromSections(_ sections: [MetadataSectionProperties], dispatcher: WalletDetailActionDispatching?) -> [WalletTableSectionController] {
         return sections.compactMap { section -> WalletTableSectionController? in
             if let properties = section as? MetadataAddressSectionProperties, let items = properties.items as? [MetadataAddressRowItemProperties] {
                 let controller = MetadataAddressTableSectionController.mapControllerFromProperties(items)

@@ -1,7 +1,7 @@
 import UIKit
 
 final class MetadataAddressTableSectionController: NSObject, WalletTableSectionController {
-    public var dispatcher: WalletActionDispatching?
+    public var dispatcher: WalletDetailActionDispatching?
     public var properties: [MetadataAddressRowItemProperties] = []
     var sectionTitle: String?
     

@@ -2,7 +2,7 @@ import UIKit
 import Anchorage
 
 protocol WalletTableSectionController: UITableViewDelegate, UITableViewDataSource {
-    var dispatcher: WalletActionDispatching? { get set }
+    var dispatcher: WalletDetailActionDispatching? { get set }
     var sectionTitle: String? { get }
     func registerReusableTypes(tableView: UITableView)
 }
@@ -77,7 +77,7 @@ struct TransactionDetailViewProperties {
 protocol TransactionDetailViewPropertiesUpdating: ViewPropertiesUpdating where ViewProperties == LoadableProps<TransactionDetailViewProperties> { }
 
 final class TransactionDetailViewController: SectionProxyTableViewController, TransactionDetailViewPropertiesUpdating {
-    weak var dispatcher: WalletActionDispatching?
+    weak var dispatcher: WalletDetailActionDispatching?
     override var sections: [WalletTableSectionController] {
         didSet {
             sections.forEach { $0.registerReusableTypes(tableView: tableView) }
