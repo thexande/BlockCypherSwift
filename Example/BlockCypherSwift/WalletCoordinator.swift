@@ -193,6 +193,9 @@ extension WalletService {
 extension WalletCoordinator: WalletActionDispatching {
     func dispatch(_ action: WalletAction) {
         switch action {
+        case let .selectedTransaction(hash, currency):
+            handleRoute(route: .transactionDetail(hash, currency))
+            
         case .selectedWallet(let walletAddress, let walletType):
             handleRoute(route: .walletDetail(walletAddress, walletType))
             
@@ -306,11 +309,10 @@ extension WalletCoordinator: WalletRoutable {
             walletPresenter.loaableProperties = properties
             navigation?.pushViewController(walletsViewController, animated: true)
             
-        case .transactionDetail: return
-//            transactionDetailViewController.properties = properties
-//            let controller = makeTransactionDetailViewController()
-            
-//            navigation?.pushViewController(transactionDetailViewController, animated: true)
+        case let .transactionDetail(hash, currency):
+            transactionDetailPresenter.loadTransaction(hash: hash, currency: currency)
+            let controller = makeTransactionDetailViewController()
+            navigation?.pushViewController(controller, animated: true)
             
         case .transactionSegmentDetail(let properties):
             transactionSegmentDetailViewController.properties = properties

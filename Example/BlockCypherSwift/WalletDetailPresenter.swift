@@ -68,6 +68,10 @@ final class WalletDetailPresenter: WalletDetailActionDispatching {
     
     func dispatch(_ action: WalletDetailAcitons) {
         switch action {
+        case let .selectedTransaction(hash):
+            if let wallet = cryptoWallet {
+                dispatcher?.dispatch(.selectedTransaction(hash, wallet.1))
+            }
         case .sortWalletDetail(let sortOrder):
             switch sortOrder {
             case .largest:
