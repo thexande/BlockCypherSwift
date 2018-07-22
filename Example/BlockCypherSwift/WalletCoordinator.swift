@@ -95,10 +95,9 @@ final class WalletCoordinator {
     private let walletService: WalletService
     private let navigationController = UINavigationController(rootViewController: UIViewController())
     
-    private let walletViewController = WalletsViewController()
+    private let walletsViewController = WalletsViewController()
     private let walletPresenter: WalletsPresenter
     
-//    private var walletDetailViewController = WalletDetailController()
     private let walletDetailPresenter = WalletDetailPresenter()
     
     private let transactionDetailViewController = TransactionDetailViewController()
@@ -140,10 +139,10 @@ final class WalletCoordinator {
         
         walletPresenter = WalletsPresenter(walletService: walletService)
         
-        self.navigationController.viewControllers = [walletViewController]
-        walletViewController.dispatcher = walletPresenter
+        self.navigationController.viewControllers = [walletsViewController]
+        walletsViewController.dispatcher = walletPresenter
         walletPresenter.deliver = { [weak self] props in
-            self?.walletViewController.properties = props
+            self?.walletsViewController.properties = props
         }
         walletPresenter.dispatcher = self
         
@@ -151,7 +150,7 @@ final class WalletCoordinator {
         factory.dispatcher = self
         
         
-        walletViewController.properties = .data(WalletsViewProperties(title: "Wallets", sections: [], displayLoading: false))
+        walletsViewController.properties = .data(WalletsViewProperties(title: "Wallets", sections: [], displayLoading: false))
         
         scannerViewController.success = { [weak self] address, walletType in
             self?.dispatch(.deliverQRResult(address, walletType))
@@ -300,13 +299,13 @@ extension WalletCoordinator: WalletRoutable {
                 self?.navigation?.pushViewController(controller, animated: true)
             }
         case .wallets(let properties):
-            if navigation?.viewControllers.contains(walletViewController) ?? false {
+            if navigation?.viewControllers.contains(walletsViewController) ?? false {
                 walletPresenter.loaableProperties = properties
                 return
             }
             
             walletPresenter.loaableProperties = properties
-            navigation?.pushViewController(walletViewController, animated: true)
+            navigation?.pushViewController(walletsViewController, animated: true)
             
         case .transactionDetail(let properties):
             transactionDetailViewController.properties = properties
@@ -330,17 +329,3 @@ extension WalletCoordinator: WalletRoutable {
         }
     }
 }
-
-
-
-extension Date {
-    func monthAsString() -> String {
-        let df = DateFormatter()
-        df.setLocalizedDateFormatFromTemplate("MMMM")
-        return df.string(from: self)
-    }
-}
-
-
-
-

@@ -17,7 +17,7 @@ final class WalletControllerFactory: WalletFactory {
     }
     
     func addWalletSelectAlertActions(_ controller: UIAlertController, walletTypes: [WalletCurrency]) {
-        var actions: [UIAlertAction] = walletTypes.map(self.makeWalletSelectorAction(_:))
+        var actions: [UIAlertAction] = walletTypes.map(makeWalletSelectorAction)
         actions.append(.cancel())
         
         actions.forEach { action in
@@ -26,7 +26,7 @@ final class WalletControllerFactory: WalletFactory {
     }
     
     func addWalletNameAlertActions(_ controller: UIAlertController, walletDescriptions: [WalletDescription]) {
-        var actions: [UIAlertAction] = walletDescriptions.map(self.makeWalletNameSelectorAction(_:))
+        var actions: [UIAlertAction] = walletDescriptions.map(makeWalletNameSelectorAction)
         actions.append(.cancel())
         
         actions.forEach { action in
