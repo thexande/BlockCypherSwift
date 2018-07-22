@@ -5,7 +5,7 @@ public struct UrlFactory {
     }
     
     static func url(transactionHash: String, currency: WalletCurrency) -> URL? {
-        let address = "https://api.blockcypher.com/v1/\(currency.symbol.lowercased())/main/txs/\(transactionHash)/full?limit=50"
+        let address = "https://api.blockcypher.com/v1/\(currency.symbol.lowercased())/main/txs/\(transactionHash)?limit=50&includeHex=true"
         return URL(string: address)
     }
     

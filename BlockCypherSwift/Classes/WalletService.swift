@@ -97,6 +97,6 @@ final public class WalletService {
                 completion(.failure(.transactionNotFound))
                 print(error.localizedDescription)
             }
-        }
+        }.resume()
     }
 }

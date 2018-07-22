@@ -15,7 +15,7 @@ extension Transaction {
     
     static func map(_ transaction: Transaction) -> TransactionDetailViewProperties {
         return TransactionDetailViewProperties(
-            title: "detail",
+            title: "Details",
             transactionItemProperties: Transaction.map(transaction),
             sections: [
                 MetadataTitleSectionProperties(displayStyle: .metadata, title: "Transaction Metadata", items: [

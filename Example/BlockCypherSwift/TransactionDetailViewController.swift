@@ -83,15 +83,16 @@ final class TransactionDetailViewController: SectionProxyTableViewController, Tr
     
     override var sections: [WalletTableSectionController] {
         didSet {
-            sections.forEach { $0.registerReusableTypes(tableView: tableView) }
-            tableView.reloadData()
+            self.sections.forEach { $0.registerReusableTypes(tableView: self.tableView) }
         }
     }
     
     func render(_ properties: LoadableProps<TransactionDetailViewProperties>) {
         switch properties {
         case .data(let properties):
-            update(from: properties, to: properties)
+            DispatchQueue.main.async {
+                self.update(from: self.properties, to: properties)
+            }
         case .error(let error): return
         case .loading:
             DispatchQueue.main.async {

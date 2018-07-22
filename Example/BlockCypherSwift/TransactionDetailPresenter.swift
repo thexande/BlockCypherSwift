@@ -3,6 +3,7 @@ import BlockCypherSwift
 
 final class TransactionDetailPresenter: WalletActionDispatching {
     var deliver: ((LoadableProps<TransactionDetailViewProperties>) -> Void)?
+    let walletService = WalletService(session: URLSession.shared)
     
     private var transaction: Transaction? {
         didSet {
@@ -19,7 +20,13 @@ final class TransactionDetailPresenter: WalletActionDispatching {
     }
     
     func loadTransaction(hash: String, currency: WalletCurrency) {
-        
+        walletService.transaction(hash: hash, currency: currency) { result in
+            switch result {
+            case let .success(transaction):
+                self.transaction = transaction
+            case let .failure(error): return
+            }
+        }
     }
     
     func dispatch(_ action: WalletAction) {
