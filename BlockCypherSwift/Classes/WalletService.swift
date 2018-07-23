@@ -32,7 +32,7 @@ final public class WalletService {
     
     public init(session: URLSession) {
         self.session = session
-        decoder.dateDecodingStrategy = .formatted(DateFormatter.iso8601Full())
+        decoder.dateDecodingStrategy = .blockCypherFormat()
     }
     
     /// Fetch a wallet for a currency available on the BlockCypher API

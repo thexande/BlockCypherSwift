@@ -10,7 +10,7 @@ public struct Transaction: Codable {
     public let preference: String
     public let relayed_by: String?
     public let confirmed: Date
-    public let received: String
+    public let received: Date
     public let ver: Int
     public let double_spend: Bool
     public let vin_sz: Int
