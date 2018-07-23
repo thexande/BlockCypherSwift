@@ -5,8 +5,8 @@ target 'BlockCypherSwift_Example' do
   pod 'Anchorage'
   pod 'Result'
   pod 'QRCode'
-  pod 'Realm'
-  pod 'RealmSwift'
+#  pod 'Realm'
+#  pod 'RealmSwift'
   pod 'lottie-ios'
   pod 'HydraAsync'
 

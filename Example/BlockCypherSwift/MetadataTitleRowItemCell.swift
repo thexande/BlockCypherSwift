@@ -61,6 +61,7 @@ final class MetadataAddressRowItemCell: UITableViewCell {
         addressLabel.font = UIFont.systemFont(ofSize: 13)
         contentView.addSubview(addressLabel)
         addressLabel.edgeAnchors == contentView.edgeAnchors + UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
+        accessoryType = .disclosureIndicator
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -82,7 +83,7 @@ final class MetadataTransactionSegmentRowItemCell: UITableViewCell {
         accessoryType = .disclosureIndicator
         addressLabel.numberOfLines = 0
         addressLabel.textColor = .gray
-        addressLabel.font = UIFont.systemFont(ofSize: 16)
+        addressLabel.font = UIFont.systemFont(ofSize: 12)
         
         contentView.addSubview(addressLabel)
         

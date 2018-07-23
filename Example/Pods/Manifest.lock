@@ -5,11 +5,6 @@ PODS:
   - HydraAsync (1.2.1)
   - lottie-ios (2.5.0)
   - QRCode (2.0)
-  - Realm (3.7.4):
-    - Realm/Headers (= 3.7.4)
-  - Realm/Headers (3.7.4)
-  - RealmSwift (3.7.4):
-    - Realm (= 3.7.4)
   - Result (4.0.0)
 
 DEPENDENCIES:
@@ -18,8 +13,6 @@ DEPENDENCIES:
   - HydraAsync
   - lottie-ios
   - QRCode
-  - Realm
-  - RealmSwift
   - Result
 
 SPEC REPOS:
@@ -28,8 +21,6 @@ SPEC REPOS:
     - HydraAsync
     - lottie-ios
     - QRCode
-    - Realm
-    - RealmSwift
     - Result
 
 EXTERNAL SOURCES:
@@ -42,10 +33,8 @@ SPEC CHECKSUMS:
   HydraAsync: 8f2ab62d57e140b4ca587ae0f66e1eb04e8e6965
   lottie-ios: d699fdee68d7b63e721d949388b015fef1aaa4ac
   QRCode: f98a1886c8f37523704a7512a4c0cd45b34c18a4
-  Realm: a469bb59e33f9926102ccaea4349822c53b9117e
-  RealmSwift: a45861b21c180f5cf0f122144b9759fa8dde3e9e
   Result: 7645bb3f50c2ce726dd0ff2fa7b6f42bbe6c3713
 
-PODFILE CHECKSUM: 8e18c7cb8014e4669551e2a924cc94725dc994bd
+PODFILE CHECKSUM: c51ae4c3ca3119cbed539e27bb50fcbccbe9b350
 
 COCOAPODS: 1.5.3

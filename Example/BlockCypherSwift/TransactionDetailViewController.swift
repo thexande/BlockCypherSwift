@@ -85,13 +85,14 @@ struct TransactionDetailViewProperties {
     init(_ transaction: Transaction) {
         var metadataItems: [MetadataTitleRowItemProperties] = []
         
-        metadataItems.append(contentsOf:
+        metadataItems.append(contentsOf: 
             [
                 MetadataTitleRowItemProperties(title: "Hash", content: transaction.hash),
                 MetadataTitleRowItemProperties(title: "Amount", content: transaction.total.satoshiToReadableBtc()),
-                MetadataTitleRowItemProperties(title: "Block Index", content: "58"),
-                MetadataTitleRowItemProperties(title: "Block Height", content: "19823129038"),
-                MetadataTitleRowItemProperties(title: "Confirmations", content: "123")
+                MetadataTitleRowItemProperties(title: "Block Index", content: String(transaction.block_index)),
+                MetadataTitleRowItemProperties(title: "Block Height", content: String(transaction.block_height)),
+                MetadataTitleRowItemProperties(title: "Confirmations", content: String(transaction.confirmations)),
+                MetadataTitleRowItemProperties(title: "Double Spend", content: String(transaction.double_spend))
             ]
         )
         
@@ -104,11 +105,26 @@ struct TransactionDetailViewProperties {
             metadataItems.append(MetadataTitleRowItemProperties(title: "Relayed By", content: relayed))
         }
         
+        let addressItems: [MetadataAddressRowItemProperties] = transaction.addresses.map { address in
+            return MetadataAddressRowItemProperties(address: address)
+        }
+        
+        let inputItems: [MetadataTransactionSegmentRowItemProperties] = transaction.inputs.map { input in
+            return MetadataTransactionSegmentRowItemProperties(address: input.script)
+        }
+        
+        let outputItems: [MetadataTransactionSegmentRowItemProperties] = transaction.outputs.map { output in
+            return MetadataTransactionSegmentRowItemProperties(address: output.script)
+        }
+            
         self.title = "Details"
         self.transactionItemProperties = Transaction.map(transaction)
         self.sections = [
             MetadataTitleSectionProperties(displayStyle: .metadata, title: "Metadata", items: metadataItems),
-            MetadataTitleSectionProperties(displayStyle: .metadata, title: "Timing", items: timingItems)
+            MetadataTitleSectionProperties(displayStyle: .metadata, title: "Timing", items: timingItems),
+            MetadataAddressSectionProperties(displayStyle: .metadata, title: "Addresses", items: addressItems),
+            MetadataTransactionSegmentSectionProperties(displayStyle: .transactionSegment, title: "Inputs", items: inputItems),
+            MetadataTransactionSegmentSectionProperties(displayStyle: .transactionSegment, title: "Outputs", items: outputItems),
         ]
     }
 }
