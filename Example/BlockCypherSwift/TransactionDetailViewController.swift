@@ -92,7 +92,10 @@ struct TransactionDetailViewProperties {
                 MetadataTitleRowItemProperties(title: "Block Index", content: String(transaction.block_index)),
                 MetadataTitleRowItemProperties(title: "Block Height", content: String(transaction.block_height)),
                 MetadataTitleRowItemProperties(title: "Confirmations", content: String(transaction.confirmations)),
-                MetadataTitleRowItemProperties(title: "Double Spend", content: String(transaction.double_spend))
+                MetadataTitleRowItemProperties(title: "Double Spend", content: String(transaction.double_spend)),
+                MetadataTitleRowItemProperties(title: "Fees", content: transaction.fees.satoshiToReadableBtc()),
+                MetadataTitleRowItemProperties(title: "Size", content: transaction.size.satoshiToReadableBtc()),
+                MetadataTitleRowItemProperties(title: "Confidence", content: String(transaction.confidence))
             ]
         )
         
