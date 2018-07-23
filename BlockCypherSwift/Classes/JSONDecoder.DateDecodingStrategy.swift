@@ -6,7 +6,7 @@ public enum DateError: Error {
 
 public extension JSONDecoder.DateDecodingStrategy {
     static func blockCypherFormat() -> JSONDecoder.DateDecodingStrategy {
-        return .custom({ (decoder) -> Date in
+        return .custom({ decoder -> Date in
             let container = try decoder.singleValueContainer()
             let dateStr = try container.decode(String.self)
             

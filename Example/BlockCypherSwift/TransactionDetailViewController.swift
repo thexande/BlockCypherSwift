@@ -1,5 +1,6 @@
 import UIKit
 import Anchorage
+import BlockCypherSwift
 
 protocol WalletTableSectionController: UITableViewDelegate, UITableViewDataSource {
     var dispatcher: WalletDetailActionDispatching? { get set }
@@ -72,6 +73,44 @@ struct TransactionDetailViewProperties {
     let transactionItemProperties: TransactionRowItemProperties
     let sections: [MetadataSectionProperties]
     static let `default` = TransactionDetailViewProperties(title: "", transactionItemProperties: .default, sections: [])
+    
+    init(title: String,
+         transactionItemProperties: TransactionRowItemProperties,
+         sections: [MetadataSectionProperties]) {
+        self.title = title
+        self.transactionItemProperties = transactionItemProperties
+        self.sections = sections
+    }
+    
+    init(_ transaction: Transaction) {
+        var metadataItems: [MetadataTitleRowItemProperties] = []
+        
+        metadataItems.append(contentsOf:
+            [
+                MetadataTitleRowItemProperties(title: "Hash", content: transaction.hash),
+                MetadataTitleRowItemProperties(title: "Amount", content: transaction.total.satoshiToReadableBtc()),
+                MetadataTitleRowItemProperties(title: "Block Index", content: "58"),
+                MetadataTitleRowItemProperties(title: "Block Height", content: "19823129038"),
+                MetadataTitleRowItemProperties(title: "Confirmations", content: "123")
+            ]
+        )
+        
+        let timingItems: [MetadataTitleRowItemProperties] = [
+            MetadataTitleRowItemProperties(title: "Received", content: transaction.received.transactionFormatString()),
+            MetadataTitleRowItemProperties(title: "Confirmed", content: transaction.confirmed.transactionFormatString()),
+        ]
+        
+        if let relayed = transaction.relayed_by {
+            metadataItems.append(MetadataTitleRowItemProperties(title: "Relayed By", content: relayed))
+        }
+        
+        self.title = "Details"
+        self.transactionItemProperties = Transaction.map(transaction)
+        self.sections = [
+            MetadataTitleSectionProperties(displayStyle: .metadata, title: "Metadata", items: metadataItems),
+            MetadataTitleSectionProperties(displayStyle: .metadata, title: "Timing", items: timingItems)
+        ]
+    }
 }
 
 protocol TransactionDetailViewPropertiesUpdating: ViewPropertiesUpdating where ViewProperties == LoadableProps<TransactionDetailViewProperties> { }

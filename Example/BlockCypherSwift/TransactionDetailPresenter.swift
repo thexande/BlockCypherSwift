@@ -8,7 +8,7 @@ final class TransactionDetailPresenter: WalletActionDispatching {
     private var transaction: Transaction? {
         didSet {
             if let transaction = transaction {
-                properties = .data(Transaction.map(transaction))
+                properties = .data(TransactionDetailViewProperties(transaction))
             }
         }
     }
